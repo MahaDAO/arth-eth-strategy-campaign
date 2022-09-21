@@ -5,7 +5,7 @@ import theme from "../../../theme";
 
 const PoolInfo = () => {
   return (
-    <div className={'material-primary'}>
+    <div className={'material-primary m-b-24'}>
       <TextWrapper
         text={'Pool Info'}
         fontFamily={'Syne'}
@@ -23,6 +23,8 @@ const PoolInfo = () => {
           valueFontSize={18}
         />
         <DataField
+          label={'These are the estimated value actual value might change'}
+          labelFontSize={10}
           value={'^ 6.78%'}
           valueFontColor={theme.color.green[300]}
           valueFontWeight={300}
@@ -39,6 +41,8 @@ const PoolInfo = () => {
           valueFontSize={18}
         />
         <DataField
+          label={'These are the estimated value actual value might change'}
+          labelFontSize={10}
           value={'^ 10.78%'}
           valueFontColor={theme.color.green[300]}
           valueFontWeight={300}
@@ -53,6 +57,10 @@ const PoolInfo = () => {
           valueFontColor={'white'}
           valueFontWeight={600}
           valueFontSize={18}
+        />
+        <DataField
+          label={'These are the estimated value actual value might change'}
+          labelFontSize={10}
         />
       </div>
     </div>
