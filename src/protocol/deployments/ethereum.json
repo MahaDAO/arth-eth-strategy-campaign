@@ -1,0 +1,10 @@
+{
+  "ARTH": {
+    "abi": "IERC20",
+    "address": "0x8cc0f052fff7ead7f2edcccac895502e884a8a71"
+  },
+  "MAHA": {
+    "abi": "IERC20",
+    "address": "0xb4d930279552397bba2ee473229f89ec245bc365"
+  }
+}

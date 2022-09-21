@@ -1,0 +1,31 @@
+/*[class*='PrivateValueLabel-circle-'] {
+!*.PrivateValueLabel-circle-25 {*!
+  width: 40px !important;
+  height: 24px !important;
+  transform: none !important;
+  align-items: center;
+  border-radius: 4px !important;
+  justify-content: center;
+  background-color: currentColor;
+}
+
+!*.PrivateValueLabel-label-26 {*!
+[class*='PrivateValueLabel-label-'] {
+  font-weight: 800 !important;
+  transform: none !important;
+}*/
+
+.MuiSlider-valueLabel > span {
+  width: 40px !important;
+  height: 24px !important;
+  transform: none !important;
+  align-items: center;
+  border-radius: 4px !important;
+  justify-content: center;
+  background-color: currentColor;
+}
+
+.MuiSlider-valueLabel > span > span {
+  font-weight: 800 !important;
+  transform: none !important;
+}

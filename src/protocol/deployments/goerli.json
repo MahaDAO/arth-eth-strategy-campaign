@@ -1,0 +1,10 @@
+{
+  "ARTH": {
+    "abi": "MockERC20",
+    "address": "0xbeab728fcc37de548620f17e9a521374f4a35c02"
+  },
+  "MAHA": {
+    "abi": "MockERC20",
+    "address": "0x106E0c36aD45cEAce8a778fa7365a2ce0500C3a2"
+  }
+}
