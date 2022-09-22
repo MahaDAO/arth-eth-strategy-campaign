@@ -105,7 +105,6 @@ const TopBar: React.FC = () => {
                 <IconLoader className={"pointer m-r-24"} iconName={'BentoMenu'} iconType={'misc'} onClick={() => {
                   setShowProjectModal(true)
                 }}/>
-                <NetworkChange/>
                 {
                   !!account &&
                   <IconLoader
@@ -114,6 +113,7 @@ const TopBar: React.FC = () => {
                     onClick={() => setShowTxModal(true)}
                   />
                 }
+                <NetworkChange/>
                 <AccountButton showWarning={showWarning}/>
               </div>
             </div>

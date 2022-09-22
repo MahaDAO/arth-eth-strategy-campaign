@@ -8,6 +8,7 @@ import CollateralDropDown from "../../components/CollateralDropDown";
 import styled from "styled-components";
 import theme from "../../theme";
 import DataField from "../../components/DataField";
+import Button from "../../components/Button";
 
 const OpenPositon = () => {
   const balance = useGetNativeTokenBalance();
@@ -23,7 +24,7 @@ const OpenPositon = () => {
 
   return (
     <div>
-      <Values className={'m-b-24'}>
+      <Form className={'m-b-24'}>
         <InputContainer
           label={'Enter Amount'}
           dataValueLoading={balance.isLoading}
@@ -47,20 +48,47 @@ const OpenPositon = () => {
             </div>
           </States>
         </InputContainer>
-        <DebtAmount>
+        <div className={'m-t-24'}>
+          <Button
+            text={'Deposit'}
+            disabled={true}
+          />
+        </div>
+      </Form>
+      <div className={'material-primary m-b-24'}>
+        <div className={'m-b-12'}>
           <DataField
-            label={'Debt Amount'}
+            label={'APR'}
             labelFontWeight={600}
-            value={debtAmount.toLocaleString('en-US', {maximumFractionDigits: 3})}
-            labelFontSize={16}
-            valueFontSize={16}
+            labelFontSize={18}
+            value={'50%'}
+            valueFontColor={theme.color.primary[300]}
+            valueFontSize={18}
+            valueFontWeight={600}
+          />
+          <DataField
+            label={'some basic random text'}
+            labelFontSize={10}
+            value={'40% MAHA APR + 10% Trading Fee'}
+            valueFontSize={12}
+            valueFontColor={theme.color.transparent[100]}
+          />
+        </div>
+      </div>
+      <LoanInfo className={'material-primary m-b-24'}>
+        <div className={'m-b-12'}>
+          <DataField
+            label={'Debt amount'}
+            labelFontWeight={600}
+            value={debtAmount.toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
             valueFontColor={'white'}
             valueFontWeight={600}
-            valueTag={'ARTH'}
           />
-        </DebtAmount>
-      </Values>
-      <LoanInfo className={'material-primary m-b-24'}>
+          <DataField
+            label={'Minimum cr should be 200%'}
+            labelFontSize={10}
+          />
+        </div>
         <div className={'m-b-12'}>
           <DataField
             label={'Collateral Ratio'}
@@ -105,7 +133,7 @@ const OpenPositon = () => {
           />
         </div>
       </LoanInfo>
-      <Rewards>
+      {/*<Rewards>
         <div className={'m-b-12'}>
           <DataField
             label={'Estimated MAHA Rewards (@30%)'}
@@ -138,14 +166,14 @@ const OpenPositon = () => {
             valueFontColor={'white'}
           />
         </div>
-      </Rewards>
+      </Rewards>*/}
     </div>
   )
 }
 
 export default OpenPositon;
 
-const Values = styled.div`
+const Form = styled.div`
 
 `;
 

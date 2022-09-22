@@ -94,18 +94,30 @@ const NetworkChange = () => {
 
   return (
     <div className={'m-r-12'}>
-      <DisplayView onClick={() => setOpenModal(!openModal)}>
-        <div className="single-line-center-between">
-          <IconLoader
-            iconName={config[activeChainId].networkIconName}
-            iconType={'chains'}
-            width={24}
-            height={24}
-            className={'m-r-8'}
-          />
-          <TextWrapper text={config[activeChainId].networkDisplayName} className={'m-r-12'}/>
-          <IconLoader iconName={'ArrowDown'} iconType={'arrow'}/>
-        </div>
+      <DisplayView onClick={() => getAvailableChains.length > 1 ? setOpenModal(!openModal) : {}}>
+        {getAvailableChains.length > 1
+          ? <div className="single-line-center-between">
+            <IconLoader
+              iconName={config[activeChainId].networkIconName}
+              iconType={'chains'}
+              width={24}
+              height={24}
+              className={'m-r-8'}
+            />
+            <TextWrapper text={config[activeChainId].networkDisplayName} className={'m-r-12'}/>
+            <IconLoader iconName={'ArrowDown'} iconType={'arrow'}/>
+          </div>
+          : <div className="single-line-center-between">
+            <IconLoader
+              iconName={config[activeChainId].networkIconName}
+              iconType={'chains'}
+              width={24}
+              height={24}
+              className={'m-r-8'}
+            />
+            <TextWrapper text={config[activeChainId].networkDisplayName}/>
+          </div>
+        }
         <SignalDot
           color={wrongNetwork
             ? theme.color.red[300]

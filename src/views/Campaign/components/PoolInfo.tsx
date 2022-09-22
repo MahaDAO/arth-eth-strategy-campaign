@@ -33,30 +33,37 @@ const PoolInfo = () => {
       </div>
       <div className={'m-b-12'}>
         <DataField
-          label={'Volume 24h'}
+          label={'ETH Price'}
           labelFontWeight={600}
-          value={'$3k'}
+          value={'669 ARTH'}
           valueFontColor={'white'}
           valueFontWeight={600}
-          valueFontSize={18}
         />
         <DataField
           label={'These are the estimated value actual value might change'}
           labelFontSize={10}
-          value={'^ 10.78%'}
-          valueFontColor={theme.color.green[300]}
-          valueFontWeight={300}
-          valueFontSize={12}
         />
       </div>
       <div className={'m-b-12'}>
         <DataField
-          label={'Trading fee 24h'}
+          label={'Collateral Ratio'}
           labelFontWeight={600}
-          value={'$300'}
+          value={'220%'}
           valueFontColor={'white'}
           valueFontWeight={600}
-          valueFontSize={18}
+        />
+        <DataField
+          label={'These are the estimated value actual value might change'}
+          labelFontSize={10}
+        />
+      </div>
+      <div className={'m-b-12'}>
+        <DataField
+          label={'No of Participants'}
+          labelFontWeight={600}
+          value={'100'}
+          valueFontColor={'white'}
+          valueFontWeight={600}
         />
         <DataField
           label={'These are the estimated value actual value might change'}

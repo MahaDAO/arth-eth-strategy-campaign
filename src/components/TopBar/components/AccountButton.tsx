@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import {useWallet} from 'use-wallet';
 
-import config from '../../../config';
+import config, {getSupportedChains} from '../../../config';
 import {truncateMiddle} from '../../../utils';
 
 import ChooseWallet from './modal/WalletInfo/ChooseWallet';
@@ -15,6 +15,7 @@ import TextWrapper from "../../TextWrapper";
 import Button from "../../Button";
 import IconLoader from "../../IconLoader";
 import WrongNetworkModal from "../../WrongNetworkModal";
+import {switchMetamaskChain} from "../../../utils/NetworkChange";
 
 interface AccountButtonProps {
   showWarning: boolean;
@@ -27,59 +28,7 @@ const AccountButton: React.FC<AccountButtonProps> = ({
   const [showWalletOption, setShowWalletOption] = useState<boolean>(false);
   const [showWrongNeworkModal, setShowWrongNeworkModal] = useState<boolean>(false);
   const {account} = useWallet();
-  const chainId = useGetActiveChainId()
-
-  const switchMetamaskChain = () => {
-    if (window.ethereum) {
-      window.ethereum
-        // @ts-ignore
-        .request({
-          method: 'wallet_switchEthereumChain',
-          params: [
-            {chainId: utils.hexStripZeros(BigNumber.from(config.chainId).toHexString())},
-          ],
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error: any) => {
-          if (error.code === 4902) addNetworkToMetamask();
-        });
-    }
-  };
-
-  const addNetworkToMetamask = () => {
-    if (window.ethereum) {
-      window.ethereum
-        // @ts-ignore
-        .request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: utils.hexStripZeros(BigNumber.from(config.chainId).toHexString()),
-              chainName: config.networkName,
-              rpcUrls: [config[chainId].defaultProvider],
-              iconUrls: [],
-              blockExplorerUrls: [config.etherscanUrl],
-              nativeCurrency: {
-                name: config.blockchainTokenName,
-                symbol: config.blockchainToken,
-                decimals: config.blockchainTokenDecimals,
-              },
-            },
-          ],
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error: any) => {
-          if (error.code === 4001) {
-            // EIP-1193 userRejectedRequest error.
-            console.log('We cannot encrypt anything without the key.');
-          }
-        });
-    }
-  };
+  const getAvailableChains = getSupportedChains();
 
   return (
     <>
@@ -88,7 +37,11 @@ const AccountButton: React.FC<AccountButtonProps> = ({
       {showWalletInfo && <BackgroundAbsolute onClick={() => setShowWalletInfo(false)}/>}
       <StyledAccountButton>
         {showWarning ? (
-          <WrongNetworkButton onClick={() => setShowWrongNeworkModal(true)}>
+          <WrongNetworkButton
+            onClick={() =>
+              getAvailableChains.length > 1
+                ? setShowWrongNeworkModal(true)
+                : switchMetamaskChain(getAvailableChains[0])}>
             <TextWrapper text={'Wrong Network'} align={'center'} fontWeight={600}/>
           </WrongNetworkButton>
         ) : !account ? (
