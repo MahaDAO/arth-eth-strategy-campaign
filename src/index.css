@@ -69,6 +69,11 @@ body {
   color: #f47f57;
 }
 
+.bold {
+  font-weight: 600;
+  color: white;
+}
+
 /* Theme Stuffs */
 
 /* *** SPACINGS *** */

@@ -25,6 +25,7 @@ const TextWrapper = (props: TextWrapperProps) => {
     text = '',
     className = '',
     align = 'left',
+    lineHeight = '100%'
   } = props;
 
   if (typeof text === "string") {
@@ -39,6 +40,7 @@ const TextWrapper = (props: TextWrapperProps) => {
         style={{color: Fcolor}}
         className={className}
         align={align}
+        lineHeight={lineHeight}
       >
         {text}
       </StyledText>
@@ -55,6 +57,7 @@ const TextWrapper = (props: TextWrapperProps) => {
         style={{color: Fcolor}}
         className={className}
         align={align}
+        lineHeight={lineHeight}
       >
         {text}
       </StyledDiv>
@@ -72,6 +75,7 @@ interface StyledTextProps {
   letterSpacing: string;
   align: 'left' | 'center' | 'right';
   fcolor: string;
+  lineHeight: string;
 }
 
 const StyledText = styled.p<StyledTextProps>`
@@ -81,6 +85,7 @@ const StyledText = styled.p<StyledTextProps>`
   font-size: ${(props) => props.fontSize}px;
   letter-spacing: ${(props) => props.letterSpacing};
   text-align: ${(props) => props.align};
+  line-height: ${(props) => props.lineHeight};
 `;
 
 const StyledDiv = styled.div<StyledTextProps>`
@@ -90,4 +95,5 @@ const StyledDiv = styled.div<StyledTextProps>`
   font-size: ${(props) => props.fontSize}px;
   letter-spacing: ${(props) => props.letterSpacing};
   text-align: ${(props) => props.align};
+  line-height: ${(props) => props.lineHeight};
 `;

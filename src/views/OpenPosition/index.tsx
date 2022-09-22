@@ -19,6 +19,8 @@ import {
   useGetLoanEth,
   useGetPositionEth
 } from "./Calculations";
+import TextWrapper from "../../components/TextWrapper";
+import IconLoader from "../../components/IconLoader";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -84,7 +86,42 @@ const OpenPosition = () => {
           />
         </div>
       </div>
+      <div className={'material-primary m-b-24'}>
+        <TextWrapper
+          text={
+            <div>
+              You are contributing <span
+              className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
+              <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ETH </span>
+              out of which <span
+              className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
+              <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ETH </span>
+              will be used as
+              collateral to mint <span
+              className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})}
+              <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ARTH </span>,
+              which would be added to uniswap as liquidity to ARTH/ETH pair.
+            </div>
+          }
+          className={'m-b-8'}
+          lineHeight={'150%'}
+          Fcolor={theme.color.transparent[100]}
+        />
+        <TextWrapper
+          text={
+            <div>
+              The liquidity position will now
+              hold {Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH
+              and {Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH
+            </div>
+          }
+          className={'m-b-12'}
+        />
+      </div>
       <LoanInfo className={'material-primary m-b-24'}>
+        <div>
+
+        </div>
         <div className={'m-b-12'}>
           <DataField
             label={'Debt amount'}
