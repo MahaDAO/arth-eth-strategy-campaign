@@ -9,6 +9,7 @@ import useCore from '../../hooks/useCore';
 import {ButtonProps} from '../Button/Button';
 
 import ChooseWallet from '../TopBar/components/modal/WalletInfo/ChooseWallet';
+import {switchMetamaskChain} from "../../utils/NetworkChange";
 
 const ActionButton = (props: ButtonProps) => {
   const core = useCore();
@@ -16,56 +17,6 @@ const ActionButton = (props: ButtonProps) => {
 
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
   const [showWalletOption, setShowWalletOption] = useState<boolean>(false);
-
-  const switchMetamaskChain = () => {
-    // @ts-ignore
-    if (window.ethereum) {
-      // @ts-ignore
-      window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{chainId: utils.hexStripZeros(BigNumber.from(config.chainId).toHexString())}],
-      })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error: any) => {
-          if (error.code === 4902) addNetworkToMetamask();
-        });
-    }
-  }
-
-  const addNetworkToMetamask = () => {
-    if (!ethereum?.request) return;
-    if (ethereum) {
-      ethereum
-        .request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: utils.hexStripZeros(BigNumber.from(config.chainId).toHexString()),
-              chainName: config.networkName,
-              rpcUrls: [],
-              iconUrls: [],
-              blockExplorerUrls: [config.etherscanUrl],
-              nativeCurrency: {
-                name: config.blockchainTokenName,
-                symbol: config.blockchainToken,
-                decimals: config.blockchainTokenDecimals
-              },
-            },
-          ],
-        })
-        .then(() => {
-          window.location.reload();
-        })
-        .catch((error: any) => {
-          if (error.code === 4001) {
-            // EIP-1193 userRejectedRequest error.
-            console.log('We cannot encrypt anything without the key.');
-          }
-        });
-    }
-  }
 
   const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
@@ -89,7 +40,7 @@ const ActionButton = (props: ButtonProps) => {
       {
         showWarning ? (
           <Button
-            onClick={switchMetamaskChain}
+            onClick={() => switchMetamaskChain(1)}
             text="Switch network"
           />
         ) : (

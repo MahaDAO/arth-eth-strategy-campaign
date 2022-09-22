@@ -30,7 +30,7 @@ export const NON_LOADING_DEFAULT_BASIC_STATE: BasicState = {
 
 export const LOADING_DEFAULT_BOOLEAN_STATE: BasicBooleanState = {
   isLoading: true,
-  value: true
+  value: false
 };
 
 export const NON_LOADING_DEFAULT_BOOLEAN_STATE: BasicBooleanState = {

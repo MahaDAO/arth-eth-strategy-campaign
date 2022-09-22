@@ -61,16 +61,18 @@ export class Protocol {
               cfg[chainId].decimalOverrides[name] || 18
             );
           }
+
           // to push all others as contracts
           networkConfig[name] = new Contract(
             deployment.address,
             ABIS[deployment.abi],
             this.provider
           );
-        }
 
+        }
         this._contracts[chainId] = networkConfig;
         this._tokens[chainId] = tokens;
+
       }
     } catch (e) {
       console.log("Error in contracts mapping", e);
@@ -116,12 +118,16 @@ export class Protocol {
     return this._config[chainId][id];
   }
 
-  gasOptions(gas: BigNumber = BigNumber.from("6000000")): Overrides {
-    const multiplied = Math.floor(
-      gas.toNumber() * this._config[137]["gasLimitMultiplier"]
-    );
-    return {
-      gasLimit: BigNumber.from(multiplied),
-    };
+  getPriceFeed() {
+    console.log('contracts', this._contracts[1])
+    return this._contracts[1][`ETHPriceFeed`];
+  }
+
+  getTroveManager() {
+    return this._contracts[1][`ETHTroveManager`];
+  }
+
+  getSortedTroves() {
+    return this._contracts[1][`ETHSortedTroves`];
   }
 }

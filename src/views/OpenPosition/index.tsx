@@ -1,26 +1,35 @@
-import React, {useMemo, useState} from "react";
-import InputContainer from "../../components/InputContainer";
+import React, {useState} from "react";
+import styled from "styled-components";
+
 import useGetNativeTokenBalance from "../../hooks/state/useGetNativeTokenBalance";
-import {getDisplayBalance} from "../../utils/formatBalance";
+
+import InputContainer from "../../components/InputContainer";
 import Input from "../../components/Input";
 import States from "../../components/States";
-import CollateralDropDown from "../../components/CollateralDropDown";
-import styled from "styled-components";
-import theme from "../../theme";
 import DataField from "../../components/DataField";
+import CollateralDropDown from "../../components/CollateralDropDown";
 import Button from "../../components/Button";
 
-const OpenPositon = () => {
-  const balance = useGetNativeTokenBalance();
-  const [ethAmount, setEthAmount] = useState<string>('10');
+import theme from "../../theme";
+import {getDisplayBalance} from "../../utils/formatBalance";
+import {
+  useGetDebtAmount,
+  useGetCollateralRatio,
+  useGetTotalDebtAmount,
+  useGetLoanEth,
+  useGetPositionEth
+} from "./Calculations";
 
-  const debtAmount = useMemo(() => {
-    if (Number(ethAmount)) {
-      return Number(ethAmount) * (85 / 15);
-    } else {
-      return '-';
-    }
-  }, [ethAmount])
+const OpenPosition = () => {
+  const [ethAmount, setEthAmount] = useState<string>('1');
+
+  const balance = useGetNativeTokenBalance();
+
+  const loanEthAmount = useGetLoanEth(ethAmount);
+  const positionEthAmount = useGetPositionEth(ethAmount);
+  const debtAmount = useGetDebtAmount(loanEthAmount);
+  const totaldebtAmount = useGetTotalDebtAmount(debtAmount);
+  const collateralRatio = useGetCollateralRatio(loanEthAmount, totaldebtAmount);
 
   return (
     <div>
@@ -80,7 +89,7 @@ const OpenPositon = () => {
           <DataField
             label={'Debt amount'}
             labelFontWeight={600}
-            value={debtAmount.toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
+            value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
             valueFontColor={'white'}
             valueFontWeight={600}
           />
@@ -93,8 +102,8 @@ const OpenPositon = () => {
           <DataField
             label={'Collateral Ratio'}
             labelFontWeight={600}
-            value={'120%'}
-            valueFontColor={theme.color.red[300]}
+            value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '%'}
+            valueFontColor={theme.color.green[300]}
             valueFontWeight={600}
           />
           <DataField
@@ -106,14 +115,14 @@ const OpenPositon = () => {
           <DataField
             label={'Your Position'}
             labelFontWeight={600}
-            value={'2 ETH'}
+            value={`${Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
             valueFontColor={'white'}
             valueFontWeight={600}
           />
           <DataField
             label={'These are the estimated value actual value might change'}
             labelFontSize={10}
-            value={'10 ARTH'}
+            value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
             valueFontColor={'white'}
             valueFontWeight={600}
             position={'start-between'}
@@ -171,7 +180,7 @@ const OpenPositon = () => {
   )
 }
 
-export default OpenPositon;
+export default OpenPosition;
 
 const Form = styled.div`
 
