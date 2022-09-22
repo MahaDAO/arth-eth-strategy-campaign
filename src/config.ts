@@ -4,8 +4,8 @@ import goerli from "./configs/goerli";
 import {isProduction} from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
-  ...ethereum,
-  // ...goerli,
+  // ...ethereum,
+  ...goerli,
 };
 
 if (isProduction) {
