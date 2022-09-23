@@ -21,9 +21,11 @@ import {
 } from "./Calculations";
 import TextWrapper from "../../components/TextWrapper";
 import IconLoader from "../../components/IconLoader";
+import TextButton from "../../components/TextButton";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
+  const [simplifieldView, setsimplifieldView] = useState<boolean>(false);
 
   const balance = useGetNativeTokenBalance();
 
@@ -87,98 +89,118 @@ const OpenPosition = () => {
         </div>
       </div>
       <div className={'material-primary m-b-24'}>
-        <TextWrapper
-          text={
-            <div>
-              You are contributing <span
-              className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
-              <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ETH </span>
-              out of which <span
-              className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
-              <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ETH </span>
-              will be used as
-              collateral to mint <span
-              className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})}
-              <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'}/>ARTH </span>,
-              which would be added to uniswap as liquidity to ARTH/ETH pair.
+        <div className={'single-line-center-end'}>
+          <TextButton
+            text={simplifieldView ? 'Text view' : 'Simplified view'}
+            fontSize={12}
+            className={'m-b-12'}
+            onClick={() => setsimplifieldView(!simplifieldView)}/>
+        </div>
+        {!simplifieldView
+          ? <div>
+            <TextWrapper
+              text={
+                <div>
+                  You are contributing <span
+                  className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                              className={'m-l-4 m-r-4'}/>ETH </span> while maintaining collateral ratio
+                  as {Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '% '}
+                  out of which <span
+                  className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                              className={'m-l-4 m-r-4'}/>ETH </span>
+                  will be used as
+                  collateral to mint <span
+                  className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
+                              className={'m-l-4 m-r-4'}/>ARTH </span>,
+                  which would be added to uniswap as liquidity to <span className={'bold'}> ARTH/ETH </span>pair.
+                </div>
+              }
+              className={'m-b-16'}
+              lineHeight={'140%'}
+              fontSize={16}
+              Fcolor={theme.color.transparent[100]}
+            />
+            <TextWrapper
+              text={
+                <div>
+                  The liquidity position will now
+                  hold <span
+                  className={'bold'}>{Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH </span>
+                  and <span
+                  className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH </span>
+                  and you would be contributing 10% to the TVL of ARTH/ETH pair.
+                </div>
+              }
+              lineHeight={'140%'}
+              fontSize={16}
+              Fcolor={theme.color.transparent[100]}
+            />
+          </div>
+          : <div>
+            <div className={'m-b-12'}>
+              <DataField
+                label={'Debt amount'}
+                labelFontWeight={600}
+                value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+              />
+              <DataField
+                label={'Minimum cr should be 200%'}
+                labelFontSize={10}
+              />
             </div>
-          }
-          className={'m-b-8'}
-          lineHeight={'150%'}
-          Fcolor={theme.color.transparent[100]}
-        />
-        <TextWrapper
-          text={
-            <div>
-              The liquidity position will now
-              hold {Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH
-              and {Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH
+            <div className={'m-b-12'}>
+              <DataField
+                label={'Collateral Ratio'}
+                labelFontWeight={600}
+                value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '%'}
+                valueFontColor={theme.color.green[300]}
+                valueFontWeight={600}
+              />
+              <DataField
+                label={'Minimum cr should be 200%'}
+                labelFontSize={10}
+              />
             </div>
-          }
-          className={'m-b-12'}
-        />
+            <div className={'m-b-12'}>
+              <DataField
+                label={'Your Position'}
+                labelFontWeight={600}
+                value={`${Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+              />
+              <DataField
+                label={'These are the estimated value actual value might change'}
+                labelFontSize={10}
+                value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+                position={'start-between'}
+              />
+            </div>
+            <div className={'m-b-12'}>
+              <DataField
+                label={'Your contribution to the TVL'}
+                labelFontWeight={600}
+                value={'30%'}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+              />
+              <DataField
+                label={'These are the estimated value actual value might change'}
+                labelFontSize={10}
+              />
+            </div>
+          </div>}
       </div>
-      <LoanInfo className={'material-primary m-b-24'}>
-        <div>
+      {/*<LoanInfo className={'material-primary m-b-24'}>
 
-        </div>
-        <div className={'m-b-12'}>
-          <DataField
-            label={'Debt amount'}
-            labelFontWeight={600}
-            value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
-            valueFontColor={'white'}
-            valueFontWeight={600}
-          />
-          <DataField
-            label={'Minimum cr should be 200%'}
-            labelFontSize={10}
-          />
-        </div>
-        <div className={'m-b-12'}>
-          <DataField
-            label={'Collateral Ratio'}
-            labelFontWeight={600}
-            value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '%'}
-            valueFontColor={theme.color.green[300]}
-            valueFontWeight={600}
-          />
-          <DataField
-            label={'Minimum cr should be 200%'}
-            labelFontSize={10}
-          />
-        </div>
-        <div className={'m-b-12'}>
-          <DataField
-            label={'Your Position'}
-            labelFontWeight={600}
-            value={`${Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
-            valueFontColor={'white'}
-            valueFontWeight={600}
-          />
-          <DataField
-            label={'These are the estimated value actual value might change'}
-            labelFontSize={10}
-            value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
-            valueFontColor={'white'}
-            valueFontWeight={600}
-            position={'start-between'}
-          />
-        </div>
-        <div className={'m-b-12'}>
-          <DataField
-            label={'Your contribution to the TVL'}
-            labelFontWeight={600}
-            value={'30%'}
-            valueFontColor={'white'}
-            valueFontWeight={600}
-          />
-          <DataField
-            label={'These are the estimated value actual value might change'}
-            labelFontSize={10}
-          />
-        </div>
-      </LoanInfo>
+      </LoanInfo>*/}
       {/*<Rewards>
         <div className={'m-b-12'}>
           <DataField
