@@ -104,7 +104,7 @@ const OpenPosition = () => {
                   You are contributing <span
                   className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                              className={'m-l-4 m-r-4'}/>ETH </span> while maintaining collateral ratio
+                              className={'m-l-4 m-r-4'}/>ETH &#127881;</span> while maintaining collateral ratio
                   as {Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '% '}
                   out of which <span
                   className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
@@ -121,7 +121,7 @@ const OpenPosition = () => {
               className={'m-b-16'}
               lineHeight={'140%'}
               fontSize={16}
-              Fcolor={theme.color.transparent[100]}
+              // Fcolor={theme.color.transparent[100]}
             />
             <TextWrapper
               text={
@@ -131,12 +131,12 @@ const OpenPosition = () => {
                   className={'bold'}>{Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH </span>
                   and <span
                   className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH </span>
-                  and you would be contributing 10% to the TVL of ARTH/ETH pair.
+                  and you would be contributing 10% &#128571; to the TVL of ARTH/ETH pair.
                 </div>
               }
               lineHeight={'140%'}
               fontSize={16}
-              Fcolor={theme.color.transparent[100]}
+              // Fcolor={theme.color.transparent[100]}
             />
           </div>
           : <div>
