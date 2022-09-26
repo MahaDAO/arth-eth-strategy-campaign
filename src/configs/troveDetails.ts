@@ -12,5 +12,5 @@ export default {
   liquidationReserve: DECIMALS_18.mul(50),
   minDebtAmount: DECIMALS_18.mul(250),
   collateralPerc: 0.8,
-  cr: DECIMALS_18.mul(220),
+  cr: DECIMALS_18.mul(150),
 }

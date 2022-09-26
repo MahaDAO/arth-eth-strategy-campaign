@@ -11,6 +11,7 @@ import DataField from "../../components/DataField";
 import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
+import PostionDetails from "../PostionDetails";
 
 const Campaign = () => {
   const isEligible = useGetIsEligible();
@@ -47,12 +48,12 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                <OpenPosition/>
+                <PostionDetails/>
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <PoolInfo/>
-              {!isEligible.value && <div className={'material-primary m-b-24'}>
+              <div className={'material-primary m-b-24'}>
                 <div className={'m-b-12'}>
                   <DataField
                     label={'APR'}
@@ -71,7 +72,7 @@ const Campaign = () => {
                     valueFontColor={theme.color.transparent[100]}
                   />
                 </div>
-              </div>}
+              </div>
             </Grid>
           </Grid>
       }
