@@ -48,7 +48,8 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                <PostionDetails/>
+                <OpenPosition/>
+                {/*<PostionDetails/>*/}
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
