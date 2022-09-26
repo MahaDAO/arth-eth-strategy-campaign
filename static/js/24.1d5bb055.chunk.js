@@ -1,0 +1,2 @@
+(this["webpackJsonpcampaign.mahadao.com"]=this["webpackJsonpcampaign.mahadao.com"]||[]).push([[24],{911:function(a,c,i){"use strict";i.r(c),c.default=i.p+"static/media/ArrowRight.faee99a3.svg"}}]);
+//# sourceMappingURL=24.1d5bb055.chunk.js.map

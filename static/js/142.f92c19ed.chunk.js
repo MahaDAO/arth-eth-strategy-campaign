@@ -1,0 +1,2 @@
+(this["webpackJsonpcampaign.mahadao.com"]=this["webpackJsonpcampaign.mahadao.com"]||[]).push([[142],{1029:function(a,c,s){"use strict";s.r(c),c.default=s.p+"static/media/USDTUSDC-ALP.9d2ea0c4.svg"}}]);
+//# sourceMappingURL=142.f92c19ed.chunk.js.map

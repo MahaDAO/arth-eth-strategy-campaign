@@ -1,2 +1,0 @@
-(this["webpackJsonpgov.mahadao.com"]=this["webpackJsonpgov.mahadao.com"]||[]).push([[114],{1001:function(a,o,s){"use strict";s.r(o),o.default=s.p+"static/media/BUSDUSDC-APE-LP-S.224f690c.svg"}}]);
-//# sourceMappingURL=114.ab0396c1.chunk.js.map
