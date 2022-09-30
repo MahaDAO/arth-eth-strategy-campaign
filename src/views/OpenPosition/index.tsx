@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import styled from "styled-components";
+import { parseUnits } from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../hooks/state/useGetNativeTokenBalance";
 
@@ -35,6 +36,14 @@ const OpenPosition = () => {
   const totaldebtAmount = useGetTotalDebtAmount(debtAmount);
   const collateralRatio = useGetCollateralRatio(loanEthAmount, totaldebtAmount);
 
+  const isInputGreaterThanMax = useMemo(
+    () => {
+      const bnETHAmount = parseUnits(ethAmount || '0', 18);
+      return bnETHAmount.gt(balance.value);
+    }, 
+    [ethAmount, balance]
+  );
+
   return (
     <div>
       <Form className={'m-b-24'}>
@@ -45,8 +54,8 @@ const OpenPosition = () => {
           className={'m-b-24'}
         >
           <States
-            state={'default'}
-            msg={''}
+            state={isInputGreaterThanMax ? 'error' : 'default'}
+            msg={isInputGreaterThanMax ? '*ETH balance not sufficient' : ''}
           >
             <div className={'single-line-center-end'}>
               <Input
@@ -64,7 +73,7 @@ const OpenPosition = () => {
         <div className={'m-t-24'}>
           <Button
             text={'Deposit'}
-            disabled={true}
+            disabled={isInputGreaterThanMax || !Number(ethAmount)}
           />
         </div>
       </Form>
