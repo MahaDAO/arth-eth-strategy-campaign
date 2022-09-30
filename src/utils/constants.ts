@@ -6,6 +6,8 @@ import {
   TransactionState
 } from './interface';
 
+export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+
 export const DAY = 86400;
 export const DAY_IN_MS = 86400000;
 

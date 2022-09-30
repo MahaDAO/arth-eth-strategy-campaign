@@ -4,6 +4,7 @@ import MockERC20 from './abi/MockERC20.json';
 import PriceFeed from './abi/PriceFeed.json';
 import SortedTroves from './abi/SortedTroves.json';
 import TroveManager from './abi/TroveManager.json';
+import ARTHETHTroveLp from './abi/ARTHETHTroveLp.json';
 
 const abis: IABIS = {
   IERC20,
@@ -11,6 +12,7 @@ const abis: IABIS = {
   PriceFeed,
   SortedTroves,
   TroveManager,
+  ARTHETHTroveLp,
 };
 
 export default abis;

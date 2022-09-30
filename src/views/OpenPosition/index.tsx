@@ -23,6 +23,7 @@ import {
 import TextWrapper from "../../components/TextWrapper";
 import IconLoader from "../../components/IconLoader";
 import TextButton from "../../components/TextButton";
+import useDeposit from "../../hooks/callbacks/useDeposit";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -43,6 +44,10 @@ const OpenPosition = () => {
     }, 
     [ethAmount, balance]
   );
+
+  const depositHandler = useDeposit(ethAmount);
+    
+  const onDepositClick = () => depositHandler();
 
   return (
     <div>
@@ -73,6 +78,7 @@ const OpenPosition = () => {
         <div className={'m-t-24'}>
           <Button
             text={'Deposit'}
+            onClick={onDepositClick}
             disabled={isInputGreaterThanMax || !Number(ethAmount)}
           />
         </div>

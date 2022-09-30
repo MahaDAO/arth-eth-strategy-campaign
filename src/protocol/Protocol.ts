@@ -120,14 +120,18 @@ export class Protocol {
 
   getPriceFeed() {
     console.log('contracts', this._contracts[1])
-    return this._contracts[1][`ETHPriceFeed`];
+    return this._contracts[this._activeNetwork][`ETHPriceFeed`];
   }
 
   getTroveManager() {
-    return this._contracts[1][`ETHTroveManager`];
+    return this._contracts[this._activeNetwork][`ETHTroveManager`];
   }
 
   getSortedTroves() {
-    return this._contracts[1][`ETHSortedTroves`];
+    return this._contracts[this._activeNetwork][`ETHSortedTroves`];
+  }
+
+  getARTHETHTroveLpStrategy() {
+    return this._contracts[this._activeNetwork][`ARTHETHTroveLpStrategy`];
   }
 }
