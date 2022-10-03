@@ -5,9 +5,9 @@ import local from "./configs/local";
 import {isProduction} from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
-  ...ethereum,
-  ...local,
-  // ...goerli,
+  // ...ethereum,
+  // ...local,
+  ...goerli,
 };
 
 if (isProduction) {
