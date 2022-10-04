@@ -4,6 +4,7 @@ import Page from "./components/Page/Page";
 import Home from "./views/Home";
 import NoPageFound from "./components/NoPageFound";
 import Campaign from "./views/Campaign";
+import PositionDetails from "./views/PostionDetails";
 
 const Navigation = () => {
   return (
@@ -15,7 +16,7 @@ const Navigation = () => {
       </Route>*/}
       <Route exact path="/">
         <Page availableNetworks={[137, 1337]}>
-          <Campaign/>
+          <PositionDetails />
         </Page>
       </Route>
       <Route exact path="*">
