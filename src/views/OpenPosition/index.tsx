@@ -1,6 +1,6 @@
 import React, {useState, useMemo} from "react";
 import styled from "styled-components";
-import { parseUnits } from "ethers/lib/utils";
+import {parseUnits} from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../hooks/state/useGetNativeTokenBalance";
 
@@ -24,6 +24,7 @@ import TextWrapper from "../../components/TextWrapper";
 import IconLoader from "../../components/IconLoader";
 import TextButton from "../../components/TextButton";
 import useDeposit from "../../hooks/callbacks/useDeposit";
+import SlippageContainer from "../../components/SlippageContainer";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -41,16 +42,20 @@ const OpenPosition = () => {
     () => {
       const bnETHAmount = parseUnits(ethAmount || '0', 18);
       return bnETHAmount.gt(balance.value);
-    }, 
+    },
     [ethAmount, balance]
   );
 
   const depositHandler = useDeposit(ethAmount);
-    
+
   const onDepositClick = () => depositHandler();
 
   return (
     <div>
+      <div className={'single-line-center-end'}>
+        <TextWrapper text={'Slippage'} className={'m-r-8 m-b-4'} Fcolor={theme.color.transparent[100]}/>
+        <SlippageContainer/>
+      </div>
       <Form className={'m-b-24'}>
         <InputContainer
           label={'Enter Amount'}
