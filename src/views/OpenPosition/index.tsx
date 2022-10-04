@@ -25,6 +25,7 @@ import IconLoader from "../../components/IconLoader";
 import TextButton from "../../components/TextButton";
 import useDeposit from "../../hooks/callbacks/useDeposit";
 import SlippageContainer from "../../components/SlippageContainer";
+import useGetPositionDetails from "../../hooks/state/useGetOutputDetails";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -37,6 +38,7 @@ const OpenPosition = () => {
   const debtAmount = useGetDebtAmount(loanEthAmount);
   const totaldebtAmount = useGetTotalDebtAmount(debtAmount);
   const collateralRatio = useGetCollateralRatio(loanEthAmount, totaldebtAmount);
+  const positionOutputDetails = useGetPositionDetails(ethAmount);
 
   const isInputGreaterThanMax = useMemo(
     () => {
@@ -47,7 +49,6 @@ const OpenPosition = () => {
   );
 
   const depositHandler = useDeposit(ethAmount);
-
   const onDepositClick = () => depositHandler();
 
   return (
@@ -165,16 +166,16 @@ const OpenPosition = () => {
                   className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ETH &#127881;</span> out of which <span
-                  className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHForTrove, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ETH</span> is being used as collateral to mint <span
-                  className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.amount0Desired, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ARTH</span> (at
-                  a <b>{Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '% '}</b> collateral
+                  a <b>250%</b> collateral
                   ratio), which
                   along with <span
-                  className={'bold'}>0.2 <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHAmount.sub(positionOutputDetails.value.bnETHForTrove), 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                                                      className={'m-l-4 m-r-4'}/>ETH</span> is
                   used to provide liquidity to the <span className={'bold'}>ARTH/ETH 0.3%</span> pair.
                 </div>
