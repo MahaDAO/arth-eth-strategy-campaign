@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import theme from "../../theme";
 import DataField from "../../components/DataField";
-import React, { useMemo }from "react";
+import React, {useMemo} from "react";
 import TextWrapper from "../../components/TextWrapper";
 import Button from "../../components/Button";
 import TextButton from "../../components/TextButton";
 import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
-import { getDisplayBalance } from "../../utils/formatBalance";
+import {getDisplayBalance} from "../../utils/formatBalance";
 import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
-import { BigNumber } from "ethers";
+import {BigNumber} from "ethers";
 import useWithdraw from "../../hooks/callbacks/useWithdraw";
 
 const PositionDetails = () => {
@@ -19,8 +19,8 @@ const PositionDetails = () => {
 
   const withdrawHandler = useWithdraw(
     positionDetails.value?.uniswapNftId,
-    positionDetails.value?.liquidity, 
-    positionDetails.value?.amount0, 
+    positionDetails.value?.liquidity,
+    positionDetails.value?.amount0,
     positionDetails.value?.amount1
   );
   const onWithdrawClick = () => withdrawHandler();
@@ -43,7 +43,7 @@ const PositionDetails = () => {
             label={'NFT ID'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`#${Number(positionDetails.value?.uniswapNftId).toLocaleString('en-US', { maximumFractionDigits: 0})}`}
+            value={`#${Number(positionDetails.value?.uniswapNftId).toLocaleString('en-US', {maximumFractionDigits: 0})}`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -71,7 +71,7 @@ const PositionDetails = () => {
             className={'m-b-4'}
           />
         </div>
-        <div className={'m-b-12'}>
+        <div>
           <DataField
             label={'Contribution to TVL'}
             labelFontSize={16}
@@ -81,6 +81,13 @@ const PositionDetails = () => {
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
+          />
+        </div>
+        <div className={'m-t-32'}>
+          <TextButton
+            text={'Close Position'}
+            onClick={onWithdrawClick}
+            align={'center'}
           />
         </div>
       </PositionContainer>
@@ -96,6 +103,7 @@ const PositionDetails = () => {
             valueFontWeight={600}
             className={'m-b-4'}
           />
+
         </div>
         <div className={'m-b-12'}>
           <DataField
@@ -131,7 +139,7 @@ const PositionDetails = () => {
         </div>
         <div className={'m-b-12'}>
           <DataField
-            label={'Estimated MAHA Rewards (@30%)'}
+            label={'MAHA Rewards'}
             labelFontWeight={600}
             labelFontColor={'white'}
             value={'2,000 MAHA'}
@@ -140,39 +148,40 @@ const PositionDetails = () => {
             valueFontColor={'white'}
             className={'m-b-2'}
           />
-        </div>
-        <div className={''}>
-          <DataField
-            label={'Estimated Trading Fee Rewards'}
-            labelFontWeight={600}
-            labelFontColor={'white'}
-            value={'20 ARTH'}
-            valueFontSize={16}
-            valueFontWeight={600}
-            valueFontColor={'white'}
-          />
           <DataField
             label={''}
-            labelFontWeight={600}
-            labelFontColor={'white'}
-            value={'10 ETH'}
-            valueFontSize={16}
-            valueFontWeight={600}
-            valueFontColor={'white'}
+            value={'$2000'}
+            valueFontSize={14}
+            valueFontColor={theme.color.transparent[100]}
           />
         </div>
-      </Rewards>
-      <Rewards className={'material-primary m-b-24'}>
-        <div className={'single-line-center-between m-b-24'}>
-          <TextWrapper text={'Action'} fontSize={24} fontFamily={'Syne'}/>
-          <RewardsBtn>
-            <Button
-              onClick={onWithdrawClick}
-              text={'Close position'} 
-              size={'sm'} 
-              disabled={true}
+        <div className={''}>
+          <div className={'single-line-center-between'}>
+            <DataField
+              label={'Trading Fee Rewards'}
+              labelFontWeight={600}
+              labelFontColor={'white'}
+              value={'20 ARTH'}
+              valueFontSize={16}
+              valueFontWeight={600}
+              valueFontColor={'white'}
+              className={'flex1'}
             />
-          </RewardsBtn>
+            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
+          </div>
+          <div className={'single-line-center-between'}>
+            <DataField
+              label={''}
+              labelFontWeight={600}
+              labelFontColor={'white'}
+              value={'10 ETH'}
+              valueFontSize={16}
+              valueFontWeight={600}
+              valueFontColor={'white'}
+              className={'flex1'}
+            />
+            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
+          </div>
         </div>
       </Rewards>
     </div>

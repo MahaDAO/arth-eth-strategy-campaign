@@ -23,12 +23,10 @@ const PoolInfo = () => {
           valueFontSize={18}
         />
         <DataField
-          label={'These are the estimated value actual value might change'}
-          labelFontSize={10}
-          value={'^ 6.78%'}
-          valueFontColor={theme.color.green[300]}
-          valueFontWeight={300}
-          valueFontSize={12}
+          label={''}
+          value={'$2000'}
+          valueFontSize={14}
+          valueFontColor={theme.color.transparent[100]}
         />
       </div>
       <div className={'m-b-12'}>
@@ -40,8 +38,10 @@ const PoolInfo = () => {
           valueFontWeight={600}
         />
         <DataField
-          label={'These are the estimated value actual value might change'}
-          labelFontSize={10}
+          label={''}
+          value={'$2000'}
+          valueFontSize={14}
+          valueFontColor={theme.color.transparent[100]}
         />
       </div>
       <div className={'m-b-12'}>
@@ -51,10 +51,6 @@ const PoolInfo = () => {
           value={'220%'}
           valueFontColor={'white'}
           valueFontWeight={600}
-        />
-        <DataField
-          label={'These are the estimated value actual value might change'}
-          labelFontSize={10}
         />
       </div>
       <div className={'m-b-12'}>
