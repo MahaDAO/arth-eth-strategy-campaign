@@ -5,7 +5,7 @@
   },
   "MAHA": {
     "abi": "IERC20",
-    "address": "0xCaD79d1a13A4c5290f5a6103043Bcf3129f6A5ed"
+    "address": "0x851a67362bCaa07e58EFA9E8ec76f5471806F240"
   },
   "ETHPriceFeed": {
     "abi": "PriceFeed",
@@ -26,6 +26,6 @@
   },
   "ARTHETHTroveLpStrategy": {
     "abi": "ARTHETHTroveLp",
-    "address": "0x84AB46bb49efaCcc93c17403b8ab0a1602E489AB"
+    "address": "0x5a74b06DD074a1d69C64823410470bf1A40d2BBC"
   }
 }
