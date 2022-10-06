@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import styled from "styled-components";
+import { parseUnits } from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../hooks/state/useGetNativeTokenBalance";
 
@@ -22,6 +23,9 @@ import {
 import TextWrapper from "../../components/TextWrapper";
 import IconLoader from "../../components/IconLoader";
 import TextButton from "../../components/TextButton";
+import useDeposit from "../../hooks/callbacks/useDeposit";
+import SlippageContainer from "../../components/SlippageContainer";
+import useGetPositionDetails from "../../hooks/state/useGetOutputDetails";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -34,9 +38,25 @@ const OpenPosition = () => {
   const debtAmount = useGetDebtAmount(loanEthAmount);
   const totaldebtAmount = useGetTotalDebtAmount(debtAmount);
   const collateralRatio = useGetCollateralRatio(loanEthAmount, totaldebtAmount);
+  const positionOutputDetails = useGetPositionDetails(ethAmount);
+
+  const isInputGreaterThanMax = useMemo(
+    () => {
+      const bnETHAmount = parseUnits(ethAmount || '0', 18);
+      return bnETHAmount.gt(balance.value);
+    },
+    [ethAmount, balance]
+  );
+
+  const depositHandler = useDeposit(ethAmount);
+  const onDepositClick = () => depositHandler();
 
   return (
     <div>
+      <div className={'single-line-center-end'}>
+        <TextWrapper text={'Slippage'} className={'m-r-8 m-b-4'} Fcolor={theme.color.transparent[100]} />
+        <SlippageContainer />
+      </div>
       <Form className={'m-b-24'}>
         <InputContainer
           label={'Enter Amount'}
@@ -45,8 +65,8 @@ const OpenPosition = () => {
           className={'m-b-24'}
         >
           <States
-            state={'default'}
-            msg={''}
+            state={isInputGreaterThanMax ? 'error' : 'default'}
+            msg={isInputGreaterThanMax ? '*ETH balance not sufficient' : ''}
           >
             <div className={'single-line-center-end'}>
               <Input
@@ -64,11 +84,12 @@ const OpenPosition = () => {
         <div className={'m-t-24'}>
           <Button
             text={'Deposit'}
-            disabled={true}
+            onClick={onDepositClick}
+            disabled={isInputGreaterThanMax || !Number(ethAmount)}
           />
         </div>
       </Form>
-      <div className={'material-primary m-b-24'}>
+      {/*<div className={'material-primary m-b-24'}>
         <div className={'m-b-12'}>
           <DataField
             label={'APR'}
@@ -87,7 +108,47 @@ const OpenPosition = () => {
             valueFontColor={theme.color.transparent[100]}
           />
         </div>
-      </div>
+      </div>*/}
+      <Rewards className={'material-primary m-b-24'}>
+        <div className={'single-line-center-between m-b-24'}>
+          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'} />
+          <RewardsBtn>
+            <Button text={'Collect Rewards'} size={'sm'} disabled={true} />
+          </RewardsBtn>
+        </div>
+        <div className={'m-b-12'}>
+          <DataField
+            label={'Estimated MAHA Rewards (@30%)'}
+            labelFontWeight={600}
+            labelFontColor={'white'}
+            value={'2,000 MAHA'}
+            valueFontSize={16}
+            valueFontWeight={600}
+            valueFontColor={'white'}
+            className={'m-b-2'}
+          />
+        </div>
+        <div className={''}>
+          <DataField
+            label={'Estimated Trading Fee Rewards'}
+            labelFontWeight={600}
+            labelFontColor={'white'}
+            value={'20 ARTH'}
+            valueFontSize={16}
+            valueFontWeight={600}
+            valueFontColor={'white'}
+          />
+          <DataField
+            label={''}
+            labelFontWeight={600}
+            labelFontColor={'white'}
+            value={'10 ETH'}
+            valueFontSize={16}
+            valueFontWeight={600}
+            valueFontColor={'white'}
+          />
+        </div>
+      </Rewards>
       <div className={'material-primary m-b-24'}>
         <div className={'single-line-center-end'}>
           <TextButton
@@ -105,14 +166,17 @@ const OpenPosition = () => {
                     className={'bold'}>{Number(ethAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                     <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                       className={'m-l-4 m-r-4'} />ETH &#127881;</span> out of which <span
-                        className={'bold'}>{Number(loanEthAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHForTrove, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                     <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                       className={'m-l-4 m-r-4'} />ETH</span> is being used as collateral to mint <span
-                        className={'bold'}>{Number(debtAmount.value).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.amount0Desired, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                     <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
-                      className={'m-l-4 m-r-4'} />ARTH</span> (at a <b>150%</b> collateral ratio), which
+                      className={'m-l-4 m-r-4'} />ARTH</span> (at
+                  a <b>250%</b> collateral
+                  ratio), which
                   along with <span
-                    className={'bold'}>0.2 <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12} className={'m-l-4 m-r-4'} />ETH</span> is
+                    className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHAmount.sub(positionOutputDetails.value.bnETHForTrove), 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                      className={'m-l-4 m-r-4'} />ETH</span> is
                   used to provide liquidity to the <span className={'bold'}>ARTH/ETH 0.3%</span> pair.
                 </div>
               }
@@ -126,8 +190,10 @@ const OpenPosition = () => {
                 <div>
                   You have so far
                   earned <span className={'bold'}>0.2 ETH</span> and <span className={'bold'}>10 ARTH</span> from
-                  trading fees, and <span className={'bold'}>10 MAHA</span> from farming
-                  rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the protocol TVL and helping create financial liberty with <span className={'bold'}>ARTH</span> and <span className={'bold'}>MAHA</span>.
+                  trading fees, and <span className={'bold'}>10 MAHA</span> from the farming
+                  rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the mission
+                  of creating financial liberty with <span className={'bold'}>ARTH</span> and <span
+                    className={'bold'}>MAHA</span>.
                 </div>
               }
               lineHeight={'140%'}
@@ -194,43 +260,6 @@ const OpenPosition = () => {
             </div>
           </div>}
       </div>
-      {/*<LoanInfo className={'material-primary m-b-24'}>
-
-      </LoanInfo>*/}
-      {/*<Rewards>
-        <div className={'m-b-12'}>
-          <DataField
-            label={'Estimated MAHA Rewards (@30%)'}
-            labelFontWeight={600}
-            labelFontColor={'white'}
-            value={'2,000 MAHA'}
-            valueFontSize={16}
-            valueFontWeight={600}
-            valueFontColor={'white'}
-            className={'m-b-2'}
-          />
-        </div>
-        <div className={''}>
-          <DataField
-            label={'Estimated Trading Fee Rewards'}
-            labelFontWeight={600}
-            labelFontColor={'white'}
-            value={'20 ARTH'}
-            valueFontSize={16}
-            valueFontWeight={600}
-            valueFontColor={'white'}
-          />
-          <DataField
-            label={''}
-            labelFontWeight={600}
-            labelFontColor={'white'}
-            value={'10 ETH'}
-            valueFontSize={16}
-            valueFontWeight={600}
-            valueFontColor={'white'}
-          />
-        </div>
-      </Rewards>*/}
     </div>
   )
 }
@@ -252,7 +281,8 @@ const LoanInfo = styled.div`
 `
 
 const Rewards = styled.div`
-  background: ${theme.color.gradients.orange_gradient};
-  padding: 24px;
-  border-radius: 6px;
+`
+
+const RewardsBtn = styled.div`
+  width: 150px;
 `

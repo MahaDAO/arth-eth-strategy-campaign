@@ -50,6 +50,9 @@
     "web-vitals": "^1.0.1",
     "web3": "^1.2.11"
   },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
+  },
   "scripts": {
     "start": "REACT_APP_ISPROD=false react-scripts start",
     "build": "react-scripts build",
@@ -79,6 +82,7 @@
     "@types/react-date-range": "^1.1.7",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.11",
+    "react-error-overlay": "6.0.9",
     "react-router-dom": "^5.2.0"
   }
 }

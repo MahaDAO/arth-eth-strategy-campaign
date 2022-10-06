@@ -6,6 +6,7 @@ import {isProduction} from "../analytics/Mixpanel";
 import application from './application/reducer';
 import transactions from './transactions/reducer';
 import chains from './chains/reducer';
+import slippage from './slippage/reducer';
 
 const PERSISTED_KEYS: string[] = ['transactions', 'slippage'];
 
@@ -13,7 +14,8 @@ const store = configureStore({
   reducer: {
     application,
     transactions,
-    chains
+    chains,
+    slippage,
   },
   middleware: isProduction
     ? [

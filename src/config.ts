@@ -1,11 +1,13 @@
 import ethereum from "./configs/ethereum";
 import {Configuration} from "./utils/interface";
 import goerli from "./configs/goerli";
+import local from "./configs/local";
 import {isProduction} from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
-  ...ethereum,
-  // ...goerli,
+  // ...ethereum,
+  // ...local,
+  ...goerli,
 };
 
 if (isProduction) {
