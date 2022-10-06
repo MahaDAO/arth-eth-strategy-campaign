@@ -80,7 +80,7 @@ const OpenPosition = () => {
             valueFontWeight={600}
           />
           <DataField
-            label={'some basic random text'}
+            label={'Your APR consists of trading fees and MAHA rewards'}
             labelFontSize={10}
             value={'40% MAHA APR + 10% Trading Fee'}
             valueFontSize={12}
@@ -126,9 +126,8 @@ const OpenPosition = () => {
                 <div>
                   You have so far
                   earned <span className={'bold'}>0.2 ETH</span> and <span className={'bold'}>10 ARTH</span> from
-                  trading fees, and <span className={'bold'}>10 MAHA</span> from the farming
-                  rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the mission
-                  of creating financial liberty with <span className={'bold'}>ARTH</span> and <span className={'bold'}>MAHA</span>.
+                  trading fees, and <span className={'bold'}>10 MAHA</span> from farming
+                  rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the protocol TVL and helping create financial liberty with <span className={'bold'}>ARTH</span> and <span className={'bold'}>MAHA</span>.
                 </div>
               }
               lineHeight={'140%'}

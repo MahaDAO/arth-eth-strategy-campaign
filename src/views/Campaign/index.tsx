@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import OpenPosition from "../OpenPosition";
 import Header from "./components/Header";
@@ -17,10 +17,10 @@ const Campaign = () => {
 
   return (
     <div className={'custom-container'}>
-      <Header/>
+      <Header />
       {
         isEligible.isLoading
-          ? <LoadingPage/>
+          ? <LoadingPage />
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <FormPart isEligibile={isEligible.value}>
@@ -38,7 +38,7 @@ const Campaign = () => {
                       className={'m-b-32'}
                       Fcolor={theme.color.transparent[100]}
                     />
-                    <div style={{width: '150px', margin: "auto"}}>
+                    <div style={{ width: '150px', margin: "auto" }}>
                       <ActionButton
                         text={'Check'}
                         onClick={() => {
@@ -47,11 +47,11 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                <OpenPosition/>
+                <OpenPosition />
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <PoolInfo/>
+              <PoolInfo />
               {!isEligible.value && <div className={'material-primary m-b-24'}>
                 <div className={'m-b-12'}>
                   <DataField
@@ -64,9 +64,9 @@ const Campaign = () => {
                     valueFontWeight={600}
                   />
                   <DataField
-                    label={'some basic random text'}
+                    label={'Your APR consists of trading fees and MAHA rewards'}
                     labelFontSize={10}
-                    value={'40% MAHA APR + 10% Trading Fee'}
+                    value={'40% MAHA APR + 10% Trading Fee APR'}
                     valueFontSize={12}
                     valueFontColor={theme.color.transparent[100]}
                   />
