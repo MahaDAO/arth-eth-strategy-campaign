@@ -2,6 +2,7 @@ import {BigNumber} from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
 import {useCallback, useEffect, useState} from 'react';
 import {useWallet} from 'use-wallet';
+import { useSlippage } from '../../state/slippage/hooks';
 
 import {useBlockNumber} from '../../state/application/hooks';
 import { DECIMALS_18 } from '../../utils/constants';
@@ -35,43 +36,73 @@ const useGetOutputDetails = (ethAmount: string) => {
   const core = useCore();
   const {account} = useWallet();
   const blockNumber = useBlockNumber();
-
+  const slippage = useSlippage();
+  
   const fetchBalance = useCallback(async () => {
       const bnETHAmount = parseUnits(ethAmount || "0", 18);
-      const bnETHForTrove = bnETHAmount.mul(80).div(100);
+      if (bnETHAmount.lte(0)) {
+        setBalance({
+          isLoading: true, 
+          value: {
+            bnETHAmount: BigNumber.from(0),
+            bnETHForTrove: BigNumber.from(0),
+            amount0Desired: BigNumber.from(0),
+            amount1Desired: BigNumber.from(0),
+            amount0Min: BigNumber.from(0),
+            amount1Min: BigNumber.from(0),
+          }
+        });
 
-      const contract = core.getTroveManager();
-      const priceContract = core.getPriceFeed();
-      const strategyContract = core.getARTHETHTroveLpStrategy();
+        return;
+      } else {
+        const bnETHForTrove = bnETHAmount.mul(80).div(100);
 
-      const price: BigNumber = await priceContract.callStatic.fetchPrice();
-      const trove = await contract.Troves(strategyContract.address);
-      const pendingETHRewards = await contract.getPendingETHReward(strategyContract.address);
-      const pendingDebt = await contract.getPendingARTHDebtReward(strategyContract.address);
+        const contract = core.getTroveManager();
+        const priceContract = core.getPriceFeed();
+        const strategyContract = core.getARTHETHTroveLpStrategy();
 
-      const debt = trove.debt.add(pendingDebt);
-      const coll = trove.coll.add(pendingETHRewards).add(bnETHForTrove);
-      const allowedDebt = coll.mul(price).mul(100).div(250).div(DECIMALS_18);
-      const mintable: BigNumber = allowedDebt.sub(debt);
+        const price: BigNumber = await priceContract.callStatic.fetchPrice();
+        const trove = await contract.Troves(strategyContract.address);
+        const pendingETHRewards = await contract.getPendingETHReward(strategyContract.address);
+        const pendingDebt = await contract.getPendingARTHDebtReward(strategyContract.address);
 
-      setBalance({
-        isLoading: false,
-        value: {
-          bnETHForTrove,
-          bnETHAmount,
-          amount0Desired: mintable,
-          amount1Desired: bnETHAmount.sub(bnETHForTrove),
-          amount0Min: mintable.div(2),
-          amount1Min: bnETHAmount.sub(bnETHForTrove).div(2),
-        }
-      });
-  }, [core, ethAmount]);
+        const debt = trove.debt.add(pendingDebt);
+        const coll = trove.coll.add(pendingETHRewards).add(bnETHForTrove);
+        const allowedDebt = coll.mul(price).mul(100).div(300).div(DECIMALS_18);
+        let mintable: BigNumber = allowedDebt.sub(debt);
+
+        const gasCompensation = await contract.ARTH_GAS_COMPENSATION();
+        const borrowingFee = await contract.getBorrowingFee(mintable);
+        mintable = mintable.sub(borrowingFee).sub(gasCompensation);
+
+        const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
+        const amount0Min = !Number(slippage.value)
+          ? mintable.mul(99).div(100)
+          : mintable.sub(mintable.mul(slippageRounded * 1e3).div(1e5));
+        const diff = bnETHAmount.sub(bnETHForTrove);
+        const amount1Min = !Number(slippage.value)
+          ? diff.mul(99).div(100)
+          : diff.sub(diff.mul(slippageRounded * 1e3).div(1e5));
+
+        setBalance({
+          isLoading: false,
+          value: {
+            bnETHForTrove,
+            bnETHAmount,
+            amount0Desired: mintable,
+            amount1Desired: bnETHAmount.sub(bnETHForTrove),
+            amount0Min: amount0Min,
+            amount1Min: amount1Min,
+          }
+        });
+      }
+  }, [core, ethAmount,slippage]);
 
   useEffect(() => {
     if (core.isUnlocked) {
       fetchBalance().catch((err) =>
         console.error(
-          `Failed to fetch token balance of ${account}: ${err.stack} `,
+          `Failed to fetch output details of ${account}: ${err.stack} `,
         ),
       );
     }

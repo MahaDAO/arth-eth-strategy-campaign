@@ -166,7 +166,7 @@ const OpenPosition = () => {
                   className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.amount0Desired, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ARTH</span> (at
-                  a <b>250%</b> collateral
+                  a <b>300%</b> collateral
                   ratio), which
                   along with <span
                   className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHAmount.sub(positionOutputDetails.value.bnETHForTrove), 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
