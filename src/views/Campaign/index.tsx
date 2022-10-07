@@ -53,7 +53,7 @@ const Campaign = () => {
                   </div>
                 </Hidden>}
                 {
-                  positionDetails.value?.uniswapNftId.gt(0)
+                  positionDetails.value?.uniswapNftId?.gt(0)
                     ?  <PostionDetails/> 
                     :  <OpenPosition />
                 }

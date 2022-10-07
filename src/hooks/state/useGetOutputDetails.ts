@@ -38,7 +38,7 @@ const useGetOutputDetails = (ethAmount: string) => {
 
   const fetchBalance = useCallback(async () => {
       const bnETHAmount = parseUnits(ethAmount || "0", 18);
-      const bnETHForTrove = bnETHAmount.div(2);
+      const bnETHForTrove = bnETHAmount.mul(80).div(100);
 
       const contract = core.getTroveManager();
       const priceContract = core.getPriceFeed();

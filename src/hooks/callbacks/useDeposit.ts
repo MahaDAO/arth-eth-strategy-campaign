@@ -22,8 +22,8 @@ const useDeposit = (ethAmount: string) => {
         const strategyContract = core.getARTHETHTroveLpStrategy();
 
         const mintParams = {
-          token0: "0x8CC0F052fff7eaD7f2EdCCcaC895502E884a8a71",
-          token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+          token0: core._tokens[core._activeNetwork]['ARTH'],
+          token1: core._tokens[core._activeNetwork]['WETH'],
           fee: "3000",
           tickLower: "-73260",
           tickUpper: "-62160",
