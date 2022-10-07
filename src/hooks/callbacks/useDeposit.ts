@@ -28,8 +28,8 @@ const useDeposit = (ethAmount: string) => {
         }
         
         const mintParams = {
-          token0: core._tokens[core._activeNetwork]['ARTH'],
-          token1: core._tokens[core._activeNetwork]['WETH'],
+          token0: core._tokens[core._activeNetwork]['ARTH'].address,
+          token1: core._tokens[core._activeNetwork]['WETH'].address,
           fee: "3000",
           tickLower: "62160",
           tickUpper: "69060",
@@ -47,7 +47,7 @@ const useDeposit = (ethAmount: string) => {
           troveParams,
           mintParams,
           1,
-          [0x0, 0x0],
+          [],
           {
             value: outputDetails.value.bnETHAmount
           },
