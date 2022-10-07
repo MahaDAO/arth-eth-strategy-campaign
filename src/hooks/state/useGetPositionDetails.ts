@@ -1,4 +1,3 @@
-import {BigNumber} from 'ethers';
 import {useCallback, useEffect, useState} from 'react';
 import {useWallet} from 'use-wallet';
 
@@ -19,7 +18,7 @@ const useGetPositionDetails = () => {
 
   const fetchBalance = useCallback(async () => {
     if (!account) {
-      setBalance({isLoading: false, value: BigNumber.from(0)});
+      setBalance({isLoading: false, value: {}});
       return;
     }
     
@@ -32,7 +31,7 @@ const useGetPositionDetails = () => {
     if (core.isUnlocked) {
       fetchBalance().catch((err) =>
         console.error(
-          `Failed to fetch token balance of ${account}: ${err.stack} `,
+          `Failed to fetch position details of ${account}: ${err.stack} `,
         ),
       );
     }

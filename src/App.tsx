@@ -68,7 +68,7 @@ const AppContent: React.FC = ({children}) => {
         console.log('chain changed', chainId);
         setChainId(chainId);
       });
-  }, [ethereum]);
+  }, [ethereum, setChainId]);
 
   if (!core) return <div/>;
 

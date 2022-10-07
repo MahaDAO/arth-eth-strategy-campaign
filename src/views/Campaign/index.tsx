@@ -14,8 +14,11 @@ import ActionButton from "../../components/ActionButton";
 import PostionDetails from "../PostionDetails";
 import AprInfo from "./components/AprInfo";
 
+import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
+
 const Campaign = () => {
   const isEligible = useGetIsEligible();
+  const positionDetails = useGetPositionDetails();
 
   return (
     <div className={'custom-container'}>
@@ -49,8 +52,11 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                {/*<OpenPosition />*/}
-                <PostionDetails/>
+                {
+                  positionDetails.value?.uniswapNftId.gt(0)
+                    ?  <PostionDetails/> 
+                    :  <OpenPosition />
+                }
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
