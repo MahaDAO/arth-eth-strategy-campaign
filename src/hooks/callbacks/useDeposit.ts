@@ -21,32 +21,38 @@ const useDeposit = (ethAmount: string) => {
       try {
         const strategyContract = core.getARTHETHTroveLpStrategy();
 
+        const troveParams =  {
+          maxFee: DECIMALS_18,
+          upperHint: ZERO_ADDRESS,
+          lowerHint: ZERO_ADDRESS
+        }
+        
         const mintParams = {
           token0: core._tokens[core._activeNetwork]['ARTH'],
           token1: core._tokens[core._activeNetwork]['WETH'],
           fee: "3000",
-          tickLower: "-73260",
-          tickUpper: "-62160",
+          tickLower: "62160",
+          tickUpper: "69060",
           amount0Desired: outputDetails.value.amount0Desired,
           amount1Desired: outputDetails.value.amount1Desired,
           amount0Min: outputDetails.value.amount0Min,
           amount1Min: outputDetails.value.amount1Min,
-          recipient: ZERO_ADDRESS,
+          recipient: strategyContract.address,
           deadline: Math.floor(Date.now() / 1000) + 10 * 60,
         };
-  
+        
         const response = await strategyContract.deposit(
           outputDetails.value.amount0Desired,
           outputDetails.value.bnETHForTrove,
-          DECIMALS_18,
-          ZERO_ADDRESS,
-          ZERO_ADDRESS,
+          troveParams,
           mintParams,
+          1,
+          [0x0, 0x0],
           {
             value: outputDetails.value.bnETHAmount
           },
         );
-  
+          
         addTransaction(response, {
           summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.bnETHAmount, 18, 3))},.`
         });
