@@ -59,18 +59,11 @@ const useGetOutputDetails = (ethAmount: string) => {
 
         const contract = core.getTroveManager();
         const priceContract = core.getPriceFeed();
-        const strategyContract = core.getARTHETHTroveLpStrategy();
-
+        
         const price: BigNumber = await priceContract.callStatic.fetchPrice();
-        const trove = await contract.Troves(strategyContract.address);
-        const pendingETHRewards = await contract.getPendingETHReward(strategyContract.address);
-        const pendingDebt = await contract.getPendingARTHDebtReward(strategyContract.address);
 
-        const debt = trove.debt.add(pendingDebt);
-        const coll = trove.coll.add(pendingETHRewards).add(bnETHForTrove);
-        const allowedDebt = coll.mul(price).mul(100).div(300).div(DECIMALS_18);
-        let mintable: BigNumber = allowedDebt.sub(debt);
-
+        const allowedDebt = bnETHForTrove.mul(price).mul(100).div(300).div(DECIMALS_18);
+        let mintable: BigNumber = allowedDebt;
         const gasCompensation = await contract.ARTH_GAS_COMPENSATION();
         const borrowingFee = await contract.getBorrowingFee(mintable);
         mintable = mintable.sub(borrowingFee).sub(gasCompensation);
