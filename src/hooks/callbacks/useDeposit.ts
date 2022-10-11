@@ -24,37 +24,32 @@ const useDeposit = (ethAmount: string) => {
         const troveParams =  {
           maxFee: DECIMALS_18,
           upperHint: ZERO_ADDRESS,
-          lowerHint: ZERO_ADDRESS
+          lowerHint: ZERO_ADDRESS,
+          ethAmount: outputDetails.value.bnETHForTrove,
+          arthAmount: outputDetails.value.amount0Desired,
         }
         
         const mintParams = {
-          token0: core._tokens[core._activeNetwork]['ARTH'].address,
-          token1: core._tokens[core._activeNetwork]['WETH'].address,
-          fee: "3000",
-          tickLower: "62160",
-          tickUpper: "69060",
-          amount0Desired: outputDetails.value.amount0Desired,
-          amount1Desired: outputDetails.value.amount1Desired,
-          amount0Min: outputDetails.value.amount0Min,
-          amount1Min: outputDetails.value.amount1Min,
-          recipient: strategyContract.address,
-          deadline: Math.floor(Date.now() / 1000) + 10 * 60,
+          tickLower: "-76020",
+          tickUpper: "-39120",
+          ethAmountMin: "0",
+          ethAmountDesired: outputDetails.value.bnETHAmount.sub(outputDetails.value.bnETHForTrove),
+          arthAmountMin: "0",
+          arthAmountDesired: outputDetails.value.amount0Desired,
         };
         
         const response = await strategyContract.deposit(
-          outputDetails.value.amount0Desired,
-          outputDetails.value.bnETHForTrove,
           troveParams,
           mintParams,
           1,
           [],
           {
-            value: outputDetails.value.bnETHAmount
+            value: outputDetails.value.bnETHAmount,
           },
         );
           
         addTransaction(response, {
-          summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.bnETHAmount, 18, 3))},.`
+          summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.bnETHAmount, 18, 3))}.`
         });
   
         if (callback) callback();

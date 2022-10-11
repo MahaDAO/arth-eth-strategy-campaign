@@ -40,11 +40,6 @@
         "internalType": "address",
         "name": "_priceFeed",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_troveManager",
-        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -238,16 +233,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "arthToMint",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ethToLock",
-        "type": "uint256"
-      },
-      {
         "components": [
           {
             "internalType": "uint256",
@@ -263,6 +248,16 @@
             "internalType": "address",
             "name": "lowerHint",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ethAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "arthAmount",
+            "type": "uint256"
           }
         ],
         "internalType": "struct ARTHETHTroveLP.TroveParams",
@@ -271,21 +266,6 @@
       },
       {
         "components": [
-          {
-            "internalType": "address",
-            "name": "token0",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "token1",
-            "type": "address"
-          },
-          {
-            "internalType": "uint24",
-            "name": "fee",
-            "type": "uint24"
-          },
           {
             "internalType": "int24",
             "name": "tickLower",
@@ -298,37 +278,27 @@
           },
           {
             "internalType": "uint256",
-            "name": "amount0Desired",
+            "name": "ethAmountMin",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "amount1Desired",
+            "name": "ethAmountDesired",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "amount0Min",
+            "name": "arthAmountMin",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "amount1Min",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "recipient",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
+            "name": "arthAmountDesired",
             "type": "uint256"
           }
         ],
-        "internalType": "struct INonfungiblePositionManager.MintParams",
-        "name": "mintParams",
+        "internalType": "struct ARTHETHTroveLP.UniswapPositionMintParams",
+        "name": "uniswapPoisitionMintParams",
         "type": "tuple"
       },
       {
@@ -770,19 +740,6 @@
   },
   {
     "inputs": [],
-    "name": "troveManager",
-    "outputs": [
-      {
-        "internalType": "contract ITroveManager",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "uniswapNFTManager",
     "outputs": [
       {
@@ -857,6 +814,16 @@
             "internalType": "address",
             "name": "lowerHint",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "ethAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "arthAmount",
+            "type": "uint256"
           }
         ],
         "internalType": "struct ARTHETHTroveLP.TroveParams",

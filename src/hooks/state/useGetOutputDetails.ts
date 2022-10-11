@@ -39,10 +39,12 @@ const useGetOutputDetails = (ethAmount: string) => {
   const slippage = useSlippage();
   
   const fetchBalance = useCallback(async () => {
+      const priceContract = core.getPriceFeed();
       const bnETHAmount = parseUnits(ethAmount || "0", 18);
+      
       if (bnETHAmount.lte(0)) {
         setBalance({
-          isLoading: true, 
+          isLoading: false, 
           value: {
             bnETHAmount: BigNumber.from(0),
             bnETHForTrove: BigNumber.from(0),
@@ -52,21 +54,12 @@ const useGetOutputDetails = (ethAmount: string) => {
             amount1Min: BigNumber.from(0),
           }
         });
-
         return;
       } else {
         const bnETHForTrove = bnETHAmount.mul(80).div(100);
-
-        const contract = core.getTroveManager();
-        const priceContract = core.getPriceFeed();
-        
         const price: BigNumber = await priceContract.callStatic.fetchPrice();
-
         const allowedDebt = bnETHForTrove.mul(price).mul(100).div(300).div(DECIMALS_18);
         let mintable: BigNumber = allowedDebt;
-        const gasCompensation = await contract.ARTH_GAS_COMPENSATION();
-        const borrowingFee = await contract.getBorrowingFee(mintable);
-        mintable = mintable.sub(borrowingFee).sub(gasCompensation);
 
         const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
         const amount0Min = !Number(slippage.value)
