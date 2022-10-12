@@ -44,7 +44,7 @@ const useGetUniV3PositionFees = (tokenId: BigNumber) => {
     
       const contract = new Contract(signedContract.address, ABI.UniV3PositionManager, core.provider);
       const owner = await contract.ownerOf(tokenId);
-  
+
       const bal = await contract.callStatic.collect(
         {
           tokenId: tokenId,
@@ -56,7 +56,7 @@ const useGetUniV3PositionFees = (tokenId: BigNumber) => {
           from: owner
         }
       );
-      setBalance({isLoading: false, value: { arthAmount: bal.amount0, ethAmount: bal.amoount1}});
+      setBalance({isLoading: false, value: { arthAmount: bal.amount0, ethAmount: bal.amount1}});
     }
   }, [core, tokenId]);
 

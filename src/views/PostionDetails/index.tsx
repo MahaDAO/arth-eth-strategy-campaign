@@ -12,13 +12,15 @@ import {BigNumber} from "ethers";
 import useWithdraw from "../../hooks/callbacks/useWithdraw";
 import useGetMahaRewards from "../../hooks/state/useGetMahaRewards";
 import useGetUniV3PositionFees from "../../hooks/state/useGetUniV3PositionFees";
+import useClaimRewards from "../../hooks/callbacks/useClaimRewards";
 
 const PositionDetails = () => {
   const InRange = true;
 
   const price = useCollateralPriceFeed()
-  const positionDetails = useGetPositionDetails();
+  const claimHandler = useClaimRewards();
   const mahaRewards = useGetMahaRewards();
+  const positionDetails = useGetPositionDetails();
   const feeRewards = useGetUniV3PositionFees(positionDetails.value.uniswapNftId);
 
   const withdrawHandler = useWithdraw(
@@ -34,7 +36,7 @@ const PositionDetails = () => {
     if (positionDetails.value.debt.lte(0)) return BigNumber.from(0)
     return price.value.mul(positionDetails.value.coll).div(positionDetails.value.debt);
   }, [price, positionDetails]);
-  
+
   return (
     <div>
       <PositionContainer className={'material-primary m-b-24'}>
@@ -47,7 +49,7 @@ const PositionDetails = () => {
             label={'NFT ID'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`#${Number(positionDetails.value?.uniswapNftId).toLocaleString('en-US', {maximumFractionDigits: 0})}`}
+            value={`#${Number(positionDetails.value.uniswapNftId).toLocaleString('en-US', {maximumFractionDigits: 0})}`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -75,7 +77,7 @@ const PositionDetails = () => {
             className={'m-b-4'}
           />
         </div>
-        <div>
+        {/* <div>
           <DataField
             label={'Contribution to TVL'}
             labelFontSize={16}
@@ -86,7 +88,7 @@ const PositionDetails = () => {
             valueFontWeight={600}
             className={'m-b-4'}
           />
-        </div>
+        </div> */}
         <div className={'m-t-32'}>
           <TextButton
             text={'Close Position'}
@@ -138,7 +140,12 @@ const PositionDetails = () => {
         <div className={'single-line-center-between m-b-24'}>
           <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'}/>
           <RewardsBtn>
-            <Button text={'Collect Rewards'} size={'sm'} disabled={true}/>
+            <Button 
+              onClick={claimHandler} 
+              text={'Collect Rewards'} 
+              size={'sm'}
+              disabled={mahaRewards.value.lte(0) && feeRewards.value.arthAmount.lte(0) && feeRewards.value.ethAmount.lte(0)}
+            />
           </RewardsBtn>
         </div>
         <div className={'m-b-12'}>
