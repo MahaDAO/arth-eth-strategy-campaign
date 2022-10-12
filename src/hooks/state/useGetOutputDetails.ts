@@ -11,12 +11,12 @@ import useCore from '../useCore';
 type State = {
   isLoading: boolean;
   value: {
-    bnETHAmount: BigNumber;
-    bnETHForTrove: BigNumber;
-    amount0Desired: BigNumber;
-    amount1Desired: BigNumber;
-    amount0Min: BigNumber;
-    amount1Min: BigNumber;
+    eth: BigNumber;
+    ethColl: BigNumber;
+    arthDesired: BigNumber;
+    ethDesired: BigNumber;
+    arthMin: BigNumber;
+    ethMin: BigNumber;
   };
 };
 
@@ -24,12 +24,12 @@ const useGetOutputDetails = (ethAmount: string) => {
   const [balance, setBalance] = useState<State>({
     isLoading: true, 
     value: {
-      bnETHAmount: BigNumber.from(0),
-      bnETHForTrove: BigNumber.from(0),
-      amount0Desired: BigNumber.from(0),
-      amount1Desired: BigNumber.from(0),
-      amount0Min: BigNumber.from(0),
-      amount1Min: BigNumber.from(0),
+      eth: BigNumber.from(0),
+      ethColl: BigNumber.from(0),
+      arthDesired: BigNumber.from(0),
+      ethDesired: BigNumber.from(0),
+      arthMin: BigNumber.from(0),
+      ethMin: BigNumber.from(0),
     }
   });
 
@@ -40,45 +40,44 @@ const useGetOutputDetails = (ethAmount: string) => {
   
   const fetchBalance = useCallback(async () => {
       const priceContract = core.getPriceFeed();
-      const bnETHAmount = parseUnits(ethAmount || "0", 18);
+      const eth = parseUnits(ethAmount || "0", 18);
       
-      if (bnETHAmount.lte(0)) {
+      if (eth.lte(0)) {
         setBalance({
           isLoading: false, 
           value: {
-            bnETHAmount: BigNumber.from(0),
-            bnETHForTrove: BigNumber.from(0),
-            amount0Desired: BigNumber.from(0),
-            amount1Desired: BigNumber.from(0),
-            amount0Min: BigNumber.from(0),
-            amount1Min: BigNumber.from(0),
+            eth: BigNumber.from(0),
+            ethColl: BigNumber.from(0),
+            arthDesired: BigNumber.from(0),
+            ethDesired: BigNumber.from(0),
+            arthMin: BigNumber.from(0),
+            ethMin: BigNumber.from(0),
           }
         });
         return;
       } else {
-        const bnETHForTrove = bnETHAmount.mul(80).div(100);
+        const ethColl = eth.mul(80).div(100);
         const price: BigNumber = await priceContract.callStatic.fetchPrice();
-        const allowedDebt = bnETHForTrove.mul(price).mul(100).div(300).div(DECIMALS_18);
-        let mintable: BigNumber = allowedDebt;
+        let  arthDesired = ethColl.mul(price).mul(100).div(300).div(DECIMALS_18);
 
         const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
-        const amount0Min = !Number(slippage.value)
-          ? mintable.mul(99).div(100)
-          : mintable.sub(mintable.mul(slippageRounded * 1e3).div(1e5));
-        const diff = bnETHAmount.sub(bnETHForTrove);
-        const amount1Min = !Number(slippage.value)
-          ? diff.mul(99).div(100)
-          : diff.sub(diff.mul(slippageRounded * 1e3).div(1e5));
+        const arthMin = !Number(slippage.value)
+          ? arthDesired.mul(99).div(100)
+          : arthDesired.sub(arthDesired.mul(slippageRounded * 1e3).div(1e5));
+        const ethForLp = eth.sub(ethColl);
+        const ethMin = !Number(slippage.value)
+          ? ethForLp.mul(99).div(100)
+          : ethForLp.sub(ethForLp.mul(slippageRounded * 1e3).div(1e5));
 
         setBalance({
           isLoading: false,
           value: {
-            bnETHForTrove,
-            bnETHAmount,
-            amount0Desired: mintable,
-            amount1Desired: bnETHAmount.sub(bnETHForTrove),
-            amount0Min: amount0Min,
-            amount1Min: amount1Min,
+            ethColl,
+            eth: eth,
+            arthDesired,
+            arthMin,
+            ethMin,
+            ethDesired: eth.sub(ethColl)
           }
         });
       }

@@ -18,10 +18,10 @@ const PositionDetails = () => {
   const positionDetails = useGetPositionDetails();
 
   const withdrawHandler = useWithdraw(
-    positionDetails.value?.uniswapNftId,
-    positionDetails.value?.liquidity,
-    positionDetails.value?.amount0,
-    positionDetails.value?.amount1
+    positionDetails.value.uniswapNftId,
+    positionDetails.value.liquidity,
+    positionDetails.value.ethInUniswap,
+    positionDetails.value.arthInUniswap
   );
   const onWithdrawClick = () => withdrawHandler();
 
@@ -50,7 +50,7 @@ const PositionDetails = () => {
             className={'m-b-2'}
           />
           <TextButton text={'View position'} fontSize={12} fontWeight={600}
-                      onClick={() => window.open('https://app.uniswap.org/#/pool/281910')} align={'right'}/>
+                      onClick={() => window.open(`https://app.uniswap.org/#/pool/${Number(positionDetails.value?.uniswapNftId)}`)} align={'right'}/>
         </div>
         <div className={'m-b-12'}>
           <DataField

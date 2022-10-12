@@ -74,7 +74,7 @@ const OpenPosition = () => {
                 setValue={setEthAmount}
                 maxTag={true}
                 onMaxClick={() => {
-                  setEthAmount(getDisplayBalance(balance.value));
+                  setEthAmount(getDisplayBalance(balance.value, 18));
                 }}
               />
               <CollateralDropDown selectedSymbol={'ETH'}/>
@@ -160,16 +160,16 @@ const OpenPosition = () => {
                   className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ETH &#127881;</span> out of which <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHForTrove, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.ethColl, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ETH</span> is being used as collateral to mint <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.amount0Desired, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.arthDesired, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ARTH</span> (at
                   a <b>300%</b> collateral
                   ratio), which
                   along with <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.bnETHAmount.sub(positionOutputDetails.value.bnETHForTrove), 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
+                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.eth.sub(positionOutputDetails.value.ethColl), 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
                   <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
                               className={'m-l-4 m-r-4'}/>ETH</span> is
                   used to provide liquidity to the <span className={'bold'}>ARTH/ETH 0.3%</span> pair.

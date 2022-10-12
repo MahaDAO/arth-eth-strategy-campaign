@@ -18,6 +18,14 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, amount0Min: BigNu
     try {
       const strategyContract = core.getARTHETHTroveLpStrategy();
 
+      const troveParams =  {
+        maxFee: DECIMALS_18,
+        upperHint: ZERO_ADDRESS,
+        lowerHint: ZERO_ADDRESS,
+        ethAmount: BigNumber.from(0),
+        arthAmount: BigNumber.from(0),
+      }
+
       const withdrawParams = {
         tokenId: tokenId,
         liquidity: liquidity,
@@ -27,9 +35,9 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, amount0Min: BigNu
       };
 
       const response = await strategyContract.withdraw(
-        DECIMALS_18,
-        ZERO_ADDRESS,
-        ZERO_ADDRESS,
+        troveParams,
+        amount0Min,
+        BigNumber.from(0),
         withdrawParams,
       );
 

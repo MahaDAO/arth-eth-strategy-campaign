@@ -25,17 +25,17 @@ const useDeposit = (ethAmount: string) => {
           maxFee: DECIMALS_18,
           upperHint: ZERO_ADDRESS,
           lowerHint: ZERO_ADDRESS,
-          ethAmount: outputDetails.value.bnETHForTrove,
-          arthAmount: outputDetails.value.amount0Desired,
+          ethAmount: outputDetails.value.ethColl,
+          arthAmount: outputDetails.value.arthDesired,
         }
         
         const mintParams = {
           tickLower: "-76020",
           tickUpper: "-39120",
           ethAmountMin: "0",
-          ethAmountDesired: outputDetails.value.bnETHAmount.sub(outputDetails.value.bnETHForTrove),
-          arthAmountMin: "0",
-          arthAmountDesired: outputDetails.value.amount0Desired,
+          ethAmountDesired: outputDetails.value.eth.sub(outputDetails.value.ethColl),
+          arthAmountMin: outputDetails.value.arthMin,
+          arthAmountDesired: outputDetails.value.arthDesired,
         };
         
         const response = await strategyContract.deposit(
@@ -44,12 +44,12 @@ const useDeposit = (ethAmount: string) => {
           1,
           [],
           {
-            value: outputDetails.value.bnETHAmount,
+            value: outputDetails.value.eth,
           },
         );
           
         addTransaction(response, {
-          summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.bnETHAmount, 18, 3))}.`
+          summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.eth, 18, 3))} ETH.`
         });
   
         if (callback) callback();
