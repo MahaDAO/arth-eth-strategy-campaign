@@ -61,14 +61,14 @@ const PositionDetails = () => {
             label={'Current Liquidity'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number((positionDetails.value.currentETHInUniswap)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
+            value={`${Number(positionDetails.value.currentETHInUniswap).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
           />
           <DataField
-            value={`${Number((positionDetails.value.currentARTHInUniswwap)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
+            value={`${Number(positionDetails.value.currentARTHInUniswwap).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}

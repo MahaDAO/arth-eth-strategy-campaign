@@ -7,6 +7,7 @@ import useCore from '../useCore';
 import { Pool, Position } from '@uniswap/v3-sdk';
 import { Token } from '@uniswap/sdk-core'
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
+import { DECIMALS_18 } from '../../utils/constants';
 
 type State = {
   isLoading: boolean;
@@ -126,8 +127,8 @@ const useGetPositionDetails = () => {
       const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, core.provider)
       const [immutables, state] = await Promise.all([getPoolImmutables(poolContract), getPoolState(poolContract)]);
 
-      const TokenA = new Token(core._activeNetwork, immutables.token0, 18)
-      const TokenB = new Token(core._activeNetwork, immutables.token1, 18)
+      const TokenA = new Token(core._activeNetwork, nftDetails.token0, 18)
+      const TokenB = new Token(core._activeNetwork, nftDetails.token1, 18)
       const pool = new Pool(
         TokenA,
         TokenB,
@@ -137,7 +138,7 @@ const useGetPositionDetails = () => {
         state.tick
       )
 
-      const position = new Position({ pool, liquidity: state.liquidity.toString(), tickLower: nftDetails.tickLower, tickUpper: nftDetails.tickUpper })
+      const position = new Position({ pool, liquidity: nftDetails.liquidity.toString(), tickLower: nftDetails.tickLower, tickUpper: nftDetails.tickUpper })
       
       const below = pool && pool.tickCurrent < nftDetails.tickLower;
       const above = pool && pool.tickCurrent >= nftDetails.tickUpper;
@@ -149,11 +150,11 @@ const useGetPositionDetails = () => {
           value: { 
             ...positionDetails,
             currentARTHInUniswwap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address 
-              ? position.amount0.toSignificant(4)
-              : position.amount1.toSignificant(4),
+              ? position.amount0.toExact()
+              : position.amount1.toExact(),
             currentETHInUniswap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address 
-            ? position.amount1.toSignificant(4)
-            : position.amount0.toSignificant(4),
+            ? position.amount1.toExact()
+            : position.amount0.toExact(),
             inRange: inRange
           }
         }
