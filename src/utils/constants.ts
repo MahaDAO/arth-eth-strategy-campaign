@@ -10,7 +10,8 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export const MAX_UINT128 = BigNumber.from(2).pow(128).sub(1)
 export const DAY = 86400;
 export const DAY_IN_MS = 86400000;
-
+export const MAX_UINT_256 =
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 export const YEAR = 365 * 86400;
 export const YEAR_IN_MS = YEAR * 1000;
 

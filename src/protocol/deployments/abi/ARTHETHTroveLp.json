@@ -236,6 +236,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "collectRewards",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "components": [
@@ -849,16 +856,6 @@
         "type": "tuple"
       },
       {
-        "internalType": "uint256",
-        "name": "amountETHswapMaximum",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ethOutMin",
-        "type": "uint256"
-      },
-      {
         "components": [
           {
             "internalType": "uint256",
@@ -872,21 +869,16 @@
           },
           {
             "internalType": "uint256",
-            "name": "amount0Min",
+            "name": "arthOutMin",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "amount1Min",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "deadline",
+            "name": "ethOutMin",
             "type": "uint256"
           }
         ],
-        "internalType": "struct INonfungiblePositionManager.DecreaseLiquidityParams",
+        "internalType": "struct ARTHETHTroveLP.UniswapPositionDecreaseLiquidity",
         "name": "decreaseLiquidityParams",
         "type": "tuple"
       }

@@ -6,6 +6,7 @@ import SortedTroves from './abi/SortedTroves.json';
 import TroveManager from './abi/TroveManager.json';
 import ARTHETHTroveLp from './abi/ARTHETHTroveLp.json';
 import UniV3PositionManager from "./abi/UniV3PositionManager.json";
+import HintHelpers from "./abi/HintHelpers.json";
 
 const abis: IABIS = {
   IERC20,
@@ -15,6 +16,7 @@ const abis: IABIS = {
   TroveManager,
   ARTHETHTroveLp,
   UniV3PositionManager,
+  HintHelpers
 };
 
 export default abis;

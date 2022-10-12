@@ -48,7 +48,7 @@ const PoolInfo = () => {
         <DataField
           label={'Collateral Ratio'}
           labelFontWeight={600}
-          value={'220%'}
+          value={'300%'}
           valueFontColor={'white'}
           valueFontWeight={600}
         />

@@ -34,7 +34,7 @@ const PositionDetails = () => {
     if (positionDetails.value.debt.lte(0)) return BigNumber.from(0)
     return price.value.mul(positionDetails.value.coll).div(positionDetails.value.debt);
   }, [price, positionDetails]);
-
+  
   return (
     <div>
       <PositionContainer className={'material-primary m-b-24'}>
@@ -61,14 +61,14 @@ const PositionDetails = () => {
             label={'Liquidity'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number('2').toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.ethInUniswap, 18, 4)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
           />
           <DataField
-            value={`${Number('1200').toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.arthInUniswap, 18, 4)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -114,7 +114,7 @@ const PositionDetails = () => {
             label={'Total Debt'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.debt, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.debt, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}

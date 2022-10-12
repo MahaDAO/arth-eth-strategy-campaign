@@ -8,11 +8,13 @@ import formatErrorMessage from '../../utils/formatErrorMessage';
 import { DECIMALS_18, ZERO_ADDRESS } from '../../utils/constants';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import { BigNumber } from 'ethers';
+import { useSlippage } from '../../state/slippage/hooks';
 
-const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, amount0Min: BigNumber, amount1Min: BigNumber) => {
+const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNumber, arthInUniV3: BigNumber) => {
   const core = useCore();
   const addPopup = useAddPopup();
   const addTransaction = useTransactionAdder();
+  const slippage = useSlippage();
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     try {
@@ -26,18 +28,23 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, amount0Min: BigNu
         arthAmount: BigNumber.from(0),
       }
 
+      const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
+      const arthMin = !Number(slippage.value)
+        ? arthInUniV3.mul(99).div(100)
+        : arthInUniV3.sub(arthInUniV3.mul(slippageRounded * 1e3).div(1e5));
+      const ethMin = !Number(slippage.value)
+        ? ethInUniV3.mul(99).div(100)
+        : ethInUniV3.sub(ethInUniV3.mul(slippageRounded * 1e3).div(1e5));
+
       const withdrawParams = {
         tokenId: tokenId,
         liquidity: liquidity,
-        amount0Min: amount0Min,
-        amount1Min: amount1Min,
-        deadline: Math.floor(Date.now() / 1000) + 10 * 60
+        arthOutMin: arthMin,
+        ethOutMin: ethMin
       };
 
       const response = await strategyContract.withdraw(
         troveParams,
-        amount0Min,
-        BigNumber.from(0),
         withdrawParams,
       );
 
@@ -54,7 +61,7 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, amount0Min: BigNu
         },
       });
     }
-  }, [core, addPopup, tokenId, amount0Min, liquidity, amount1Min, addTransaction]);
+  }, [core, addPopup, tokenId, ethInUniV3, liquidity, slippage, arthInUniV3, addTransaction]);
 
   return action;
 }

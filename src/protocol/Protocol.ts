@@ -131,6 +131,10 @@ export class Protocol {
     return this._contracts[this._activeNetwork][`ETHSortedTroves`];
   }
 
+  getHintHelpers() {
+    return this._contracts[this._activeNetwork][`ETHHintHelpers`];
+  }
+
   getARTHETHTroveLpStrategy() {
     return this._contracts[this._activeNetwork][`ARTHETHTroveLpStrategy`];
   }

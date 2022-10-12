@@ -5,9 +5,10 @@ import {useTransactionAdder} from '../../state/transactions/hooks';
 
 import useCore from '../useCore';
 import formatErrorMessage from '../../utils/formatErrorMessage';
-import { DECIMALS_18, ZERO_ADDRESS } from '../../utils/constants';
+import { DECIMALS_18 } from '../../utils/constants';
 import { getDisplayBalance } from '../../utils/formatBalance';
 import useGetOutputDetails from '../state/useGetOutputDetails';
+import { findHintsForNominalCollateralRatio } from '../../utils';
 
 const useDeposit = (ethAmount: string) => {
   const core = useCore();
@@ -21,10 +22,21 @@ const useDeposit = (ethAmount: string) => {
       try {
         const strategyContract = core.getARTHETHTroveLpStrategy();
 
+        const [
+          upperHint,
+          lowerHint,
+        ]: string[] = await findHintsForNominalCollateralRatio(
+          outputDetails.value.ethColl.mul(DECIMALS_18.mul(100)).div(outputDetails.value.arthDesired),
+          core.getSortedTroves(),
+          core.getHintHelpers(),
+          core.getTroveManager(),
+          core.myAccount,
+        );
+
         const troveParams =  {
           maxFee: DECIMALS_18,
-          upperHint: ZERO_ADDRESS,
-          lowerHint: ZERO_ADDRESS,
+          upperHint: upperHint,
+          lowerHint: lowerHint,
           ethAmount: outputDetails.value.ethColl,
           arthAmount: outputDetails.value.arthDesired,
         }
@@ -32,9 +44,9 @@ const useDeposit = (ethAmount: string) => {
         const mintParams = {
           tickLower: "-76020",
           tickUpper: "-39120",
-          ethAmountMin: "0",
+          ethAmountMin: 1, // outputDetails.value.ethMin,
           ethAmountDesired: outputDetails.value.eth.sub(outputDetails.value.ethColl),
-          arthAmountMin: outputDetails.value.arthMin,
+          arthAmountMin: 1, // outputDetails.value.arthMin,
           arthAmountDesired: outputDetails.value.arthDesired,
         };
         
