@@ -134,4 +134,8 @@ export class Protocol {
   getARTHETHTroveLpStrategy() {
     return this._contracts[this._activeNetwork][`ARTHETHTroveLpStrategy`];
   }
+
+  getUniV3PositionManager() {
+    return this._contracts[this._activeNetwork]['UniV3PositionManager'];
+  }
 }

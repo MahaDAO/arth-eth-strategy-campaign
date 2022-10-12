@@ -10,12 +10,16 @@ import {getDisplayBalance} from "../../utils/formatBalance";
 import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
 import {BigNumber} from "ethers";
 import useWithdraw from "../../hooks/callbacks/useWithdraw";
+import useGetMahaRewards from "../../hooks/state/useGetMahaRewards";
+import useGetUniV3PositionFees from "../../hooks/state/useGetUniV3PositionFees";
 
 const PositionDetails = () => {
   const InRange = true;
 
   const price = useCollateralPriceFeed()
   const positionDetails = useGetPositionDetails();
+  const mahaRewards = useGetMahaRewards();
+  const feeRewards = useGetUniV3PositionFees(positionDetails.value.uniswapNftId);
 
   const withdrawHandler = useWithdraw(
     positionDetails.value.uniswapNftId,
@@ -142,7 +146,7 @@ const PositionDetails = () => {
             label={'MAHA Rewards'}
             labelFontWeight={600}
             labelFontColor={'white'}
-            value={'2,000 MAHA'}
+            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4})}
             valueFontSize={16}
             valueFontWeight={600}
             valueFontColor={'white'}
@@ -161,7 +165,7 @@ const PositionDetails = () => {
               label={'Trading Fee Rewards'}
               labelFontWeight={600}
               labelFontColor={'white'}
-              value={'20 ARTH'}
+              value={Number(getDisplayBalance(feeRewards.value.arthAmount)).toLocaleString('en-US', { maximumFractionDigits: 4}) + " ARTH"}
               valueFontSize={16}
               valueFontWeight={600}
               valueFontColor={'white'}
@@ -174,7 +178,7 @@ const PositionDetails = () => {
               label={''}
               labelFontWeight={600}
               labelFontColor={'white'}
-              value={'10 ETH'}
+              value={Number(getDisplayBalance(feeRewards.value.ethAmount)).toLocaleString('en-US', { maximumFractionDigits: 4}) + " ETH"}
               valueFontSize={16}
               valueFontWeight={600}
               valueFontColor={'white'}

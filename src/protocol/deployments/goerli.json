@@ -26,5 +26,9 @@
   "ARTHETHTroveLpStrategy": {
     "abi": "ARTHETHTroveLp",
     "address": "0xAddACb2b0f217C56eD2576087bB8AF66F4084d14"
+  },
+  "UniV3PositionManager": {
+    "abi": "UniV3PositionManager",
+    "address": "0xc36442b4a4522e871399cd717abdd847ab11fe88"
   }
 }

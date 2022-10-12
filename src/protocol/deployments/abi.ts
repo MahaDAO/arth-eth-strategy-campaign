@@ -5,6 +5,7 @@ import PriceFeed from './abi/PriceFeed.json';
 import SortedTroves from './abi/SortedTroves.json';
 import TroveManager from './abi/TroveManager.json';
 import ARTHETHTroveLp from './abi/ARTHETHTroveLp.json';
+import UniV3PositionManager from "./abi/UniV3PositionManager.json";
 
 const abis: IABIS = {
   IERC20,
@@ -13,6 +14,7 @@ const abis: IABIS = {
   SortedTroves,
   TroveManager,
   ARTHETHTroveLp,
+  UniV3PositionManager,
 };
 
 export default abis;
