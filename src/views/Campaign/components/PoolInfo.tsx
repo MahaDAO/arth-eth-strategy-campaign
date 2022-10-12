@@ -3,7 +3,12 @@ import TextWrapper from "../../../components/TextWrapper";
 import DataField from "../../../components/DataField";
 import theme from "../../../theme";
 
+import useGetCollateralPrice from '../../../hooks/state/TroveManager/useCollateralPriceFeed';
+import { getDisplayBalance } from "../../../utils/formatBalance";
+
 const PoolInfo = () => {
+  const price = useGetCollateralPrice();
+
   return (
     <div className={'material-primary m-b-24'}>
       <TextWrapper
@@ -33,7 +38,7 @@ const PoolInfo = () => {
         <DataField
           label={'ETH Price'}
           labelFontWeight={600}
-          value={'669 ARTH'}
+          value={Number(getDisplayBalance(price.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 3}) + " ARTH"}
           valueFontColor={'white'}
           valueFontWeight={600}
         />

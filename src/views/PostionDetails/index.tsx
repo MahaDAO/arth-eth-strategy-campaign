@@ -15,8 +15,6 @@ import useGetUniV3PositionFees from "../../hooks/state/useGetUniV3PositionFees";
 import useClaimRewards from "../../hooks/callbacks/useClaimRewards";
 
 const PositionDetails = () => {
-  const InRange = true;
-
   const price = useCollateralPriceFeed()
   const claimHandler = useClaimRewards();
   const mahaRewards = useGetMahaRewards();
@@ -41,8 +39,8 @@ const PositionDetails = () => {
     <div>
       <PositionContainer className={'material-primary m-b-24'}>
         <InRangeTag>
-          <TagColor color={InRange ? theme.color.green[300] : theme.color.red[300]}/>
-          <TextWrapper text={InRange ? 'In Range' : 'Out of Range'}/>
+          <TagColor color={positionDetails.value.inRange ? theme.color.green[300] : theme.color.red[300]}/>
+          <TextWrapper text={positionDetails.value.inRange ? 'In Range' : 'Out of Range'}/>
         </InRangeTag>
         <div className={'m-b-12'}>
           <DataField
@@ -60,17 +58,36 @@ const PositionDetails = () => {
         </div>
         <div className={'m-b-12'}>
           <DataField
-            label={'Liquidity'}
+            label={'Current Liquidity'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.ethInUniswap, 18, 4)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
+            value={`${Number((positionDetails.value.currentETHInUniswap)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
           />
           <DataField
-            value={`${Number(getDisplayBalance(positionDetails.value.arthInUniswap, 18, 4)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
+            value={`${Number((positionDetails.value.currentARTHInUniswwap)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
+            valueFontColor={'white'}
+            valueFontSize={16}
+            valueFontWeight={600}
+            className={'m-b-4'}
+          />
+        </div>
+        <div className={'m-b-12'}>
+          <DataField
+            label={'Starting Liquidity'}
+            labelFontSize={16}
+            labelFontColor={'white'}
+            value={`${Number(getDisplayBalance(positionDetails.value.ethInUniswap, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
+            valueFontColor={'white'}
+            valueFontSize={16}
+            valueFontWeight={600}
+            className={'m-b-4'}
+          />
+          <DataField
+            value={`${Number(getDisplayBalance(positionDetails.value.arthInUniswap, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
