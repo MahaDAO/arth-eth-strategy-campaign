@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import {useCallback} from 'react';
-import { Pool } from '@uniswap/v3-sdk'
+import { nearestUsableTick, Pool } from '@uniswap/v3-sdk'
 import { Token } from '@uniswap/sdk-core'
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json'
 
@@ -50,7 +50,7 @@ const useDeposit = (ethAmount: string) => {
           arthAmount: outputDetails.value.arthDesired,
         }
         
-        const [, token0, token1, fee, , ] = await Promise.all([
+        const [, token0, token1, fee, tickSpacing, ] = await Promise.all([
           poolContract.factory(),
           poolContract.token0(),
           poolContract.token1(),
@@ -59,63 +59,58 @@ const useDeposit = (ethAmount: string) => {
           poolContract.maxLiquidityPerTick(),
         ]);
         const [liquidity, slot] = await Promise.all([poolContract.liquidity(), poolContract.slot0()]);
-        const TokenA = new Token(1, token0, 18);
-        const TokenB = new Token(1, token1, 18);
-        const pool = new Pool(
-          TokenA,
-          TokenB,
-          fee,
-          slot.sqrtPriceX96.toString(),
-          liquidity.toString(),
-          slot.tick
-        );
+        // const TokenA = new Token(1, token0, 18);
+        // const TokenB = new Token(1, token1, 18);
+        // const pool = new Pool(
+        //   TokenA,
+        //   TokenB,
+        //   fee,
+        //   slot.sqrtPriceX96.toString(),
+        //   liquidity.toString(),
+        //   slot.tick
+        // );
         
-        const x: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
-          ? Number(ethers.utils.formatUnits(outputDetails.value.arthMin, 18))
-          : Number(ethers.utils.formatUnits(outputDetails.value.ethMin, 18))
+        // const x: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
+        //   ? Number(ethers.utils.formatUnits(outputDetails.value.arthMin, 18))
+        //   : Number(ethers.utils.formatUnits(outputDetails.value.ethMin, 18))
+        // const y: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
+        //   ? Number(ethers.utils.formatUnits(outputDetails.value.ethMin, 18))
+        //   : Number(ethers.utils.formatUnits(outputDetails.value.arthMin, 18))
+        // const currentPrice: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
+        //   ? Number(pool.token0Price.toSignificant(6))
+        //   : Number(pool.token1Price.toSignificant(6))
+        // const token1V2: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
+        //   ? Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['ARTH'].balanceOf(poolAddress), 18))
+        //   : Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['WETH'].balanceOf(poolAddress), 18))
+        // const token2V2: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
+        // ? Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['WETH'].balanceOf(poolAddress), 18))
+        // : Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['ARTH'].balanceOf(poolAddress), 18))
+        // const minMaxPrice = await calculateMinAndMaxPrice(
+        //   y,
+        //   x,
+        //   currentPrice,
+        //   token1V2,
+        //   token2V2,
+        //   2
+        // );
+        // const tickLower = getTickFromPrice(
+        //   minMaxPrice.priceMin,
+        //   pool,
+        //   token0 === core._tokens[core._activeNetwork]['ARTH'].address ? 1 : 0
+        // );
+        // const tickUpper = getTickFromPrice(
+        //   minMaxPrice.priceMax,
+        //   pool,
+        //   token0 === core._tokens[core._activeNetwork]['ARTH'].address ? 0 : 1
+        // );
 
-        const y: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
-          ? Number(ethers.utils.formatUnits(outputDetails.value.ethMin, 18))
-          : Number(ethers.utils.formatUnits(outputDetails.value.arthMin, 18))
-
-        const currentPrice: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
-          ? Number(pool.token0Price.toSignificant(6))
-          : Number(pool.token1Price.toSignificant(6))
-
-        const token1V2: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
-          ? Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['ARTH'].balanceOf(poolAddress), 18))
-          : Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['WETH'].balanceOf(poolAddress), 18))
+        // Multiplier is 2.
+        const tickLower = nearestUsableTick(slot.tick, tickSpacing) - tickSpacing * 2
+        const tickUpper = nearestUsableTick(slot.tick, tickSpacing) + tickSpacing * 2
         
-        const token2V2: number = token0 === core._tokens[core._activeNetwork]['ARTH'].address
-        ? Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['WETH'].balanceOf(poolAddress), 18))
-        : Number(ethers.utils.formatUnits(await core._tokens[core._activeNetwork]['ARTH'].balanceOf(poolAddress), 18))
-
-        const minMaxPrice = await calculateMinAndMaxPrice(
-          x,
-          y,
-          currentPrice,
-          token1V2,
-          token2V2,
-          2
-        );
-
-        const tickLower = getTickFromPrice(
-          minMaxPrice.priceMin,
-          pool,
-          token0 === core._tokens[core._activeNetwork]['ARTH'].address ? 1 : 0
-        );
-
-        const tickUpper = getTickFromPrice(
-          minMaxPrice.priceMax,
-          pool,
-          token0 === core._tokens[core._activeNetwork]['ARTH'].address ? 0 : 1
-        );
-        
-        console.log("Prices", minMaxPrice, {tickLower, tickUpper});
-
         const mintParams = {
-          tickLower: tickLower.toString(),
-          tickUpper: tickUpper.toString(),
+          tickLower: tickLower,
+          tickUpper: tickUpper,
           ethAmountMin: outputDetails.value.ethMin,
           ethAmountDesired: outputDetails.value.eth.sub(outputDetails.value.ethColl),
           arthAmountMin: outputDetails.value.arthMin,

@@ -7,6 +7,7 @@ import { useSlippage } from '../../state/slippage/hooks';
 import {useBlockNumber} from '../../state/application/hooks';
 import { DECIMALS_18 } from '../../utils/constants';
 import useCore from '../useCore';
+import useGetBorrowingFeeRateWithDecay from './TroveManager/useGetBorrowingFeeRateWithDecay';
 
 type State = {
   isLoading: boolean;
@@ -37,6 +38,7 @@ const useGetOutputDetails = (ethAmount: string) => {
   const {account} = useWallet();
   const blockNumber = useBlockNumber();
   const slippage = useSlippage();
+  const borrowingFeeRate = useGetBorrowingFeeRateWithDecay();
   
   const fetchBalance = useCallback(async () => {
       const priceContract = core.getPriceFeed();
@@ -59,7 +61,7 @@ const useGetOutputDetails = (ethAmount: string) => {
         const ethColl = eth.mul(80).div(100);
         const price: BigNumber = await priceContract.callStatic.fetchPrice();
         let  arthDesired = ethColl.mul(price).mul(100).div(300).div(DECIMALS_18);
-
+        arthDesired = arthDesired.sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18)).sub(DECIMALS_18.mul(50));
         const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
         const arthMin = !Number(slippage.value)
           ? arthDesired.mul(99).div(100)
@@ -81,7 +83,7 @@ const useGetOutputDetails = (ethAmount: string) => {
           }
         });
       }
-  }, [core, ethAmount,slippage]);
+  }, [core, ethAmount,slippage, borrowingFeeRate]);
 
   useEffect(() => {
     if (core.isUnlocked) {
