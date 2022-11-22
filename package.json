@@ -20,6 +20,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/redux-logger": "^3.0.9",
+    "@uniswap/sdk-core": "^3.1.0",
     "@uniswap/v3-sdk": "^3.9.0",
     "bignumber.js": "^9.0.1",
     "copy-to-clipboard": "^3.3.1",

@@ -19,6 +19,7 @@ const configurations: { [env: string]: Configuration } = {
       "https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/",
     supportedTokens: ["MAHA", "ARTH", "WETH"],
     decimalOverrides: {},
+    poolAddress: "0xE7cDba5e9b0D5E044AaB795cd3D659aAc8dB869B"
   },
 };
 

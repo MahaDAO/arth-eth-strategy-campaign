@@ -62,6 +62,7 @@ export type Configuration = {
   networkSetupDocLink?: string;
   supportedTokens: string[];
   decimalOverrides: { [name: string]: number };
+  poolAddress: string;
 };
 
 export type configKeys = keyof Configuration;

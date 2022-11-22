@@ -33,7 +33,7 @@
       },
       {
         "internalType": "address",
-        "name": "_uniswapV3SwapRouter",
+        "name": "_arthRouter",
         "type": "address"
       },
       {
@@ -42,9 +42,9 @@
         "type": "address"
       },
       {
-        "internalType": "bool",
-        "name": "_isARTHToken0",
-        "type": "bool"
+        "internalType": "address",
+        "name": "_pool",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -191,6 +191,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "arthRouter",
+    "outputs": [
+      {
+        "internalType": "contract IARTHETHRouter",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -312,16 +325,6 @@
         "internalType": "struct ARTHETHTroveLP.UniswapPositionMintParams",
         "name": "uniswapPoisitionMintParams",
         "type": "tuple"
-      },
-      {
-        "internalType": "uint256",
-        "name": "rootId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bytes32[]",
-        "name": "proof",
-        "type": "bytes32[]"
       }
     ],
     "name": "deposit",
@@ -380,6 +383,52 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "shouldSwapARTHForETH",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
+      }
+    ],
+    "name": "flush",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPoolData",
+    "outputs": [
+      {
+        "internalType": "uint160",
+        "name": "sqrtPriceX96",
+        "type": "uint160"
+      },
+      {
+        "internalType": "int24",
+        "name": "tick",
+        "type": "int24"
+      },
+      {
+        "internalType": "uint160",
+        "name": "liquidity",
+        "type": "uint160"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "getReward",
     "outputs": [],
@@ -394,6 +443,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTickSpacing",
+    "outputs": [
+      {
+        "internalType": "int24",
+        "name": "",
+        "type": "int24"
       }
     ],
     "stateMutability": "view",
@@ -436,6 +498,19 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastGoodPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -566,6 +641,19 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pool",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV3Pool",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -738,6 +826,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "setRouter",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "totalSupply",
     "outputs": [
@@ -769,19 +870,6 @@
     "outputs": [
       {
         "internalType": "contract INonfungiblePositionManager",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "uniswapV3SwapRouter",
-    "outputs": [
-      {
-        "internalType": "contract IUniswapV3SwapRouter",
         "name": "",
         "type": "address"
       }
@@ -839,21 +927,21 @@
             "internalType": "address",
             "name": "lowerHint",
             "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "ethAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "arthAmount",
-            "type": "uint256"
           }
         ],
-        "internalType": "struct ARTHETHTroveLP.TroveParams",
+        "internalType": "struct ARTHETHTroveLP.WithdrawTroveParams",
         "name": "troveParams",
         "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountETHswapMaximum",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "ethOutMin",
+        "type": "uint256"
       },
       {
         "components": [

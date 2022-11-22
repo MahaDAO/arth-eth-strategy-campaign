@@ -16,10 +16,11 @@ const configurations: { [env: string]: Configuration } = {
     blockchainTokenDecimals: 18,
     networkSetupDocLink:
       "https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/",
-    supportedTokens: ["MAHA"],
+    supportedTokens: ["MAHA", "ARTH", "WETH"],
     decimalOverrides: {
       USDC: 6,
     },
+    poolAddress: "0xE7cDba5e9b0D5E044AaB795cd3D659aAc8dB869B"
   },
 };
 

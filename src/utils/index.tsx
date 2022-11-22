@@ -5,8 +5,26 @@ import assert from 'assert';
 
 import {MAX_UINT_256} from './constants';
 
+export const round = (number: number, decimalPlaces: number) => {
+  const factorOfTen = Math.pow(10, decimalPlaces)
+  return Math.round(number * factorOfTen) / factorOfTen
+}
+
+export const logWithBase = (y: number, x: number) => {
+  return Math.log(y) / Math.log(x);
+}
+
 export function escapeRegExp(string: string): string {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+export const getTickFromPrice = (val: any, pool: any, baseSelected: any) => {
+  const decimal0 = baseSelected && baseSelected === 1 ? parseInt(pool.token1.decimals) : parseInt(pool.token0.decimals);
+  const decimal1 = baseSelected && baseSelected === 1 ? parseInt(pool.token0.decimals) : parseInt(pool.token1.decimals);
+
+  const valToLog = parseFloat(val) * Math.pow(10, (decimal0 - decimal1));
+  const tickIDXRaw = logWithBase(valToLog,  1.0001);
+  return round(tickIDXRaw, 0) * -1;
 }
 
 export const truncateMiddle = function (

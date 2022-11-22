@@ -114,7 +114,7 @@ export class Protocol {
     this._activeNetwork = chainId;
   }
 
-  config(id: configKeys, chainId: number) {
+  config(id: configKeys, chainId: number): any {
     return this._config[chainId][id];
   }
 

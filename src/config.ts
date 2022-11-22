@@ -6,8 +6,8 @@ import {isProduction} from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
   // ...ethereum,
-  // ...local,
-  ...goerli,
+  ...local,
+  // ...goerli,
 };
 
 if (isProduction) {
