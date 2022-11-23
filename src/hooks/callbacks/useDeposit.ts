@@ -1,4 +1,4 @@
-import { ethers } from 'ethers';
+import { BigNumber, Contract, ethers } from 'ethers';
 import {useCallback} from 'react';
 import { nearestUsableTick, Pool } from '@uniswap/v3-sdk'
 import { Token } from '@uniswap/sdk-core'
@@ -14,10 +14,13 @@ import { getDisplayBalance } from '../../utils/formatBalance';
 import useGetOutputDetails from '../state/useGetOutputDetails';
 import { findHintsForNominalCollateralRatio, getTickFromPrice } from '../../utils';
 import { calculateMinAndMaxPrice } from '../../utils/calculateMinAndMaxPrice';
+import { useWallet } from 'use-wallet';
+import ABIS from '../../protocol/deployments/abi';
 
 const useDeposit = (ethAmount: string) => {
   const core = useCore();
   const addPopup = useAddPopup();
+  const { account } = useWallet();
   const addTransaction = useTransactionAdder();
   const outputDetails = useGetOutputDetails(ethAmount);
 
@@ -26,7 +29,7 @@ const useDeposit = (ethAmount: string) => {
     const poolAddress: string = core.config('poolAddress', core._activeNetwork);
     const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider)
 
-    if (outputDetails.isLoading) return;
+    if (outputDetails.isLoading || !account) return;
     else {
       try {
         const strategyContract = core.getARTHETHTroveLpStrategy();
@@ -43,22 +46,22 @@ const useDeposit = (ethAmount: string) => {
         );
 
         const troveParams =  {
-          maxFee: DECIMALS_18,
+          maxFee: DECIMALS_18.toHexString(),
           upperHint: upperHint,
           lowerHint: lowerHint,
-          ethAmount: outputDetails.value.ethColl,
-          arthAmount: outputDetails.value.arthDesired,
+          ethAmount: outputDetails.value.ethColl.toHexString(),
+          arthAmount: outputDetails.value.arthDesired.toHexString(),
         }
         
-        const [, token0, token1, fee, tickSpacing, ] = await Promise.all([
-          poolContract.factory(),
-          poolContract.token0(),
-          poolContract.token1(),
-          poolContract.fee(),
+        const [/*, token0, token1, fee,*/ tickSpacing, /* */] = await Promise.all([
+          // poolContract.factory(),
+          // poolContract.token0(),
+          // poolContract.token1(),
+          // poolContract.fee(),
           poolContract.tickSpacing(),
-          poolContract.maxLiquidityPerTick(),
+          // poolContract.maxLiquidityPerTick(),
         ]);
-        const [liquidity, slot] = await Promise.all([poolContract.liquidity(), poolContract.slot0()]);
+        const [/*liquidity,*/ slot] = await Promise.all([/*poolContract.liquidity(),*/ poolContract.slot0(),]);
         // const TokenA = new Token(1, token0, 18);
         // const TokenB = new Token(1, token1, 18);
         // const pool = new Pool(
@@ -105,26 +108,29 @@ const useDeposit = (ethAmount: string) => {
         // );
 
         // Multiplier is 2.
-        const tickLower = nearestUsableTick(slot.tick, tickSpacing) - tickSpacing * 1
-        const tickUpper = nearestUsableTick(slot.tick, tickSpacing) + tickSpacing * 1
-
+        const tickLower = nearestUsableTick(slot.tick, tickSpacing) - tickSpacing * 2
+        const tickUpper = nearestUsableTick(slot.tick, tickSpacing) + tickSpacing * 2
         const mintParams = {
           tickLower: tickLower,
           tickUpper: tickUpper,
-          ethAmountMin: 1, //outputDetails.value.ethMin,
-          ethAmountDesired: outputDetails.value.ethDesired,
-          arthAmountMin: outputDetails.value.arthMin,
-          arthAmountDesired: outputDetails.value.arthDesired,
+          ethAmountMin: 0, // outputDetails.value.ethMin.toHexString(),
+          ethAmountDesired: outputDetails.value.ethDesired.toHexString(),
+          arthAmountMin: 0, // outputDetails.value.arthMin.toHexString(),
+          arthAmountDesired: outputDetails.value.arthDesired.toHexString()
         };
         
-        const response = await strategyContract.deposit(
-          troveParams,
-          mintParams,
-          // TODO: add whitelisting logic here.
-          {
-            value: outputDetails.value.eth,
-          },
-        );
+        const depositData = strategyContract.interface.encodeFunctionData('deposit', [troveParams, mintParams]);
+        const flushData = strategyContract.interface.encodeFunctionData('flush', [account, false, 0]);
+        const multicall = strategyContract.interface.encodeFunctionData('multicall', [[depositData, flushData]]);
+
+        const txn: any = {
+          to: strategyContract.address,
+          data: multicall,
+          value: outputDetails.value.eth.toHexString(),
+        }
+
+        const signer = await provider.getSigner();
+        const response = await signer.sendTransaction(txn);
           
         addTransaction(response, {
           summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.eth, 18, 3))} ETH.`
@@ -132,6 +138,7 @@ const useDeposit = (ethAmount: string) => {
   
         if (callback) callback();
       } catch (e: any) {
+        console.log("ERROR", e);
         addPopup({
           error: {
             message: formatErrorMessage(e?.data?.message || e?.message),
@@ -140,7 +147,7 @@ const useDeposit = (ethAmount: string) => {
         });
       }
     }
-  }, [core, addPopup, outputDetails, addTransaction]);
+  }, [core, addPopup, outputDetails, account, addTransaction]);
 
   return action;
 }

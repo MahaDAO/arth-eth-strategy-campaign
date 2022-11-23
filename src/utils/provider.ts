@@ -2,7 +2,7 @@ import {ethers} from 'ethers';
 
 import {Configuration} from './interface';
 
-export function getDefaultProvider(config: Configuration): ethers.providers.BaseProvider {
+export function getDefaultProvider(config: Configuration): ethers.providers.JsonRpcProvider {
   // @ts-ignore
   const _window: { ethereum?: any, web3?: any } = window;
 

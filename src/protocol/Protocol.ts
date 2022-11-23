@@ -28,7 +28,7 @@ export class Protocol {
   };
 
   // @ts-ignore
-  provider: ethers.providers.BaseProvider;
+  provider: ethers.providers.JsonRpcProvider;
 
   _tokens: {
     [chainId: number]: { [name: string]: ERC20 };
