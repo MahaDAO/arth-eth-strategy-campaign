@@ -105,14 +105,14 @@ const useDeposit = (ethAmount: string) => {
         // );
 
         // Multiplier is 2.
-        const tickLower = nearestUsableTick(slot.tick, tickSpacing) - tickSpacing * 2
-        const tickUpper = nearestUsableTick(slot.tick, tickSpacing) + tickSpacing * 2
-        
+        const tickLower = nearestUsableTick(slot.tick, tickSpacing) - tickSpacing * 1
+        const tickUpper = nearestUsableTick(slot.tick, tickSpacing) + tickSpacing * 1
+
         const mintParams = {
           tickLower: tickLower,
           tickUpper: tickUpper,
-          ethAmountMin: outputDetails.value.ethMin,
-          ethAmountDesired: outputDetails.value.eth.sub(outputDetails.value.ethColl),
+          ethAmountMin: 1, //outputDetails.value.ethMin,
+          ethAmountDesired: outputDetails.value.ethDesired,
           arthAmountMin: outputDetails.value.arthMin,
           arthAmountDesired: outputDetails.value.arthDesired,
         };
