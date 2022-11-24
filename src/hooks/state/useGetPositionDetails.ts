@@ -123,7 +123,7 @@ const useGetPositionDetails = () => {
       const nftManagerContract  = core.getUniV3PositionManager();
       const nftDetails = await nftManagerContract.positions(positionDetails.uniswapNftId);
 
-      const poolAddress = '0x0ed096027cA87500a4267E5Fe3D3A5D1Dc4fD755';
+      const poolAddress = core.config("poolAddress", core._activeNetwork);
       const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, core.provider)
       const [immutables, state] = await Promise.all([getPoolImmutables(poolContract), getPoolState(poolContract)]);
 
