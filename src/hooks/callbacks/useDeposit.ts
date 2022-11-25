@@ -113,24 +113,25 @@ const useDeposit = (ethAmount: string) => {
         const mintParams = {
           tickLower: tickLower,
           tickUpper: tickUpper,
-          ethAmountMin: 1, // outputDetails.value.ethMin.toHexString(),
+          ethAmountMin: 0, // outputDetails.value.ethMin.toHexString(),
           ethAmountDesired: outputDetails.value.ethDesired.toHexString(),
-          arthAmountMin: 1, // outputDetails.value.arthMin.toHexString(),
+          arthAmountMin: 0, // outputDetails.value.arthMin.toHexString(),
           arthAmountDesired: outputDetails.value.arthDesired.toHexString()
         };
         
-        const depositData = strategyContract.interface.encodeFunctionData('deposit', [troveParams, mintParams]);
-        const flushData = strategyContract.interface.encodeFunctionData('flush', [account, false, 0]);
-        const multicall = strategyContract.interface.encodeFunctionData('multicall', [[depositData, flushData]]);
+        // const depositData = strategyContract.interface.encodeFunctionData('deposit', [troveParams, mintParams]);
+        // const flushData = strategyContract.interface.encodeFunctionData('flush', [account, false, 0]);
+        // const multicall = strategyContract.interface.encodeFunctionData('multicall', [[depositData, flushData]]);
 
-        const txn: any = {
-          to: strategyContract.address,
-          data: multicall,
-          value: outputDetails.value.eth.toHexString(),
-        }
+        // const txn: any = {
+        //   to: strategyContract.address,
+        //   data: multicall,
+        //   value: outputDetails.value.eth.toHexString(),
+        // }
 
-        const signer = await provider.getSigner();
-        const response = await signer.sendTransaction(txn);
+        // const signer = await provider.getSigner();
+        // const response = await signer.sendTransaction(txn);
+        const response = await strategyContract.deposit(troveParams, mintParams, { value:  outputDetails.value.eth.toHexString()});
           
         addTransaction(response, {
           summary: `Deposit ${Number(getDisplayBalance(outputDetails.value.eth, 18, 3))} ETH.`
