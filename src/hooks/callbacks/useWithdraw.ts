@@ -1,4 +1,6 @@
 import {useCallback} from 'react';
+import { BigNumber } from 'ethers';
+import { useWallet } from 'use-wallet';
 
 import {useAddPopup} from '../../state/application/hooks';
 import {useTransactionAdder} from '../../state/transactions/hooks';
@@ -7,14 +9,14 @@ import useCore from '../useCore';
 import formatErrorMessage from '../../utils/formatErrorMessage';
 import { DECIMALS_18, ZERO_ADDRESS } from '../../utils/constants';
 import { getDisplayBalance } from '../../utils/formatBalance';
-import { BigNumber } from 'ethers';
 import { useSlippage } from '../../state/slippage/hooks';
 
 const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNumber, arthInUniV3: BigNumber) => {
   const core = useCore();
   const addPopup = useAddPopup();
-  const addTransaction = useTransactionAdder();
   const slippage = useSlippage();
+  const { account } = useWallet();
+  const addTransaction = useTransactionAdder();
 
   const action = useCallback(async (callback?: () => void): Promise<void> => {
     try {
@@ -24,8 +26,6 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNu
         maxFee: DECIMALS_18,
         upperHint: ZERO_ADDRESS,
         lowerHint: ZERO_ADDRESS,
-        ethAmount: BigNumber.from(0),
-        arthAmount: BigNumber.from(0),
       }
 
       const slippageRounded = Math.floor(slippage.value * 1e3) / 1e3;
@@ -43,10 +43,19 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNu
         ethOutMin: ethMin
       };
 
-      const response = await strategyContract.withdraw(
-        troveParams,
-        withdrawParams,
-      );
+      const withdrawData = strategyContract.interface.encodeFunctionData('withdraw', [troveParams, ethInUniV3, 0, withdrawParams]);
+      const flushData = strategyContract.interface.encodeFunctionData('flush', [account, false, 0]);
+      const multicall = strategyContract.interface.encodeFunctionData('multicall', [[withdrawData, flushData]]);
+
+      const txn: any = {
+        to: strategyContract.address,
+        data: multicall,
+        value: BigNumber.from(0).toHexString(),
+      }
+
+      const provider = core.provider;
+      const signer = await provider.getSigner();
+      const response = await signer.sendTransaction(txn);
 
       addTransaction(response, {
         summary: `Withdraw ${Number(getDisplayBalance(liquidity, 18, 3))} from ARTH/ETH pool.`
@@ -61,7 +70,7 @@ const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNu
         },
       });
     }
-  }, [core, addPopup, tokenId, ethInUniV3, liquidity, slippage, arthInUniV3, addTransaction]);
+  }, [core, account, addPopup, tokenId, ethInUniV3, liquidity, slippage, arthInUniV3, addTransaction]);
 
   return action;
 }
