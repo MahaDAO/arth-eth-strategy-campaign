@@ -10,8 +10,6 @@ const Navigation = () => {
   const chainId = useGetChainId();
   const {chain} = useNetwork();
 
-  console.log('chain', chainId, chain);
-
   return (
     <Switch>
       {/*<Route exact path="/">

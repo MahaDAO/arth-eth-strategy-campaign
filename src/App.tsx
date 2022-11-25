@@ -38,6 +38,7 @@ import {
 } from "wagmi";
 import {publicProvider} from 'wagmi/providers/public';
 import ChainUpdater from "./components/ChainUpdater";
+import {myCustomTheme} from "./utils/rainbowKitCustomTheme";
 
 const Providers: React.FC = ({children}) => {
   return (
@@ -80,7 +81,7 @@ const RainbowProvider: React.FC = ({children}) => {
   const {chains, provider} = configureChains([chain.goerli], [publicProvider()]);
 
   const {connectors} = getDefaultWallets({
-    appName: 'My RainbowKit App',
+    appName: 'Arth Eth Strategy',
     chains
   });
 
@@ -92,7 +93,7 @@ const RainbowProvider: React.FC = ({children}) => {
 
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} theme={darkTheme()}>
+      <RainbowKitProvider chains={chains} theme={myCustomTheme} showRecentTransactions={true}>
         {children}
       </RainbowKitProvider>
     </WagmiConfig>
