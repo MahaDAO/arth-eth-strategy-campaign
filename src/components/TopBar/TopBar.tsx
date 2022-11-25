@@ -124,13 +124,7 @@ const TopBar: React.FC = () => {
                 <IconLoader iconName={'BentoMenu'} iconType={'misc'} onClick={() => {
                   setShowProjectModal(true)
                 }}/>
-                <IconLoader
-                  iconName={!showMobileMenu ? 'Menu' : 'Cross'}
-                  onClick={() => toggleMobileMenu(!showMobileMenu)}
-                  className={'pointer'}
-                />
               </div>
-
             </div>
           </HideOnBigScreen>
           <HideOnBigScreen>
