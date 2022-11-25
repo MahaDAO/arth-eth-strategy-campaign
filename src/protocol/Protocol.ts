@@ -119,7 +119,6 @@ export class Protocol {
   }
 
   getPriceFeed() {
-    console.log('contracts', this._contracts[1])
     return this._contracts[this._activeNetwork][`ETHPriceFeed`];
   }
 

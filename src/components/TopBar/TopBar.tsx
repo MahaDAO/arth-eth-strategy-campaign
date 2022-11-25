@@ -3,6 +3,7 @@ import {useLocation} from "react-router-dom";
 import {useMediaQuery} from "react-responsive";
 import {useWallet} from "use-wallet";
 import React, {useCallback, useEffect, useState} from 'react';
+import {ConnectButton} from '@rainbow-me/rainbowkit';
 import detectEthereumProvider from '@metamask/detect-provider';
 
 import IconLoader from "../IconLoader";
@@ -30,8 +31,6 @@ const TopBar: React.FC = () => {
   const {account, connect, chainId} = useWallet();
   const isMobile = useMediaQuery({maxWidth: '600px'});
   const activeChainId = useGetActiveChainId();
-  const setChainId = useGetUpdateActiveChainId();
-  const getAvailableChains = getSupportedChains();
   // const setAvailableChains = useUpdateAvailableChains();
   const dispatch = useDispatch();
 
@@ -40,7 +39,7 @@ const TopBar: React.FC = () => {
   const [showMobileMenu, toggleMobileMenu] = useState(false);
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
 
-  const processNetwork = useCallback(async () => {
+  /*const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
     if (provider) {
@@ -51,7 +50,7 @@ const TopBar: React.FC = () => {
         setShowWarning(true)
       }
     }
-  }, [getAvailableChains, setChainId]);
+  }, [getAvailableChains, setChainId]);*/
 
   useEffect(() => {
     if (core) {
@@ -75,8 +74,8 @@ const TopBar: React.FC = () => {
       Mixpanel.people.set({walletId: account});
     }
 
-    processNetwork()
-  }, [account, connect, processNetwork]);
+    // processNetwork()
+  }, [account, connect]);
 
   /* useEffect(() => {
      setAvailableChains(getSupportedChains());
@@ -113,17 +112,25 @@ const TopBar: React.FC = () => {
                     onClick={() => setShowTxModal(true)}
                   />
                 }
-                <NetworkChange/>
-                <AccountButton showWarning={showWarning}/>
+                {/*<NetworkChange/>*/}
+                <ConnectButton showBalance={true}/>
               </div>
             </div>
           </HideonPhone>
           <HideOnBigScreen>
             <div className="single-line-center-between">
               <IconLoader iconName={'Mahalg'} iconType={'brandLogo'} onClick={() => window.location.href = '/#/'}/>
-              <IconLoader iconName={'BentoMenu'} iconType={'misc'} onClick={() => {
-                setShowProjectModal(true)
-              }}/>
+              <div>
+                <IconLoader iconName={'BentoMenu'} iconType={'misc'} onClick={() => {
+                  setShowProjectModal(true)
+                }}/>
+                <IconLoader
+                  iconName={!showMobileMenu ? 'Menu' : 'Cross'}
+                  onClick={() => toggleMobileMenu(!showMobileMenu)}
+                  className={'pointer'}
+                />
+              </div>
+
             </div>
           </HideOnBigScreen>
           <HideOnBigScreen>

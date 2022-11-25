@@ -1,11 +1,17 @@
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import Page from "./components/Page/Page";
-import Home from "./views/Home";
 import NoPageFound from "./components/NoPageFound";
 import Campaign from "./views/Campaign";
+import {useGetChainId} from "./utils/NetworksCustomHooks";
+import {useNetwork} from "wagmi";
 
 const Navigation = () => {
+  const chainId = useGetChainId();
+  const {chain} = useNetwork();
+
+  console.log('chain', chainId, chain);
+
   return (
     <Switch>
       {/*<Route exact path="/">
@@ -15,7 +21,7 @@ const Navigation = () => {
       </Route>*/}
       <Route exact path="/">
         <Page availableNetworks={[137, 1337]}>
-          <Campaign />
+          <Campaign/>
         </Page>
       </Route>
       <Route exact path="*">

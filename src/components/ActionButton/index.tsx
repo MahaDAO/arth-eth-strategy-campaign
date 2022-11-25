@@ -10,26 +10,32 @@ import {ButtonProps} from '../Button/Button';
 
 import ChooseWallet from '../TopBar/components/modal/WalletInfo/ChooseWallet';
 import {switchMetamaskChain} from "../../utils/NetworkChange";
+import {ConnectButton} from "@rainbow-me/rainbowkit";
+import {useAccount, useNetwork} from "wagmi";
 
 const ActionButton = (props: ButtonProps) => {
   const core = useCore();
-  const {account, ethereum}: { account: any, ethereum?: any } = useWallet();
 
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
   const [showWalletOption, setShowWalletOption] = useState<boolean>(false);
 
-  const processNetwork = useCallback(async () => {
+  const {address: account, isDisconnected} = useAccount();
+  const {chain} = useNetwork();
+
+  console.log('account', account, !chain?.unsupported, isDisconnected);
+
+  /*const processNetwork = useCallback(async () => {
     const provider: any = await detectEthereumProvider();
 
     if (provider) {
       const chainId = Number(await provider.request({method: 'eth_chainId'}));
       setShowWarning(!getSupportedChains().includes(chainId));
     }
-  }, []);
+  }, []);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     processNetwork();
-  }, [core, processNetwork, account]);
+  }, [core, processNetwork, account]);*/
 
   return (
     <div>
@@ -38,25 +44,9 @@ const ActionButton = (props: ButtonProps) => {
         onClose={() => setShowWalletOption(false)}
       />
       {
-        showWarning ? (
-          <Button
-            onClick={() => switchMetamaskChain(1)}
-            text="Switch network"
-          />
-        ) : (
-          !account ? (
-            <Button
-              text="Connect Wallet"
-              tracking_id={'connect_wallet_before_button'}
-              onClick={() => {
-                setShowWalletOption(true);
-              }}
-            />
-          ) : (
-            <Button
-              {...props}
-            />
-          ))
+        isDisconnected || account === undefined || chain?.unsupported
+          ? <ConnectButton/>
+          : <Button {...props} />
       }
     </div>
   );

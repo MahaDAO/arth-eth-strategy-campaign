@@ -26,6 +26,7 @@ import TextButton from "../../components/TextButton";
 import useDeposit from "../../hooks/callbacks/useDeposit";
 import SlippageContainer from "../../components/SlippageContainer";
 import useGetPositionDetails from "../../hooks/state/useGetOutputDetails";
+import ActionButton from "../../components/ActionButton";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -82,7 +83,7 @@ const OpenPosition = () => {
           </States>
         </InputContainer>
         <div className={'m-t-24'}>
-          <Button
+          <ActionButton
             text={'Deposit'}
             onClick={onDepositClick}
             disabled={isInputGreaterThanMax || !Number(ethAmount)}

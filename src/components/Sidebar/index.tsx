@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import config from "../../config";
 import IconLoader from "../IconLoader";
-import { useGetActiveChainId } from "../../state/chains/hooks";
+import {useGetAccount, useGetChainId} from "../../utils/NetworksCustomHooks";
 
 const Sidebar = () => {
-  const chainId = useGetActiveChainId();
+  const chainId = useGetChainId();
 
   return (
     <SidebarDiv>
@@ -37,10 +37,10 @@ const Sidebar = () => {
               Pool Incentives
             </StyledLink>
             <StyledLinkHref href="https://www.tally.xyz/governance/eip155:1:0xFfEC018583152aB5f056c5323f1f68b701bF1Bc5"
-              target={"_blank"}>
+                            target={"_blank"}>
               <div className={"single-line-center-start"}>
                 <p>Governance</p>
-                <IconLoader iconName={"ArrowLinkColored"} iconType={"arrow"} />
+                <IconLoader iconName={"ArrowLinkColored"} iconType={"arrow"}/>
               </div>
             </StyledLinkHref>
             {/* <StyledLinkHref href="https://debt.mahadao.com" target={"_blank"}>
@@ -69,13 +69,13 @@ const Sidebar = () => {
           <StyledLinkHref href="https://dune.com/mahadao/staking-governance" target={'_blank'}>
             <div className={'single-line-center-start'}>
               <p>Analytics</p>
-              <IconLoader iconName={'ArrowLinkColored'} iconType={'arrow'} />
+              <IconLoader iconName={'ArrowLinkColored'} iconType={'arrow'}/>
             </div>
           </StyledLinkHref>
           <StyledLinkHref href="https://docs.mahadao.com/governance/governance-portal" target={'_blank'}>
             <div className={'single-line-center-start'}>
               <p>Documentation</p>
-              <IconLoader iconName={'ArrowLinkColored'} iconType={'arrow'} />
+              <IconLoader iconName={'ArrowLinkColored'} iconType={'arrow'}/>
             </div>
           </StyledLinkHref>
           {/* <StyledLinkHref

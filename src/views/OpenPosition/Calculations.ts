@@ -37,7 +37,6 @@ export const useGetDebtAmount = (collateralValue: string): BasicState => {
       return LOADING_DEFAULT_BASIC_STATE;
     }
 
-    console.log('collateralGMUPrice', collateralGMUPrice.value.toString());
     if (Number(collateralValue)) {
       const collateralValueBN = BigNumber.from(parseUnits(collateralValue, 18));
       const debtAmount = collateralValueBN.mul(collateralGMUPrice.value).mul(100).div(troveDetails.cr.mul(DECIMALS_18));
