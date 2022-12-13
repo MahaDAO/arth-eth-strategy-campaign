@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import {Mixpanel} from '../../analytics/Mixpanel';
 import config from '../../config';
-import {useGetActiveChainId} from '../../state/chains/hooks';
 import theme from '../../theme';
 import TextWrapper from "../TextWrapper";
+import {useGetChainId} from "../../utils/NetworksCustomHooks";
 
 const Footer = () => {
-  const chainId = useGetActiveChainId();
+  const chainId = useGetChainId();
 
   const trackButtons = (value: string) => {
     Mixpanel.track(`buttonClick:footer_${value}`, {

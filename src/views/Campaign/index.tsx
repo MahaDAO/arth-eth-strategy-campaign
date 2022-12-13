@@ -27,43 +27,44 @@ const Campaign = () => {
           ? <LoadingPage />
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <FormPart isEligibile={isEligible.value}>
-                {!isEligible.value && <Hidden>
-                  <div>
-                    <TextWrapper
-                      text={<div>Check your eligibility</div>}
-                      align={'center'}
-                      className={'m-b-4'}
-                    />
-                    <TextWrapper
-                      text={
-                        <div>
-                          or fill <a href='/#' className={'links'}>this</a> form if you want to be part of this
-                        </div>
-                      }
-                      align={'center'}
-                      className={'m-b-32'}
-                      Fcolor={theme.color.transparent[100]}
-                    />
-                    <div style={{ width: '150px', margin: "auto" }}>
-                      <ActionButton
-                        text={'Check'}
-                        onClick={() => {
-                        }}
+              <div className={'mo-custom-container'}>
+                <FormPart isEligibile={isEligible.value}>
+                  {!isEligible.value && <Hidden>
+                    <div>
+                      <TextWrapper
+                        text={<div>Check your eligibility</div>}
+                        align={'center'}
+                        className={'m-b-4'}
                       />
+                      {/* <TextWrapper
+                        text={<div>or fill <a href={'#'} className={'links'}>this</a> form if you want to be part of this
+                        </div>}
+                        align={'center'}
+                        className={'m-b-32'}
+                        Fcolor={theme.color.transparent[100]}
+                      /> */}
+                      <div style={{ width: 'max-content', margin: "auto" }}>
+                        <ActionButton
+                          text={'Check'}
+                          onClick={() => {
+                          }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </Hidden>}
-                {
-                  !positionDetails.isLoading && positionDetails.value.isActive
-                    ? <PostionDetails />
-                    : <OpenPosition />
-                }
-              </FormPart>
+                  </Hidden>}
+                  {
+                    positionDetails.value?.isActive
+                      ? <PostionDetails />
+                      : <OpenPosition />
+                  }
+                </FormPart>
+              </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <PoolInfo />
-              <AprInfo />
+              <div className={'mo-custom-container'}>
+                <PoolInfo />
+                <AprInfo />
+              </div>
             </Grid>
           </Grid>
       }

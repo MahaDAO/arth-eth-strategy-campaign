@@ -18,6 +18,10 @@
     "txHash": "0xdcae3fdd84932fd0a2941c6a126858844ba061b4a09d5153dfe350fb475f7531",
     "verification": "https://etherscan.io/address/0xF4eD5d0C3C977B57382fabBEa441A63FAaF843d3#code"
   },
+    "ARTHETHTroveLpStrategy": {
+    "abi": "ARTHETHTroveLp",
+    "address": "0xA9735E594624339f8fbc8a99c57C13C7B4E8BCaC"
+  },
   "ETHSortedTroves": {
     "abi": "SortedTroves",
     "address": "0x65334D2A487702292A8E0Ea70faD35Cb3E820A3D",

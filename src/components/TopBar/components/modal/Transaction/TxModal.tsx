@@ -76,9 +76,6 @@ const TxModal: React.FC<props> = ({openModal, onDismiss}) => {
         {sortedRecentTransactions.length === 0 && (
           <div>
             <NoTransaction>You haven’t done any transaction yet.</NoTransaction>
-            <CallToAction to={'/farming'} onClick={() => handleClose()}>
-              Farm and earn rewards
-            </CallToAction>
           </div>
         )}
         <StyledTransactionList>

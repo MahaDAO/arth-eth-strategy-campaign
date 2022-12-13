@@ -53,6 +53,13 @@ body {
   color: white !important;
 }
 
+.action-connect-button button {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .center {
   transform: translate(-50%, -50%);
 }

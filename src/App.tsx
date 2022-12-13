@@ -23,11 +23,32 @@ import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { useGetUpdateActiveChainId } from "./state/chains/hooks";
 
+import '@rainbow-me/rainbowkit/styles.css';
+
+import {
+  darkTheme,
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import {
+  chain,
+  configureChains,
+  createClient,
+  WagmiConfig
+} from "wagmi";
+import { publicProvider } from 'wagmi/providers/public';
+import ChainUpdater from "./components/ChainUpdater";
+import { myCustomTheme } from "./utils/rainbowKitCustomTheme";
+
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <WalletProvider>{children}</WalletProvider>
+        <WalletProvider>
+          <RainbowProvider>
+            {children}
+          </RainbowProvider>
+        </WalletProvider>
       </Provider>
     </ThemeProvider>
   );
@@ -55,6 +76,29 @@ const WalletProvider: React.FC = ({ children }) => {
     </UseWalletProvider>
   );
 };
+
+const RainbowProvider: React.FC = ({ children }) => {
+  const { chains, provider } = configureChains([chain.goerli], [publicProvider()]);
+
+  const { connectors } = getDefaultWallets({
+    appName: 'Arth Eth Strategy',
+    chains
+  });
+
+  const wagmiClient = createClient({
+    autoConnect: true,
+    connectors,
+    provider
+  })
+
+  return (
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains} theme={myCustomTheme} showRecentTransactions={true}>
+        {children}
+      </RainbowKitProvider>
+    </WagmiConfig>
+  )
+}
 
 const AppContent: React.FC = ({ children }) => {
   const core = useCore();
@@ -107,6 +151,7 @@ const App: React.FC = () => {
     <Providers>
       <Router>
         <TopBar />
+        <ChainUpdater />
         <Navigation />
       </Router>
     </Providers>
