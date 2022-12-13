@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 import { parseUnits } from "ethers/lib/utils";
 
@@ -17,8 +17,8 @@ import useDeposit from "../../hooks/callbacks/useDeposit";
 import ActionButton from "../../components/ActionButton";
 import { getDisplayBalance } from "../../utils/formatBalance";
 
-const OpenPosition = () => {
-  const [ethAmount, setEthAmount] = useState<string>("1");
+const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<React.SetStateAction<string>> }) => {
+  const { ethAmount, setEthAmount } = props;
   const balance = useGetNativeTokenBalance();
 
   const isInputGreaterThanMax = useMemo(() => {
@@ -74,11 +74,11 @@ const OpenPosition = () => {
         </div>
         <div className={"m-b-12"}>
           <DataField
-            label={"Estimated MAHA Rewards (@30%)"}
+            label={"Earned Rewards"}
             labelFontWeight={600}
             labelFontColor={"white"}
             value={"2,000 MAHA"}
-            valueFontSize={16}
+            valueFontSize={18}
             valueFontWeight={600}
             valueFontColor={"white"}
             className={"m-b-2"}
@@ -88,6 +88,18 @@ const OpenPosition = () => {
             value={"$2000"}
             valueFontSize={14}
             valueFontColor={theme.color.transparent[100]}
+          />
+        </div>
+        <div className={"m-b-12"}>
+          <DataField
+            label={"APR"}
+            // labelFontWeight={600}
+            // labelFontColor={"white"}
+            value={"20%"}
+            // valueFontSize={16}
+            valueFontWeight={600}
+            // valueFontColor={"white"}
+            className={"m-b-2"}
           />
         </div>
       </Rewards>

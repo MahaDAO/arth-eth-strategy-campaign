@@ -9,23 +9,22 @@
   },
   "ETHPriceFeed": {
     "abi": "PriceFeed",
-    "address": "0x15726a29c398e65Ae5dA551DFf3BBC26D767d0F7",
-    "verification": "https://etherscan.io/address/0x15726a29c398e65Ae5dA551DFf3BBC26D767d0F7#code"
+    "address": "0xCB056C17ce063F20a8D0650F30550B20Ff1f04c1"
   },
   "ETHTroveManager": {
     "abi": "TroveManager",
-    "address": "0xF4eD5d0C3C977B57382fabBEa441A63FAaF843d3",
-    "txHash": "0xdcae3fdd84932fd0a2941c6a126858844ba061b4a09d5153dfe350fb475f7531",
-    "verification": "https://etherscan.io/address/0xF4eD5d0C3C977B57382fabBEa441A63FAaF843d3#code"
-  },
-    "ARTHETHTroveLpStrategy": {
-    "abi": "ARTHETHTroveLp",
-    "address": "0xA9735E594624339f8fbc8a99c57C13C7B4E8BCaC"
+    "address": "0xF4eD5d0C3C977B57382fabBEa441A63FAaF843d3"
   },
   "ETHSortedTroves": {
     "abi": "SortedTroves",
-    "address": "0x65334D2A487702292A8E0Ea70faD35Cb3E820A3D",
-    "txHash": "0x1d0217fa3e6f9fe093da66ef149727fbbfc5fe4fd8172140af11b4a6409f9ee0",
-    "verification": "https://etherscan.io/address/0x65334D2A487702292A8E0Ea70faD35Cb3E820A3D#code"
+    "address": "0x65334D2A487702292A8E0Ea70faD35Cb3E820A3D"
+  },
+  "ARTHETHTroveLpStrategy": {
+    "abi": "ARTHETHTroveLp",
+    "address": "0xA9735E594624339f8fbc8a99c57C13C7B4E8BCaC"
+  },
+  "ETHHintHelpers": {
+    "abi": "HintHelpers",
+    "address": "0xeBE989Cf09Af235e139FB19EF75302914df4b310"
   }
 }

@@ -5,7 +5,7 @@ import local from "./configs/local";
 import { isProduction } from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
-  // ...ethereum,
+  ...ethereum,
   // ...local,
   ...goerli,
 };

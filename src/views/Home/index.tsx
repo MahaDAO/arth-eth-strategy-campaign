@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className={'custom-container'}>
       <PageHeader title={'Hello'}
-        subTitle={`My Balance: 
+        subTitle={`My Balance:
                   ${Number(getDisplayBalance(balance.value)).toLocaleString('en-US', { maximumFractionDigits: 3 })}`}
       />
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 
 import OpenPosition from "../OpenPosition";
@@ -17,6 +17,8 @@ import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 import SummaryView from "./components/SummaryView";
 
 const Campaign = () => {
+  const [ethAmount, setEthAmount] = useState<string>("1");
+
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();
 
@@ -49,16 +51,16 @@ const Campaign = () => {
                   {
                     positionDetails.value?.isActive
                       ? <PostionDetails />
-                      : <OpenPosition />
+                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount} />
                   }
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                <SummaryView ethAmount="1" />
+                <SummaryView ethAmount={ethAmount} />
                 {/* <PoolInfo /> */}
-                <AprInfo />
+                {/* <AprInfo /> */}
               </div>
             </Grid>
           </Grid>

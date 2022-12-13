@@ -7,23 +7,23 @@ const AprInfo = () => {
     <div className={'material-primary m-b-24'}>
       <div className={'m-b-12'}>
         <DataField
-          label={'Total APR'}
+          label={'APR'}
           labelFontWeight={600}
           labelFontSize={18}
-          value={'50%'}
+          value={'5%'}
           valueFontColor={theme.color.primary[300]}
           valueFontSize={18}
           valueFontWeight={600}
         />
       </div>
-      <DataField
-        label={'Framing/MAHA APR'}
+      {/* <DataField
+        label={'MAHA APR'}
         labelFontSize={14}
         value={'12%'}
         valueFontWeight={600}
         valueFontColor={theme.color.green[300]}
         className={'m-b-4'}
-      />
+      /> */}
     </div>
   )
 }

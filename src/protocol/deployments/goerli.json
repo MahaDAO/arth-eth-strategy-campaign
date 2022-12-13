@@ -7,10 +7,6 @@
     "abi": "IERC20",
     "address": "0x0Ac047155dfc292598503e31EBa58F988F0De76d"
   },
-  "WETH": {
-    "abi": "IERC20",
-    "address": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"
-  },
   "ETHPriceFeed": {
     "abi": "PriceFeed",
     "address": "0x10fc058fc6c4e011c3369bC8C909a853d36ffFa0"
@@ -26,10 +22,6 @@
   "ARTHETHTroveLpStrategy": {
     "abi": "ARTHETHTroveLp",
     "address": "0x2eb0f53472fD3b372539Ac9Ea59721eAda24a967"
-  },
-  "UniV3PositionManager": {
-    "abi": "UniV3PositionManager",
-    "address": "0xc36442b4a4522e871399cd717abdd847ab11fe88"
   },
   "ETHHintHelpers": {
     "abi": "HintHelpers",

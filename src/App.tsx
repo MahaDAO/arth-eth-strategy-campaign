@@ -72,7 +72,7 @@ const WalletProvider: React.FC = ({ children }) => {
 
 const RainbowProvider: React.FC = ({ children }) => {
   const { chains, provider } = configureChains(
-    [chain.goerli],
+    [chain.goerli, chain.mainnet],
     [publicProvider()]
   );
 

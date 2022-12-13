@@ -25,11 +25,12 @@ const SummaryView = (props: { ethAmount: string }) => {
     let arthDesired: BigNumber = eth
       .mul(price.value)
       .mul(100)
-      .div(300)
+      .div(310)
       .div(DECIMALS_18);
-    arthDesired = arthDesired
-      .sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18))
-      .sub(DECIMALS_18.mul(50));
+
+    // arthDesired = arthDesired
+    //   .sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18))
+    //   .sub(DECIMALS_18.mul(50));
 
     return arthDesired.lte(0) ? BigNumber.from(0) : arthDesired;
   }, [price, props.ethAmount, borrowingFeeRate]);
@@ -76,7 +77,7 @@ const SummaryView = (props: { ethAmount: string }) => {
                   />
                   ARTH
                 </span>{" "}
-                (at a <b>300%</b> collateral ratio), which is then isthen
+                (at a <b>300%</b> collateral ratio), which is then is then
                 deposited into <span className={"bold"}>MahaLend</span>.
               </div>
             }
