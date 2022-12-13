@@ -1,11 +1,10 @@
-import {BigNumber, Contract} from 'ethers';
-import {useCallback, useEffect, useState} from 'react';
+import { BigNumber } from 'ethers';
+import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../useCore';
-import ERC20 from '../../protocol/ERC20';
-import {BasicState} from '../../utils/interface';
-import {useBlockNumber} from '../../state/application/hooks';
-import {LOADING_DEFAULT_BASIC_STATE, NON_LOADING_DEFAULT_BASIC_STATE} from '../../utils/constants';
+import { BasicState } from '../../utils/interface';
+import { useBlockNumber } from '../../state/application/hooks';
+import { LOADING_DEFAULT_BASIC_STATE, NON_LOADING_DEFAULT_BASIC_STATE } from '../../utils/constants';
 import { useWallet } from 'use-wallet';
 
 const useGetMahaRewards = () => {
@@ -18,7 +17,7 @@ const useGetMahaRewards = () => {
   const fetchBalance = useCallback(async () => {
     const strategyContract = core.getARTHETHTroveLpStrategy();
     const bal: BigNumber = await strategyContract.earned(account);
-    setBalance({isLoading: false, value: bal});
+    setBalance({ isLoading: false, value: bal });
   }, [core, account]);
 
   useEffect(() => {

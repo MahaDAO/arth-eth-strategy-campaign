@@ -1,7 +1,7 @@
-import {BigNumber} from "ethers";
-import {useCallback, useEffect, useState} from "react";
-import {useWallet} from "use-wallet";
-import {useBlockNumber} from "../../../state/application/hooks";
+import { BigNumber } from "ethers";
+import { useCallback, useEffect, useState } from "react";
+import { useWallet } from "use-wallet";
+import { useBlockNumber } from "../../../state/application/hooks";
 import useCore from "../../useCore";
 
 type State = {
@@ -9,20 +9,20 @@ type State = {
   value: BigNumber;
 };
 
-export default () => {
+const useCollateralPriceFeed = () => {
   const [data, setData] = useState<State>({
     isLoading: true,
     value: BigNumber.from(0),
   });
 
   const core = useCore();
-  const {account} = useWallet();
+  const { account } = useWallet();
   const blockNumber = useBlockNumber();
   const tokenDecimals = 18;
 
   const fetchValue = useCallback(async () => {
     if (!account) {
-      setData({isLoading: false, value: BigNumber.from(0)});
+      setData({ isLoading: false, value: BigNumber.from(0) });
       return;
     }
 
@@ -50,3 +50,5 @@ export default () => {
 
   return data;
 };
+
+export default useCollateralPriceFeed;

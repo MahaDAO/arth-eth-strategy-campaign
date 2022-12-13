@@ -9,7 +9,7 @@ type State = {
   value: BigNumber;
 };
 
-export default () => {
+const useGetBorrowingFeeRateWithDecay = () => {
   const [data, setData] = useState<State>({
     isLoading: true,
     value: BigNumber.from(0),
@@ -44,3 +44,5 @@ export default () => {
 
   return data;
 };
+
+export default useGetBorrowingFeeRateWithDecay;

@@ -12,33 +12,33 @@ import CollateralDropDown from "../../components/CollateralDropDown";
 import Button from "../../components/Button";
 
 import theme from "../../theme";
-import { getDisplayBalance } from "../../utils/formatBalance";
-import {
-  useGetDebtAmount,
-  useGetCollateralRatio,
-  useGetTotalDebtAmount,
-  useGetLoanEth,
-  useGetPositionEth
-} from "./Calculations";
 import TextWrapper from "../../components/TextWrapper";
 import IconLoader from "../../components/IconLoader";
 import TextButton from "../../components/TextButton";
 import useDeposit from "../../hooks/callbacks/useDeposit";
 import SlippageContainer from "../../components/SlippageContainer";
-import useGetPositionDetails from "../../hooks/state/useGetOutputDetails";
+import { BigNumber } from "ethers";
+import { DECIMALS_18 } from "../../utils/constants";
+import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
+import useGetBorrowingFeeRateWithDecay from "../../hooks/state/TroveManager/useGetBorrowingFeeRateWithDecay";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
   const [simplifieldView, setsimplifieldView] = useState<boolean>(false);
 
+  const price = useCollateralPriceFeed();
   const balance = useGetNativeTokenBalance();
+  const borrowingFeeRate = useGetBorrowingFeeRateWithDecay();
 
-  const loanEthAmount = useGetLoanEth(ethAmount);
-  const positionEthAmount = useGetPositionEth(ethAmount);
-  const debtAmount = useGetDebtAmount(loanEthAmount);
-  const totaldebtAmount = useGetTotalDebtAmount(debtAmount);
-  const collateralRatio = useGetCollateralRatio(loanEthAmount, totaldebtAmount);
-  const positionOutputDetails = useGetPositionDetails(ethAmount);
+  const arthOutputFromLoans = useMemo(() => {
+    if (price.isLoading || borrowingFeeRate.isLoading) return BigNumber.from(0);
+
+    const eth = parseUnits(ethAmount || "0", 18);
+    let arthDesired: BigNumber = eth.mul(price.value).mul(100).div(300).div(DECIMALS_18);
+    arthDesired = arthDesired.sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18)).sub(DECIMALS_18.mul(50));
+
+    return arthDesired
+  }, [price, ethAmount, borrowingFeeRate]);
 
   const isInputGreaterThanMax = useMemo(
     () => {
@@ -131,26 +131,19 @@ const OpenPosition = () => {
                   You are contributing <span
                     className={'bold'}>{Number(ethAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                     <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                      className={'m-l-4 m-r-4'} />ETH &#127881;</span> out of which <span
-                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.ethColl, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
-                    <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                      className={'m-l-4 m-r-4'} />ETH</span> is being used as collateral to mint <span
-                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.arthDesired, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                      className={'m-l-4 m-r-4'} />ETH &#127881;</span> which is being used as collateral to mint <span
+                        className={'bold'}>{Number(getDisplayBalance(arthOutputFromLoans, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
                     <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
                       className={'m-l-4 m-r-4'} />ARTH</span> (at
                   a <b>300%</b> collateral
                   ratio), which
-                  along with <span
-                    className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.eth.sub(positionOutputDetails.value.ethColl), 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
-                    <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                      className={'m-l-4 m-r-4'} />ETH</span> is
-                  used to provide liquidity to the <span className={'bold'}>ARTH/ETH 0.3%</span> pair.
+                  is then is
+                  used to provide liquidity to the <span className={'bold'}>ARTH in MahaLend</span>.
                 </div>
               }
               className={'m-b-16'}
               lineHeight={'140%'}
               fontSize={16}
-            // Fcolor={theme.color.transparent[100]}
             />
             <TextWrapper
               text={
@@ -165,7 +158,6 @@ const OpenPosition = () => {
               }
               lineHeight={'140%'}
               fontSize={16}
-            // Fcolor={theme.color.transparent[100]}
             />
           </div>
           : <div>
@@ -173,55 +165,12 @@ const OpenPosition = () => {
               <DataField
                 label={'Debt amount'}
                 labelFontWeight={600}
-                value={Number(debtAmount.value).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
+                value={Number(getDisplayBalance(arthOutputFromLoans, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
                 valueFontColor={'white'}
                 valueFontWeight={600}
               />
               <DataField
-                label={'Minimum cr should be 250%'}
-                labelFontSize={10}
-              />
-            </div>
-            <div className={'m-b-12'}>
-              <DataField
-                label={'Collateral Ratio'}
-                labelFontWeight={600}
-                value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + '%'}
-                valueFontColor={theme.color.green[300]}
-                valueFontWeight={600}
-              />
-              <DataField
-                label={'Minimum cr should be 200%'}
-                labelFontSize={10}
-              />
-            </div>
-            <div className={'m-b-12'}>
-              <DataField
-                label={'Your Position'}
-                labelFontWeight={600}
-                value={`${Number(positionEthAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
-                valueFontColor={'white'}
-                valueFontWeight={600}
-              />
-              <DataField
-                label={'These are the estimated value actual value might change'}
-                labelFontSize={10}
-                value={Number(debtAmount.value).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
-                valueFontColor={'white'}
-                valueFontWeight={600}
-                position={'start-between'}
-              />
-            </div>
-            <div className={'m-b-12'}>
-              <DataField
-                label={'Your contribution to the TVL'}
-                labelFontWeight={600}
-                value={'30%'}
-                valueFontColor={'white'}
-                valueFontWeight={600}
-              />
-              <DataField
-                label={'These are the estimated value actual value might change'}
+                label={'Minimum cr should be 300%'}
                 labelFontSize={10}
               />
             </div>
