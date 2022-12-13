@@ -1,0 +1,2 @@
+(this["webpackJsonpcampaign.mahadao.com"]=this["webpackJsonpcampaign.mahadao.com"]||[]).push([[50],{1032:function(a,c,i){"use strict";i.r(c),c.default=i.p+"static/media/CosmicFinance.d60a718a.svg"}}]);
+//# sourceMappingURL=50.8b420619.chunk.js.map

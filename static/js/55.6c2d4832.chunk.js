@@ -1,2 +1,0 @@
-(this["webpackJsonpcampaign.mahadao.com"]=this["webpackJsonpcampaign.mahadao.com"]||[]).push([[55],{967:function(a,c,i){"use strict";i.r(c),c.default=i.p+"static/media/PickleFinance.1e80ce22.svg"}}]);
-//# sourceMappingURL=55.6c2d4832.chunk.js.map
