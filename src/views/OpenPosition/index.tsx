@@ -21,6 +21,7 @@ import { BigNumber } from "ethers";
 import { DECIMALS_18 } from "../../utils/constants";
 import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
 import useGetBorrowingFeeRateWithDecay from "../../hooks/state/TroveManager/useGetBorrowingFeeRateWithDecay";
+import { getDisplayBalance } from "../../utils/formatBalance";
 
 const OpenPosition = () => {
   const [ethAmount, setEthAmount] = useState<string>('1');
@@ -37,7 +38,7 @@ const OpenPosition = () => {
     let arthDesired: BigNumber = eth.mul(price.value).mul(100).div(300).div(DECIMALS_18);
     arthDesired = arthDesired.sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18)).sub(DECIMALS_18.mul(50));
 
-    return arthDesired
+    return arthDesired.lte(0) ? BigNumber.from(0) : arthDesired;
   }, [price, ethAmount, borrowingFeeRate]);
 
   const isInputGreaterThanMax = useMemo(
@@ -145,25 +146,29 @@ const OpenPosition = () => {
               lineHeight={'140%'}
               fontSize={16}
             />
-            <TextWrapper
-              text={
-                <div>
-                  You have so far
-                  earned <span className={'bold'}>0.2 ETH</span> and <span className={'bold'}>10 ARTH</span> from
-                  trading fees, and <span className={'bold'}>10 MAHA</span> from the farming
-                  rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the mission
-                  of creating financial liberty with <span className={'bold'}>ARTH</span> and <span
-                    className={'bold'}>MAHA</span>.
-                </div>
-              }
-              lineHeight={'140%'}
-              fontSize={16}
-            />
           </div>
           : <div>
             <div className={'m-b-12'}>
               <DataField
+                label={'Collateral amount'}
+                labelFontWeight={600}
+                value={Number(getDisplayBalance(parseUnits(ethAmount || "0", 18), 18)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+              />
+            </div>
+            <div className={'m-b-12'}>
+              <DataField
                 label={'Debt amount'}
+                labelFontWeight={600}
+                value={Number(getDisplayBalance(arthOutputFromLoans, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
+                valueFontColor={'white'}
+                valueFontWeight={600}
+              />
+            </div>
+            <div className={'m-b-12'}>
+              <DataField
+                label={'Supply amount to lending pool'}
                 labelFontWeight={600}
                 value={Number(getDisplayBalance(arthOutputFromLoans, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
                 valueFontColor={'white'}

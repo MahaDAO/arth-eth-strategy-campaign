@@ -9,7 +9,7 @@ import useCore from '../useCore';
 import formatErrorMessage from '../../utils/formatErrorMessage';
 import { DECIMALS_18, ZERO_ADDRESS } from '../../utils/constants';
 
-const useWithdraw = (tokenId: BigNumber, liquidity: BigNumber, ethInUniV3: BigNumber, arthInUniV3: BigNumber) => {
+const useWithdraw = (ethAmount: BigNumber, arthAmount: BigNumber) => {
   const core = useCore();
   const addPopup = useAddPopup();
   const { account } = useWallet();

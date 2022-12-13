@@ -54,12 +54,11 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                <PostionDetails />
-                {/* {
-                  positionDetails.value?.uniswapNftId?.gt(0)
+                {
+                  !positionDetails.isLoading && positionDetails.value.isActive
                     ? <PostionDetails />
                     : <OpenPosition />
-                } */}
+                }
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
