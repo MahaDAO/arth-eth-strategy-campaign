@@ -36,7 +36,7 @@ const PositionDetails = () => {
       <div className={'material-primary m-b-24'}>
         <div className={'m-b-12'}>
           <DataField
-            label={'Total Collateral'}
+            label={'Your ETH collateral'}
             labelFontSize={16}
             labelFontColor={'white'}
             value={`${Number(getDisplayBalance(positionDetails.value.ethForLoan, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
@@ -49,7 +49,7 @@ const PositionDetails = () => {
         </div>
         <div className={'m-b-12'}>
           <DataField
-            label={'Total Debt'}
+            label={'ARTH minted'}
             labelFontSize={16}
             labelFontColor={'white'}
             value={`${Number(getDisplayBalance(positionDetails.value.arthFromLoan, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
@@ -61,7 +61,7 @@ const PositionDetails = () => {
         </div>
         <div className={'m-b-12'}>
           <DataField
-            label={'Total ARTH supplied to lending pool'}
+            label={'ARTH supplied to MahaLend'}
             labelFontSize={16}
             labelFontColor={'white'}
             value={`${Number(getDisplayBalance(positionDetails.value.arthInLendingPool, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
