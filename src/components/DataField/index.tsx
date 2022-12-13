@@ -4,7 +4,7 @@ import Loader from "react-spinners/BeatLoader";
 import theme from "../../theme";
 
 import ToolTip from "../Tooltip";
-import TextWrapper, {TextWrapperProps} from "../TextWrapper";
+import TextWrapper, { TextWrapperProps } from "../TextWrapper";
 
 interface Iprops {
   label?: string;
@@ -13,12 +13,12 @@ interface Iprops {
   valueTag?: string;
   isValueLoading?: boolean;
 
-  labelFontSize?: TextWrapperProps["fontSize"]
-  labelFontWeight?: TextWrapperProps["fontWeight"]
+  labelFontSize?: TextWrapperProps["fontSize"];
+  labelFontWeight?: TextWrapperProps["fontWeight"];
   labelFontColor?: string;
 
-  valueFontSize?: TextWrapperProps["fontSize"]
-  valueFontWeight?: TextWrapperProps["fontWeight"]
+  valueFontSize?: TextWrapperProps["fontSize"];
+  valueFontWeight?: TextWrapperProps["fontWeight"];
   valueFontColor?: string;
   valueTagColor?: string;
 
@@ -60,8 +60,8 @@ const DataField = (props: Iprops) => {
       </div>
       <div className="single-line-center-start">
         {value &&
-        isValueLoading
-          ? <Loader color={'#ffffff'} loading={true} size={2} margin={2}/>
+          isValueLoading
+          ? <Loader color={'#ffffff'} loading={true} size={2} margin={2} />
           : <TextWrapper
             text={value || ""}
             fontWeight={valueFontWeight}

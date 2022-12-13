@@ -1,10 +1,14 @@
-import {useMemo} from "react";
-import {BigNumber} from "ethers";
-import {parseUnits} from "ethers/lib/utils";
+import { useMemo } from "react";
+import { BigNumber } from "ethers";
+import { parseUnits } from "ethers/lib/utils";
 
-import {DECIMALS_18, LOADING_DEFAULT_BASIC_STATE, NON_LOADING_DEFAULT_BASIC_STATE} from "../../utils/constants";
+import {
+  DECIMALS_18,
+  LOADING_DEFAULT_BASIC_STATE,
+  NON_LOADING_DEFAULT_BASIC_STATE,
+} from "../../utils/constants";
 
-import {BasicState} from "../../utils/interface";
+import { BasicState } from "../../utils/interface";
 
 import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
 import troveDetails from "../../configs/troveDetails";
@@ -14,7 +18,7 @@ export const useGetLoanEth = (ethAmount: string): string => {
     if (Number(ethAmount)) {
       return (Number(ethAmount) * troveDetails.collateralPerc).toString();
     } else {
-      return '0';
+      return "0";
     }
   }, [ethAmount]);
 };
@@ -24,7 +28,7 @@ export const useGetPositionEth = (ethAmount: string): string => {
     if (Number(ethAmount)) {
       return (Number(ethAmount) * (1 - troveDetails.collateralPerc)).toString();
     } else {
-      return '0';
+      return "0";
     }
   }, [ethAmount]);
 };
@@ -39,7 +43,10 @@ export const useGetDebtAmount = (collateralValue: string): BasicState => {
 
     if (Number(collateralValue)) {
       const collateralValueBN = BigNumber.from(parseUnits(collateralValue, 18));
-      const debtAmount = collateralValueBN.mul(collateralGMUPrice.value).mul(100).div(troveDetails.cr.mul(DECIMALS_18));
+      const debtAmount = collateralValueBN
+        .mul(collateralGMUPrice.value)
+        .mul(100)
+        .div(troveDetails.cr.mul(DECIMALS_18));
       return {
         isLoading: false,
         value: debtAmount,
@@ -50,7 +57,10 @@ export const useGetDebtAmount = (collateralValue: string): BasicState => {
   }, [collateralGMUPrice.isLoading, collateralGMUPrice.value, collateralValue]);
 };
 
-export const useGetCollateralRatio = (collateralValue: string, totalDebt: BasicState): BasicState => {
+export const useGetCollateralRatio = (
+  collateralValue: string,
+  totalDebt: BasicState
+): BasicState => {
   return {
     isLoading: false,
     value: troveDetails.cr,
@@ -81,7 +91,7 @@ export const useGetTotalDebtAmount = (debtAmount: BasicState): BasicState => {
   return {
     isLoading: debtAmount.isLoading,
     value: debtAmount.value,
-  }
+  };
   /*const borrowingFee = useGetBorrowingFee(debtAmount);
 
   return useMemo(() => {
@@ -99,4 +109,4 @@ export const useGetTotalDebtAmount = (debtAmount: BasicState): BasicState => {
         .add(borrowingFee.value),
     };
   }, [borrowingFee.isLoading, borrowingFee.value, debtAmount]);*/
-}
+};

@@ -4,8 +4,8 @@ import Loader from 'react-spinners/PulseLoader';
 
 import theme from '../../theme';
 import TextWrapper from '../TextWrapper';
-import {BackgroundAbsolute} from '../Selector';
-import IconLoader, {IconLoaderProps} from '../IconLoader';
+import { BackgroundAbsolute } from '../Selector';
+import IconLoader, { IconLoaderProps } from '../IconLoader';
 
 interface CollateralDropDownProps {
   selectedSymbol: IconLoaderProps['iconName'];
@@ -15,7 +15,7 @@ interface CollateralDropDownProps {
   showDropDown?: boolean;
   toggleDropDown?: () => void;
   hasDropDown?: boolean;
-  ondropDownValueChange?: (value: IconLoaderProps['iconName']) => void
+  ondropDownValueChange?: (value: IconLoaderProps['iconName']) => void;
   border?: string;
   loading?: boolean;
 }
@@ -38,7 +38,7 @@ const CollateralDropDown = (props: CollateralDropDownProps) => {
     <MainContainer>
       {!multiIcons
         ? (<Container
-          style={{borderRadius: border}}
+          style={{ borderRadius: border }}
           className={"single-line-center-start"}
           onClick={() => {
             if (toggleDropDown) toggleDropDown()
@@ -46,8 +46,8 @@ const CollateralDropDown = (props: CollateralDropDownProps) => {
         >
           {
             loading
-              ? <Loader color={'#ffffff'} loading={loading} size={4} margin={2}/>
-              : <IconLoader iconName={selectedSymbol} iconType={"tokenSymbol"} height={20} width={20}/>
+              ? <Loader color={'#ffffff'} loading={loading} size={4} margin={2} />
+              : <IconLoader iconName={selectedSymbol} iconType={"tokenSymbol"} height={20} width={20} />
           }
           {
             !loading && <TextWrapper
@@ -59,10 +59,10 @@ const CollateralDropDown = (props: CollateralDropDownProps) => {
           }
           {hasDropDown &&
             <IconLoader iconName={showDropDown ? 'ArrowUp' : 'ArrowDown'} iconType={"arrow"} height={16} width={16}
-                        className={"m-l-8"}/>}
+              className={"m-l-8"} />}
         </Container>)
         : (<Container
-          style={{borderRadius: border}}
+          style={{ borderRadius: border }}
           className={"single-line-center-start"}
           onClick={() => {
             if (toggleDropDown) toggleDropDown()
@@ -94,7 +94,7 @@ const CollateralDropDown = (props: CollateralDropDownProps) => {
           </div>
           {hasDropDown &&
             <IconLoader iconName={showDropDown ? 'ArrowUp' : 'ArrowDown'} iconType={"arrow"} height={16} width={16}
-                        className={"m-l-8"}/>}
+              className={"m-l-8"} />}
         </Container>)
       }
       {showDropDown &&
@@ -113,7 +113,7 @@ const CollateralDropDown = (props: CollateralDropDownProps) => {
               }}
               key={index}
             >
-              <IconLoader iconName={item} iconType={"tokenSymbol"} height={20} width={20}/>
+              <IconLoader iconName={item} iconType={"tokenSymbol"} height={20} width={20} />
               <CustomDropDownLiText>{item}</CustomDropDownLiText>
             </CustomDropDownLi>
           );

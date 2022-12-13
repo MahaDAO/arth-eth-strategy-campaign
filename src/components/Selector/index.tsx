@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, {CSSProperties} from "react";
+import React, { CSSProperties } from "react";
 
 import theme from "../../theme";
 
@@ -10,7 +10,7 @@ interface Iprops {
   openSelector: boolean;
   toggleSelector: () => void;
 
-  dropdownValue: string[]
+  dropdownValue: string[];
 
   selectedData: string;
   setSelectedData: (data: string) => void;
@@ -21,7 +21,7 @@ interface Iprops {
     bottom: string;
     left: string;
     right: string;
-  }
+  };
   className?: string;
   width?: string;
   dropDownWidth?: string;
@@ -62,7 +62,7 @@ const Selector = (props: Iprops) => {
         fontWeight={600}
         fontSize={14}
       />
-      <IconLoader iconName={openSelector ? "ArrowUp" : "ArrowDown"} iconType={"arrow"} className="m-l-8"/>
+      <IconLoader iconName={openSelector ? "ArrowUp" : "ArrowDown"} iconType={"arrow"} className="m-l-8" />
 
       {
         openSelector && (
@@ -129,16 +129,16 @@ interface CustomDropDownContainerProps {
     bottom: string;
     left: string;
     right: string;
-  }
+  };
   width: string;
 }
 
 const CustomDropDownContainer = styled.div<CustomDropDownContainerProps>`
   position: absolute;
-  top: ${({position}) => position.top};
-  bottom: ${({position}) => position.bottom};
-  right: ${({position}) => position.right};
-  left: ${({position}) => position.left};
+  top: ${({ position }) => position.top};
+  bottom: ${({ position }) => position.bottom};
+  right: ${({ position }) => position.right};
+  left: ${({ position }) => position.left};
   z-index: 111;
   background: ${theme.color.dark[300]};
   border-radius: 6px;

@@ -1,21 +1,21 @@
 import { Provider } from "react-redux";
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { SnackbarProvider } from "notistack";
-import { useWallet, UseWalletProvider } from 'use-wallet';
-import { HashRouter as Router } from 'react-router-dom';
+import { useWallet, UseWalletProvider } from "use-wallet";
+import { HashRouter as Router } from "react-router-dom";
 
-import './App.css';
-import './index.css';
+import "./App.css";
+import "./index.css";
 
 import Popups from "./components/Popups";
 
-import Navigation from './Navigation';
-import TopBar from './components/TopBar';
-import ModalsProvider from './context/Modals';
-import ProtocolProvider from './context/Provider';
+import Navigation from "./Navigation";
+import TopBar from "./components/TopBar";
+import ModalsProvider from "./context/Modals";
+import ProtocolProvider from "./context/Provider";
 
 import store from "./state";
-import { getChainsRpc, getSupportedChains } from './config';
+import { getChainsRpc, getSupportedChains } from "./config";
 import useCore from "./hooks/useCore";
 import Updaters from "./state/Updaters";
 import { isProduction } from "./analytics/Mixpanel";
@@ -23,20 +23,15 @@ import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import { useGetUpdateActiveChainId } from "./state/chains/hooks";
 
-import '@rainbow-me/rainbowkit/styles.css';
+import "@rainbow-me/rainbowkit/styles.css";
 
 import {
   darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
-import {
-  chain,
-  configureChains,
-  createClient,
-  WagmiConfig
-} from "wagmi";
-import { publicProvider } from 'wagmi/providers/public';
+} from "@rainbow-me/rainbowkit";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 import ChainUpdater from "./components/ChainUpdater";
 import { myCustomTheme } from "./utils/rainbowKitCustomTheme";
 
@@ -45,9 +40,7 @@ const Providers: React.FC = ({ children }) => {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <WalletProvider>
-          <RainbowProvider>
-            {children}
-          </RainbowProvider>
+          <RainbowProvider>{children}</RainbowProvider>
         </WalletProvider>
       </Provider>
     </ThemeProvider>
@@ -63,7 +56,7 @@ const WalletProvider: React.FC = ({ children }) => {
         },
         walletconnect: {
           chainId: getSupportedChains(),
-          bridge: 'https://bridge.walletconnect.org',
+          bridge: "https://bridge.walletconnect.org",
           pollingInterval: 12000,
           rpc: { ...getChainsRpc() },
         },
@@ -78,27 +71,34 @@ const WalletProvider: React.FC = ({ children }) => {
 };
 
 const RainbowProvider: React.FC = ({ children }) => {
-  const { chains, provider } = configureChains([chain.goerli], [publicProvider()]);
+  const { chains, provider } = configureChains(
+    [chain.goerli],
+    [publicProvider()]
+  );
 
   const { connectors } = getDefaultWallets({
-    appName: 'Arth Eth Strategy',
-    chains
+    appName: "Arth Eth Strategy",
+    chains,
   });
 
   const wagmiClient = createClient({
     autoConnect: true,
     connectors,
-    provider
-  })
+    provider,
+  });
 
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider chains={chains} theme={myCustomTheme} showRecentTransactions={true}>
+      <RainbowKitProvider
+        chains={chains}
+        theme={myCustomTheme}
+        showRecentTransactions={true}
+      >
         {children}
       </RainbowKitProvider>
     </WagmiConfig>
-  )
-}
+  );
+};
 
 const AppContent: React.FC = ({ children }) => {
   const core = useCore();
@@ -107,9 +107,8 @@ const AppContent: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (ethereum)
-      // @ts-ignore
-      ethereum.on('chainChanged', (chainId) => {
-        console.log('chain changed', chainId);
+      ethereum.on("chainChanged", (chainId: number) => {
+        console.log("chain changed", chainId);
         setChainId(chainId);
       });
   }, [ethereum, setChainId]);
@@ -120,8 +119,8 @@ const AppContent: React.FC = ({ children }) => {
     <ModalsProvider>
       <SnackbarProvider
         anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         maxSnack={2}
         autoHideDuration={2500}
@@ -135,7 +134,7 @@ const AppContent: React.FC = ({ children }) => {
   );
 };
 
-export let isMobileGlobal = false;
+export const isMobileGlobal = false;
 
 const App: React.FC = () => {
   const makeUnPassive = (ev: any) => {
@@ -143,8 +142,10 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
-    return () => document.body.removeEventListener('touchmove', makeUnPassive);
+    document.body.addEventListener("touchmove", makeUnPassive, {
+      passive: true,
+    });
+    return () => document.body.removeEventListener("touchmove", makeUnPassive);
   }, []);
 
   return (
@@ -160,5 +161,4 @@ const App: React.FC = () => {
 
 export default App;
 
-if (isProduction) console.log = function () {
-};
+if (isProduction) console.log = function () { };

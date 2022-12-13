@@ -1,9 +1,9 @@
-import {BigNumber, Contract, ethers, Overrides} from "ethers";
+import { Contract, ethers } from "ethers";
 
 import ERC20 from "./ERC20";
 import ABIS from "./deployments/abi";
-import {configKeys, Configuration} from "../utils/interface";
-import {getDefaultProvider} from "../utils/provider";
+import { configKeys, Configuration } from "../utils/interface";
+import { getDefaultProvider } from "../utils/provider";
 import Web3 from "web3";
 
 /**
@@ -45,7 +45,7 @@ export class Protocol {
     try {
       for (const [chainIdString, config] of Object.entries(cfg)) {
         const chainId = Number(chainIdString);
-        const {deployments} = config;
+        const { deployments } = config;
         this.provider = getDefaultProvider(config);
         const networkConfig: { [name: string]: Contract } = {};
         const tokens: { [name: string]: ERC20 } = {};
@@ -68,11 +68,9 @@ export class Protocol {
             ABIS[deployment.abi],
             this.provider
           );
-
         }
         this._contracts[chainId] = networkConfig;
         this._tokens[chainId] = tokens;
-
       }
     } catch (e) {
       console.log("Error in contracts mapping", e);
@@ -139,6 +137,6 @@ export class Protocol {
   }
 
   getUniV3PositionManager() {
-    return this._contracts[this._activeNetwork]['UniV3PositionManager'];
+    return this._contracts[this._activeNetwork]["UniV3PositionManager"];
   }
 }

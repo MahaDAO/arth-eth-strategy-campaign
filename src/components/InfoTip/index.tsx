@@ -1,11 +1,11 @@
-import React, {ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import styled from 'styled-components';
 
 import theme from '../../theme';
 import IconLoader from "../IconLoader";
 
 interface Iprops {
-  type: 'Warning' | 'Info' | 'Error'
+  type: 'Warning' | 'Info' | 'Error';
   msg: string | ReactElement;
   className?: string;
 }
@@ -27,8 +27,8 @@ const InfoTip = (props: Iprops) => {
 
   return (
     <CustomBadgeAlert className={className}>
-      <IconLoader iconName={type} iconType={'infoTip'}/>
-      <Text style={{color: color}}>{msg}</Text>
+      <IconLoader iconName={type} iconType={'infoTip'} />
+      <Text style={{ color: color }}>{msg}</Text>
     </CustomBadgeAlert>
   );
 }

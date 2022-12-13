@@ -1,16 +1,16 @@
-import React, {useMemo} from 'react';
-import styled from 'styled-components';
-import {Link} from 'react-router-dom';
-import Loader from 'react-spinners/PulseLoader';
+import React, { useMemo } from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Loader from "react-spinners/PulseLoader";
 
-import config from '../../config';
-import fileTheme from '../../theme';
-import {Mixpanel} from '../../analytics/Mixpanel';
+import config from "../../config";
+import fileTheme from "../../theme";
+import { Mixpanel } from "../../analytics/Mixpanel";
 
 export interface tracking_params {
   position?: string;
   collateral?: string;
-  action?: 'initial' | 'confirm' | 'cancel';
+  action?: "initial" | "confirm" | "cancel";
   amount?: number;
   other?: object;
 }
@@ -20,18 +20,18 @@ export interface ButtonProps {
   disabled?: boolean;
   href?: string;
   onClick?: () => void;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   text?: string;
   to?: string;
-  theme?: 'default' | 'secondary' | 'tertiary';
-  variant?: 'default' | 'transparent' | 'outlined' | 'rounded';
+  theme?: "default" | "secondary" | "tertiary";
+  variant?: "default" | "transparent" | "outlined" | "rounded";
   loading?: boolean;
   tracking_id?: string;
   tracking_params?: tracking_params;
 }
 
-function variantToStyle(variant: string = 'default', color: any) {
-  if (variant === 'transparent') {
+function variantToStyle(variant = "default", color: any) {
+  if (variant === "transparent") {
     return {
       fg: {
         normal: color.white,
@@ -39,97 +39,101 @@ function variantToStyle(variant: string = 'default', color: any) {
       bg: {
         normal: color.transparentog,
         hover: color.dark[100],
-        selected: color.dark[300]
+        selected: color.dark[300],
       },
       border: {
         normal: `1px solid ${color.transparent[300]}`,
         hover: `1px solid ${color.dark[100]}`,
-        radius: '6px',
-        radiusHover: '6px'
-      }
-    }
-  } else if (variant === 'outlined') {
+        radius: "6px",
+        radiusHover: "6px",
+      },
+    };
+  } else if (variant === "outlined") {
     return {
-      fg: {normal: color.transparent[100], hover: color.transparent[100]},
-      bg: {normal: color.transparentog, hover: color.transparentog, disabled: color.transparentog},
+      fg: { normal: color.transparent[100], hover: color.transparent[100] },
+      bg: {
+        normal: color.transparentog,
+        hover: color.transparentog,
+        disabled: color.transparentog,
+      },
       border: {
         normal: `1px solid ${color.transparent[300]}`,
         hover: `1px solid ${color.transparent[200]}`,
-      }
-    }
-  } else if (variant === 'rounded') {
+      },
+    };
+  } else if (variant === "rounded") {
     return {
-      fg: {normal: color.primary[300]},
-      bg: {normal: color.transparent[100], disabled: color.transparentog},
-      border: {radius: '19px', radiusHover: '19px'}
-    }
+      fg: { normal: color.primary[300] },
+      bg: { normal: color.transparent[100], disabled: color.transparentog },
+      border: { radius: "19px", radiusHover: "19px" },
+    };
   } else {
     return {
       fg: {},
       bg: {},
-      border: {}
-    }
+      border: {},
+    };
   }
 }
 
 const Button: React.FC<ButtonProps> = ({
-                                         children,
-                                         disabled,
-                                         href,
-                                         onClick,
-                                         size,
-                                         text,
-                                         to,
-                                         theme,
-                                         variant,
-                                         loading = false,
-                                         tracking_id = '',
-                                         tracking_params = {},
-                                       }) => {
-  const {color, spacing} = fileTheme;
+  children,
+  disabled,
+  href,
+  onClick,
+  size,
+  text,
+  to,
+  theme,
+  variant,
+  loading = false,
+  tracking_id = "",
+  tracking_params = {},
+}) => {
+  const { color, spacing } = fileTheme;
 
   const variantStyle = variantToStyle(variant, color);
 
-  let fg = {
-    normal: theme === 'secondary' ? color.teal[200] : color.white,
+  const fg = {
+    normal: theme === "secondary" ? color.teal[200] : color.white,
     hover: color.white,
-    selected: theme === 'secondary' ? color.teal[200] : color.white,
-    disabled: '',
-    ...variantStyle.fg
+    selected: theme === "secondary" ? color.teal[200] : color.white,
+    disabled: "",
+    ...variantStyle.fg,
   };
 
-  let bg = {
+  const bg = {
     normal: `linear-gradient(38.44deg, ${color.pink[200]} 15.81%, ${color.pink[400]} 87.57%)`,
     hover: color.pink[300],
     selected: `linear-gradient(180deg, ${color.pink[200]} -11.33%, ${color.pink[400]} 100%)`,
     disabled: color.transparent[300],
-    ...variantStyle.bg
+    ...variantStyle.bg,
   };
 
-  let border = {
-    normal: '0',
-    hover: '0',
-    radius: '6px',
-    radiusHover: variantStyle.border.radiusHover || '6px',
-    ...variantStyle.border
-  }
+  const border = {
+    normal: "0",
+    hover: "0",
+    radius: "6px",
+    radiusHover: variantStyle.border.radiusHover || "6px",
+    ...variantStyle.border,
+  };
 
   let buttonSize: number;
   let buttonPadding: number;
   let fontSize: number;
 
   switch (size) {
-    case 'sm':
+    case "sm":
       buttonPadding = spacing[3];
       buttonSize = 36;
       fontSize = 14;
       break;
-    case 'lg':
+    case "lg":
       buttonPadding = spacing[4];
       buttonSize = 44;
       fontSize = 14;
       break;
-    case 'md':
+    case "md":
       buttonPadding = spacing[4];
       buttonSize = 34;
       fontSize = 14;
@@ -156,7 +160,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <StyledButton
-      boxShadow={'0'}
+      boxShadow={"0"}
       fg={fg}
       bg={bg}
       border={border}
@@ -168,9 +172,9 @@ const Button: React.FC<ButtonProps> = ({
           ...tracking_params,
         };
         if (tracking_id) {
-          Mixpanel.track(`buttonClick:${tracking_id.toLowerCase()}`, params)
+          Mixpanel.track(`buttonClick:${tracking_id.toLowerCase()}`, params);
         }
-        if (onClick) onClick()
+        if (onClick) onClick();
       }}
       padding={buttonPadding}
       size={buttonSize}
@@ -178,15 +182,20 @@ const Button: React.FC<ButtonProps> = ({
     >
       {!loading && children}
       {!loading && ButtonChild}
-      <Loader color={'#ffffff'} loading={loading} size={10} margin={2}/>
+      <Loader color={"#ffffff"} loading={loading} size={10} margin={2} />
     </StyledButton>
   );
 };
 
 interface StyledButtonProps {
-  fg: { normal: string, hover: string, selected: string, disabled: string }
-  bg: { normal: string, hover: string, selected: string, disabled: string }
-  border: { normal: string, hover: string, radius: string, radiusHover: string }
+  fg: { normal: string; hover: string; selected: string; disabled: string };
+  bg: { normal: string; hover: string; selected: string; disabled: string };
+  border: {
+    normal: string;
+    hover: string;
+    radius: string;
+    radiusHover: string;
+  };
   boxShadow: string;
   disabled?: boolean;
   fontSize: number;
@@ -196,12 +205,12 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   position: relative;
-  color: ${({fg}) => fg.normal};
-  background: ${({bg}) => bg.normal};
-  border: ${({border}) => border.normal};
-  border-radius: ${({border}) => border.radius};
+  color: ${({ fg }) => fg.normal};
+  background: ${({ bg }) => bg.normal};
+  border: ${({ border }) => border.normal};
+  border-radius: ${({ border }) => border.radius};
   box-shadow: ${(props) => props.boxShadow};
-  cursor: ${(props) => (props.disabled ? "not-allowed" : 'pointer')};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   align-items: center;
   text-align: center;
@@ -209,25 +218,25 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   font-size: 14px;
   font-weight: 600;
-  height: ${({size}) => size}px;
+  height: ${({ size }) => size}px;
   justify-content: center;
   outline: none !important;
   padding: 10px 22px;
   width: 100%;
 
   &:hover {
-    color: ${({fg}) => fg.hover};
-    background: ${({bg}) => bg.hover};
-    border: ${({border}) => border.hover};
-    border-radius: ${({border}) => border.radiusHover}
+    color: ${({ fg }) => fg.hover};
+    background: ${({ bg }) => bg.hover};
+    border: ${({ border }) => border.hover};
+    border-radius: ${({ border }) => border.radiusHover};
   }
   &:focus {
-    color: ${({fg}) => fg.selected};
-    background: ${({bg}) => bg.selected};
+    color: ${({ fg }) => fg.selected};
+    background: ${({ bg }) => bg.selected};
   }
   &:disabled {
-    color: ${({fg}) => fg.disabled};
-    background: ${({bg}) => bg.disabled};
+    color: ${({ fg }) => fg.disabled};
+    background: ${({ bg }) => bg.disabled};
     cursor: not-allowed;
     opacity: 0.5;
   }

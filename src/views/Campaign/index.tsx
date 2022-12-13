@@ -14,6 +14,7 @@ import PostionDetails from "../PostionDetails";
 import AprInfo from "./components/AprInfo";
 
 import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
+import SummaryView from "./components/SummaryView";
 
 const Campaign = () => {
   const isEligible = useGetIsEligible();
@@ -36,13 +37,6 @@ const Campaign = () => {
                         align={'center'}
                         className={'m-b-4'}
                       />
-                      {/* <TextWrapper
-                        text={<div>or fill <a href={'#'} className={'links'}>this</a> form if you want to be part of this
-                        </div>}
-                        align={'center'}
-                        className={'m-b-32'}
-                        Fcolor={theme.color.transparent[100]}
-                      /> */}
                       <div style={{ width: 'max-content', margin: "auto" }}>
                         <ActionButton
                           text={'Check'}
@@ -62,7 +56,8 @@ const Campaign = () => {
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                <PoolInfo />
+                <SummaryView ethAmount="1" />
+                {/* <PoolInfo /> */}
                 <AprInfo />
               </div>
             </Grid>

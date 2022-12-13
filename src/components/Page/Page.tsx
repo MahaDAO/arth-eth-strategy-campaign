@@ -5,11 +5,11 @@ import Sidebar from "../Sidebar";
 import Footer from "../Footer";
 
 interface IProps {
-  children: any
+  children: any;
   availableNetworks?: number[]
 }
 
-const Page = ({children}: IProps) => {
+const Page = ({ children }: IProps) => {
   return (
     <MainPageContainer>
       <StyledPage>
