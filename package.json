@@ -2,7 +2,6 @@
   "name": "campaign.mahadao.com",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://mahadao.github.io/arth-eth-strategy-campaign/",
   "dependencies": {
     "@ethersproject/providers": "^5.4.5",
     "@makerdao/multicall": "^0.12.0",
@@ -61,7 +60,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "gh-deploy": "npm run build && gh-pages -d build"
+    "gh-deploy": "npm run build && echo eth.arth.loans > build/CNAME && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
