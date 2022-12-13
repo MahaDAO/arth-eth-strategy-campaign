@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import OpenPosition from "../OpenPosition";
 import Header from "./components/Header";
@@ -7,7 +7,6 @@ import PoolInfo from "./components/PoolInfo";
 import styled from "styled-components";
 import TextWrapper from "../../components/TextWrapper";
 import theme from "../../theme";
-import DataField from "../../components/DataField";
 import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
@@ -22,10 +21,10 @@ const Campaign = () => {
 
   return (
     <div className={'custom-container'}>
-      <Header/>
+      <Header />
       {
         isEligible.isLoading
-          ? <LoadingPage/>
+          ? <LoadingPage />
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <FormPart isEligibile={isEligible.value}>
@@ -37,13 +36,16 @@ const Campaign = () => {
                       className={'m-b-4'}
                     />
                     <TextWrapper
-                      text={<div>or fill <a href={'#'} className={'links'}>this</a> form if you want to be part of this
-                      </div>}
+                      text={
+                        <div>
+                          or fill <a href='/#' className={'links'}>this</a> form if you want to be part of this
+                        </div>
+                      }
                       align={'center'}
                       className={'m-b-32'}
                       Fcolor={theme.color.transparent[100]}
                     />
-                    <div style={{width: '150px', margin: "auto"}}>
+                    <div style={{ width: '150px', margin: "auto" }}>
                       <ActionButton
                         text={'Check'}
                         onClick={() => {
@@ -52,16 +54,17 @@ const Campaign = () => {
                     </div>
                   </div>
                 </Hidden>}
-                {
+                <PostionDetails />
+                {/* {
                   positionDetails.value?.uniswapNftId?.gt(0)
-                    ?  <PostionDetails/> 
-                    :  <OpenPosition />
-                }
+                    ? <PostionDetails />
+                    : <OpenPosition />
+                } */}
               </FormPart>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
-              <PoolInfo/>
-              <AprInfo/>
+              <PoolInfo />
+              <AprInfo />
             </Grid>
           </Grid>
       }

@@ -38,7 +38,7 @@ const PoolInfo = () => {
         <DataField
           label={'ETH Price'}
           labelFontWeight={600}
-          value={Number(getDisplayBalance(price.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 3}) + " ARTH"}
+          value={Number(getDisplayBalance(price.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + " ARTH"}
           valueFontColor={'white'}
           valueFontWeight={600}
         />

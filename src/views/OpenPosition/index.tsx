@@ -1,6 +1,6 @@
-import React, {useState, useMemo} from "react";
+import React, { useState, useMemo } from "react";
 import styled from "styled-components";
-import {parseUnits} from "ethers/lib/utils";
+import { parseUnits } from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../hooks/state/useGetNativeTokenBalance";
 
@@ -12,7 +12,7 @@ import CollateralDropDown from "../../components/CollateralDropDown";
 import Button from "../../components/Button";
 
 import theme from "../../theme";
-import {getDisplayBalance} from "../../utils/formatBalance";
+import { getDisplayBalance } from "../../utils/formatBalance";
 import {
   useGetDebtAmount,
   useGetCollateralRatio,
@@ -54,14 +54,14 @@ const OpenPosition = () => {
   return (
     <div>
       <div className={'single-line-center-end'}>
-        <TextWrapper text={'Slippage'} className={'m-r-8 m-b-4'} Fcolor={theme.color.transparent[100]}/>
-        <SlippageContainer/>
+        <TextWrapper text={'Slippage'} className={'m-r-8 m-b-4'} Fcolor={theme.color.transparent[100]} />
+        <SlippageContainer />
       </div>
       <Form className={'m-b-24'}>
         <InputContainer
           label={'Enter Amount'}
           dataValueLoading={balance.isLoading}
-          dataValue={`Balance: ${Number(getDisplayBalance(balance.value)).toLocaleString('en-US', {maximumFractionDigits: 3})}`}
+          dataValue={`Balance: ${Number(getDisplayBalance(balance.value)).toLocaleString('en-US', { maximumFractionDigits: 3 })}`}
           className={'m-b-24'}
         >
           <States
@@ -77,7 +77,7 @@ const OpenPosition = () => {
                   setEthAmount(getDisplayBalance(balance.value, 18));
                 }}
               />
-              <CollateralDropDown selectedSymbol={'ETH'}/>
+              <CollateralDropDown selectedSymbol={'ETH'} />
             </div>
           </States>
         </InputContainer>
@@ -91,9 +91,9 @@ const OpenPosition = () => {
       </Form>
       <Rewards className={'material-primary m-b-24'}>
         <div className={'single-line-center-between m-b-24'}>
-          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'}/>
+          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'} />
           <RewardsBtn>
-            <Button text={'Collect Rewards'} size={'sm'} disabled={true}/>
+            <Button text={'Collect Rewards'} size={'sm'} disabled={true} />
           </RewardsBtn>
         </div>
         <div className={'m-b-12'}>
@@ -114,34 +114,6 @@ const OpenPosition = () => {
             valueFontColor={theme.color.transparent[100]}
           />
         </div>
-        <div className={''}>
-          <div className={'single-line-center-between'}>
-            <DataField
-              label={'Estimated Trading Fee Rewards'}
-              labelFontWeight={600}
-              labelFontColor={'white'}
-              value={'20 ARTH'}
-              valueFontSize={16}
-              valueFontWeight={600}
-              valueFontColor={'white'}
-              className={'flex1'}
-            />
-            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
-          </div>
-          <div className={'single-line-center-between'}>
-            <DataField
-              label={''}
-              labelFontWeight={600}
-              labelFontColor={'white'}
-              value={'10 ETH'}
-              valueFontSize={16}
-              valueFontWeight={600}
-              valueFontColor={'white'}
-              className={'flex1'}
-            />
-            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
-          </div>
-        </div>
       </Rewards>
       <div className={'material-primary m-b-24'}>
         <div className={'single-line-center-end'}>
@@ -149,7 +121,7 @@ const OpenPosition = () => {
             text={simplifieldView ? 'Text view' : 'Simplified view'}
             fontSize={12}
             className={'m-b-12'}
-            onClick={() => setsimplifieldView(!simplifieldView)}/>
+            onClick={() => setsimplifieldView(!simplifieldView)} />
         </div>
         {!simplifieldView
           ? <div>
@@ -157,28 +129,28 @@ const OpenPosition = () => {
               text={
                 <div>
                   You are contributing <span
-                  className={'bold'}>{Number(ethAmount).toLocaleString('en-US', {maximumFractionDigits: 3})}
-                  <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                              className={'m-l-4 m-r-4'}/>ETH &#127881;</span> out of which <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.ethColl, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
-                  <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                              className={'m-l-4 m-r-4'}/>ETH</span> is being used as collateral to mint <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.arthDesired, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
-                  <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
-                              className={'m-l-4 m-r-4'}/>ARTH</span> (at
+                    className={'bold'}>{Number(ethAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                    <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                      className={'m-l-4 m-r-4'} />ETH &#127881;</span> out of which <span
+                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.ethColl, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                    <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                      className={'m-l-4 m-r-4'} />ETH</span> is being used as collateral to mint <span
+                        className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.arthDesired, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                    <IconLoader iconName={'ARTH'} iconType={'tokenSymbol'} width={12}
+                      className={'m-l-4 m-r-4'} />ARTH</span> (at
                   a <b>300%</b> collateral
                   ratio), which
                   along with <span
-                  className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.eth.sub(positionOutputDetails.value.ethColl), 18)).toLocaleString('en-US', {maximumFractionDigits: 3})}
-                  <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
-                              className={'m-l-4 m-r-4'}/>ETH</span> is
+                    className={'bold'}>{Number(getDisplayBalance(positionOutputDetails.value.eth.sub(positionOutputDetails.value.ethColl), 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })}
+                    <IconLoader iconName={'ETH'} iconType={'tokenSymbol'} width={12}
+                      className={'m-l-4 m-r-4'} />ETH</span> is
                   used to provide liquidity to the <span className={'bold'}>ARTH/ETH 0.3%</span> pair.
                 </div>
               }
               className={'m-b-16'}
               lineHeight={'140%'}
               fontSize={16}
-              // Fcolor={theme.color.transparent[100]}
+            // Fcolor={theme.color.transparent[100]}
             />
             <TextWrapper
               text={
@@ -188,12 +160,12 @@ const OpenPosition = () => {
                   trading fees, and <span className={'bold'}>10 MAHA</span> from the farming
                   rewards. You are currently contributing <span className={'bold'}>10%</span> &#128571; to the mission
                   of creating financial liberty with <span className={'bold'}>ARTH</span> and <span
-                  className={'bold'}>MAHA</span>.
+                    className={'bold'}>MAHA</span>.
                 </div>
               }
               lineHeight={'140%'}
               fontSize={16}
-              // Fcolor={theme.color.transparent[100]}
+            // Fcolor={theme.color.transparent[100]}
             />
           </div>
           : <div>
@@ -201,12 +173,12 @@ const OpenPosition = () => {
               <DataField
                 label={'Debt amount'}
                 labelFontWeight={600}
-                value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
+                value={Number(debtAmount.value).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
                 valueFontColor={'white'}
                 valueFontWeight={600}
               />
               <DataField
-                label={'Minimum cr should be 200%'}
+                label={'Minimum cr should be 250%'}
                 labelFontSize={10}
               />
             </div>
@@ -214,7 +186,7 @@ const OpenPosition = () => {
               <DataField
                 label={'Collateral Ratio'}
                 labelFontWeight={600}
-                value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 3}) + '%'}
+                value={Number(getDisplayBalance(collateralRatio.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 }) + '%'}
                 valueFontColor={theme.color.green[300]}
                 valueFontWeight={600}
               />
@@ -227,14 +199,14 @@ const OpenPosition = () => {
               <DataField
                 label={'Your Position'}
                 labelFontWeight={600}
-                value={`${Number(positionEthAmount).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+                value={`${Number(positionEthAmount).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
                 valueFontColor={'white'}
                 valueFontWeight={600}
               />
               <DataField
                 label={'These are the estimated value actual value might change'}
                 labelFontSize={10}
-                value={Number(debtAmount.value).toLocaleString('en-US', {maximumFractionDigits: 3}) + ' ARTH'}
+                value={Number(debtAmount.value).toLocaleString('en-US', { maximumFractionDigits: 3 }) + ' ARTH'}
                 valueFontColor={'white'}
                 valueFontWeight={600}
                 position={'start-between'}

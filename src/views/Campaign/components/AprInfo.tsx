@@ -17,27 +17,11 @@ const AprInfo = () => {
         />
       </div>
       <DataField
-        label={'Trading APR'}
-        labelFontSize={14}
-        value={'40%'}
-        valueFontWeight={600}
-        valueFontColor={theme.color.green[300]}
-        className={'m-b-4'}
-      />
-      <DataField
         label={'Framing/MAHA APR'}
         labelFontSize={14}
         value={'12%'}
         valueFontWeight={600}
         valueFontColor={theme.color.green[300]}
-        className={'m-b-4'}
-      />
-      <DataField
-        label={'Improvident loss'}
-        labelFontSize={14}
-        value={'2%'}
-        valueFontWeight={600}
-        valueFontColor={theme.color.red[300]}
         className={'m-b-4'}
       />
     </div>

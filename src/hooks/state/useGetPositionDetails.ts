@@ -1,8 +1,8 @@
 import { ethers, BigNumber, Contract } from 'ethers';
-import {useCallback, useEffect, useState} from 'react';
-import {useWallet} from 'use-wallet';
+import { useCallback, useEffect, useState } from 'react';
+import { useWallet } from 'use-wallet';
 
-import {useBlockNumber} from '../../state/application/hooks';
+import { useBlockNumber } from '../../state/application/hooks';
 import useCore from '../useCore';
 import { Pool, Position } from '@uniswap/v3-sdk';
 import { Token } from '@uniswap/sdk-core'
@@ -84,43 +84,47 @@ async function getPoolState(poolContract: Contract) {
 }
 
 const useGetPositionDetails = () => {
-  const [balance, setBalance] = useState<State>({isLoading: true, value: {
-    uniswapNftId: BigNumber.from(0),
-    eth: BigNumber.from(0),
-    coll: BigNumber.from(0),
-    debt: BigNumber.from(0),
-    liquidity: BigNumber.from(0),
-    arthInUniswap: BigNumber.from(0),
-    ethInUniswap: BigNumber.from(0),
-    currentARTHInUniswwap: '0',
-    currentETHInUniswap: '0',
-    inRange: false
-  }});
+  const [balance, setBalance] = useState<State>({
+    isLoading: true, value: {
+      uniswapNftId: BigNumber.from(0),
+      eth: BigNumber.from(0),
+      coll: BigNumber.from(0),
+      debt: BigNumber.from(0),
+      liquidity: BigNumber.from(0),
+      arthInUniswap: BigNumber.from(0),
+      ethInUniswap: BigNumber.from(0),
+      currentARTHInUniswwap: '0',
+      currentETHInUniswap: '0',
+      inRange: false
+    }
+  });
 
   const core = useCore();
-  const {account} = useWallet();
+  const { account } = useWallet();
   const blockNumber = useBlockNumber();
 
   const fetchBalance = useCallback(async () => {
     if (!account) {
-      setBalance({isLoading: false, value: {
-        uniswapNftId: BigNumber.from(0),
-        eth: BigNumber.from(0),
-        coll: BigNumber.from(0),
-        debt: BigNumber.from(0),
-        liquidity: BigNumber.from(0),
-        arthInUniswap: BigNumber.from(0),
-        ethInUniswap: BigNumber.from(0),
-        currentARTHInUniswwap: '0',
-        currentETHInUniswap: '0',
-        inRange: false
-      }});
+      setBalance({
+        isLoading: false, value: {
+          uniswapNftId: BigNumber.from(0),
+          eth: BigNumber.from(0),
+          coll: BigNumber.from(0),
+          debt: BigNumber.from(0),
+          liquidity: BigNumber.from(0),
+          arthInUniswap: BigNumber.from(0),
+          ethInUniswap: BigNumber.from(0),
+          currentARTHInUniswwap: '0',
+          currentETHInUniswap: '0',
+          inRange: false
+        }
+      });
 
       return;
     } else {
       const strategyContract = core.getARTHETHTroveLpStrategy();
       const positionDetails = await strategyContract.positions(account);
-      const nftManagerContract  = core.getUniV3PositionManager();
+      const nftManagerContract = core.getUniV3PositionManager();
       const nftDetails = await nftManagerContract.positions(positionDetails.uniswapNftId);
 
       const poolAddress = core.config("poolAddress", core._activeNetwork);
@@ -139,22 +143,22 @@ const useGetPositionDetails = () => {
       )
 
       const position = new Position({ pool, liquidity: nftDetails.liquidity.toString(), tickLower: nftDetails.tickLower, tickUpper: nftDetails.tickUpper })
-      
+
       const below = pool && pool.tickCurrent < nftDetails.tickLower;
       const above = pool && pool.tickCurrent >= nftDetails.tickUpper;
       const inRange: boolean = typeof below === 'boolean' && typeof above === 'boolean' ? !below && !above : false
-      
+
       setBalance(
         {
-          isLoading: false, 
-          value: { 
+          isLoading: false,
+          value: {
             ...positionDetails,
-            currentARTHInUniswwap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address 
+            currentARTHInUniswwap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address
               ? position.amount0.toExact()
               : position.amount1.toExact(),
-            currentETHInUniswap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address 
-            ? position.amount1.toExact()
-            : position.amount0.toExact(),
+            currentETHInUniswap: TokenA.address === core._tokens[core._activeNetwork]['ARTH'].address
+              ? position.amount1.toExact()
+              : position.amount0.toExact(),
             inRange: inRange
           }
         }

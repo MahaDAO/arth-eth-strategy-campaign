@@ -1,11 +1,11 @@
-import {BigNumber, Contract} from 'ethers';
-import {useCallback, useEffect, useState} from 'react';
+import { BigNumber, Contract } from 'ethers';
+import { useCallback, useEffect, useState } from 'react';
 
 import useCore from '../useCore';
 
-import {useBlockNumber} from '../../state/application/hooks';
+import { useBlockNumber } from '../../state/application/hooks';
 import { useWallet } from 'use-wallet';
-import {MAX_UINT128} from '../../utils/constants'
+import { MAX_UINT128 } from '../../utils/constants'
 import ABI from '../../protocol/deployments/abi';
 
 type IState = {
@@ -38,10 +38,10 @@ const useGetUniV3PositionFees = (tokenId: BigNumber) => {
           ethAmount: BigNumber.from(0),
         }
       });
-      return; 
+      return;
     } else {
       const signedContract = core.getUniV3PositionManager();
-    
+
       const contract = new Contract(signedContract.address, ABI.UniV3PositionManager, core.provider);
       const owner = await contract.ownerOf(tokenId);
 
@@ -56,7 +56,7 @@ const useGetUniV3PositionFees = (tokenId: BigNumber) => {
           from: owner
         }
       );
-      setBalance({isLoading: false, value: { arthAmount: bal.amount0, ethAmount: bal.amount1}});
+      setBalance({ isLoading: false, value: { arthAmount: bal.amount0, ethAmount: bal.amount1 } });
     }
   }, [core, tokenId]);
 

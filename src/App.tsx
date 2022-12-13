@@ -1,8 +1,8 @@
-import {Provider} from "react-redux";
-import React, {useEffect} from 'react';
-import {SnackbarProvider} from "notistack";
-import {useWallet, UseWalletProvider} from 'use-wallet';
-import {HashRouter as Router} from 'react-router-dom';
+import { Provider } from "react-redux";
+import React, { useEffect } from 'react';
+import { SnackbarProvider } from "notistack";
+import { useWallet, UseWalletProvider } from 'use-wallet';
+import { HashRouter as Router } from 'react-router-dom';
 
 import './App.css';
 import './index.css';
@@ -15,15 +15,15 @@ import ModalsProvider from './context/Modals';
 import ProtocolProvider from './context/Provider';
 
 import store from "./state";
-import {getChainsRpc, getSupportedChains} from './config';
+import { getChainsRpc, getSupportedChains } from './config';
 import useCore from "./hooks/useCore";
 import Updaters from "./state/Updaters";
-import {isProduction} from "./analytics/Mixpanel";
-import {ThemeProvider} from "styled-components";
+import { isProduction } from "./analytics/Mixpanel";
+import { ThemeProvider } from "styled-components";
 import theme from "./theme";
-import {useGetUpdateActiveChainId} from "./state/chains/hooks";
+import { useGetUpdateActiveChainId } from "./state/chains/hooks";
 
-const Providers: React.FC = ({children}) => {
+const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>
@@ -33,7 +33,7 @@ const Providers: React.FC = ({children}) => {
   );
 };
 
-const WalletProvider: React.FC = ({children}) => {
+const WalletProvider: React.FC = ({ children }) => {
   return (
     <UseWalletProvider
       connectors={{
@@ -44,11 +44,11 @@ const WalletProvider: React.FC = ({children}) => {
           chainId: getSupportedChains(),
           bridge: 'https://bridge.walletconnect.org',
           pollingInterval: 12000,
-          rpc: {...getChainsRpc()},
+          rpc: { ...getChainsRpc() },
         },
       }}
     >
-      <Updaters/>
+      <Updaters />
       <ProtocolProvider>
         <AppContent>{children}</AppContent>
       </ProtocolProvider>
@@ -56,9 +56,9 @@ const WalletProvider: React.FC = ({children}) => {
   );
 };
 
-const AppContent: React.FC = ({children}) => {
+const AppContent: React.FC = ({ children }) => {
   const core = useCore();
-  const {ethereum} = useWallet();
+  const { ethereum } = useWallet();
   const setChainId = useGetUpdateActiveChainId();
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const AppContent: React.FC = ({children}) => {
       });
   }, [ethereum, setChainId]);
 
-  if (!core) return <div/>;
+  if (!core) return <div />;
 
   return (
     <ModalsProvider>
@@ -83,7 +83,7 @@ const AppContent: React.FC = ({children}) => {
         autoHideDuration={2500}
       >
         <>
-          <Popups/>
+          <Popups />
           {children}
         </>
       </SnackbarProvider>
@@ -99,15 +99,15 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    document.body.addEventListener('touchmove', makeUnPassive, {passive: true});
+    document.body.addEventListener('touchmove', makeUnPassive, { passive: true });
     return () => document.body.removeEventListener('touchmove', makeUnPassive);
   }, []);
 
   return (
     <Providers>
       <Router>
-        <TopBar/>
-        <Navigation/>
+        <TopBar />
+        <Navigation />
       </Router>
     </Providers>
   );

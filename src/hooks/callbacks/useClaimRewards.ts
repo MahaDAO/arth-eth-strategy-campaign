@@ -1,7 +1,7 @@
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 
-import {useAddPopup} from '../../state/application/hooks';
-import {useTransactionAdder} from '../../state/transactions/hooks';
+import { useAddPopup } from '../../state/application/hooks';
+import { useTransactionAdder } from '../../state/transactions/hooks';
 
 import useCore from '../useCore';
 import formatErrorMessage from '../../utils/formatErrorMessage';
@@ -15,7 +15,7 @@ const useClaimRewards = () => {
     try {
       const strategyContract = core.getARTHETHTroveLpStrategy();
       const response = await strategyContract.collectRewards();
-        
+
       addTransaction(response, {
         summary: `Claim rewards.`
       });

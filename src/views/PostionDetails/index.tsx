@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import theme from "../../theme";
 import DataField from "../../components/DataField";
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import TextWrapper from "../../components/TextWrapper";
 import Button from "../../components/Button";
 import TextButton from "../../components/TextButton";
 import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
-import {getDisplayBalance} from "../../utils/formatBalance";
+import { getDisplayBalance } from "../../utils/formatBalance";
 import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
-import {BigNumber} from "ethers";
+import { BigNumber } from "ethers";
 import useWithdraw from "../../hooks/callbacks/useWithdraw";
 import useGetMahaRewards from "../../hooks/state/useGetMahaRewards";
 import useGetUniV3PositionFees from "../../hooks/state/useGetUniV3PositionFees";
@@ -39,36 +39,36 @@ const PositionDetails = () => {
     <div>
       <PositionContainer className={'material-primary m-b-24'}>
         <InRangeTag>
-          <TagColor color={positionDetails.value.inRange ? theme.color.green[300] : theme.color.red[300]}/>
-          <TextWrapper text={positionDetails.value.inRange ? 'In Range' : 'Out of Range'}/>
+          <TagColor color={positionDetails.value.inRange ? theme.color.green[300] : theme.color.red[300]} />
+          <TextWrapper text={positionDetails.value.inRange ? 'In Range' : 'Out of Range'} />
         </InRangeTag>
         <div className={'m-b-12'}>
           <DataField
             label={'NFT ID'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`#${Number(positionDetails.value.uniswapNftId).toLocaleString('en-US', {maximumFractionDigits: 0})}`}
+            value={`#${Number(positionDetails.value.uniswapNftId).toLocaleString('en-US', { maximumFractionDigits: 0 })}`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-2'}
           />
           <TextButton text={'View position'} fontSize={12} fontWeight={600}
-                      onClick={() => window.open(`https://app.uniswap.org/#/pool/${Number(positionDetails.value?.uniswapNftId)}`)} align={'right'}/>
+            onClick={() => window.open(`https://app.uniswap.org/#/pool/${Number(positionDetails.value?.uniswapNftId)}`)} align={'right'} />
         </div>
         <div className={'m-b-12'}>
           <DataField
             label={'Current Liquidity'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(positionDetails.value.currentETHInUniswap).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+            value={`${Number(positionDetails.value.currentETHInUniswap).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
           />
           <DataField
-            value={`${Number(positionDetails.value.currentARTHInUniswwap).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
+            value={`${Number(positionDetails.value.currentARTHInUniswwap).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -80,14 +80,14 @@ const PositionDetails = () => {
             label={'Starting Liquidity'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.ethInUniswap, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4})} ETH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.ethInUniswap, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4 })} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
             className={'m-b-4'}
           />
           <DataField
-            value={`${Number(getDisplayBalance(positionDetails.value.arthInUniswap, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4})} ARTH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.arthInUniswap, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4 })} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -120,7 +120,7 @@ const PositionDetails = () => {
             label={'Total Collateral'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.coll, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.coll, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -133,7 +133,7 @@ const PositionDetails = () => {
             label={'Total Debt'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.debt, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.debt, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -145,7 +145,7 @@ const PositionDetails = () => {
             label={'Collateral Ratio'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(cr, 16, 3)).toLocaleString('en-US', {maximumFractionDigits: 3})}%`}
+            value={`${Number(getDisplayBalance(cr, 16, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 })}%`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -155,11 +155,11 @@ const PositionDetails = () => {
       </div>
       <Rewards className={'material-primary m-b-24'}>
         <div className={'single-line-center-between m-b-24'}>
-          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'}/>
+          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'} />
           <RewardsBtn>
-            <Button 
-              onClick={claimHandler} 
-              text={'Collect Rewards'} 
+            <Button
+              onClick={claimHandler}
+              text={'Collect Rewards'}
               size={'sm'}
               disabled={mahaRewards.value.lte(0) && feeRewards.value.arthAmount.lte(0) && feeRewards.value.ethAmount.lte(0)}
             />
@@ -170,7 +170,7 @@ const PositionDetails = () => {
             label={'MAHA Rewards'}
             labelFontWeight={600}
             labelFontColor={'white'}
-            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4})}
+            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4 })}
             valueFontSize={16}
             valueFontWeight={600}
             valueFontColor={'white'}
@@ -189,26 +189,26 @@ const PositionDetails = () => {
               label={'Trading Fee Rewards'}
               labelFontWeight={600}
               labelFontColor={'white'}
-              value={Number(getDisplayBalance(feeRewards.value.arthAmount)).toLocaleString('en-US', { maximumFractionDigits: 4}) + " ARTH"}
+              value={Number(getDisplayBalance(feeRewards.value.arthAmount)).toLocaleString('en-US', { maximumFractionDigits: 4 }) + " ARTH"}
               valueFontSize={16}
               valueFontWeight={600}
               valueFontColor={'white'}
               className={'flex1'}
             />
-            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
+            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'} />
           </div>
           <div className={'single-line-center-between'}>
             <DataField
               label={''}
               labelFontWeight={600}
               labelFontColor={'white'}
-              value={Number(getDisplayBalance(feeRewards.value.ethAmount)).toLocaleString('en-US', { maximumFractionDigits: 4}) + " ETH"}
+              value={Number(getDisplayBalance(feeRewards.value.ethAmount)).toLocaleString('en-US', { maximumFractionDigits: 4 }) + " ETH"}
               valueFontSize={16}
               valueFontWeight={600}
               valueFontColor={'white'}
               className={'flex1'}
             />
-            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'}/>
+            <TextWrapper text={'($40)'} align={'right'} Fcolor={theme.color.transparent[100]} className={'m-l-2'} />
           </div>
         </div>
       </Rewards>

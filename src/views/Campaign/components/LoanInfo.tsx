@@ -1,7 +1,5 @@
 import React from "react";
 import TextWrapper from "../../../components/TextWrapper";
-import DataField from "../../../components/DataField";
-import theme from "../../../theme";
 
 const LoanInfo = () => {
   return (

@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as Sentry from "@sentry/react";
-import {BrowserTracing} from "@sentry/tracing";
+import { BrowserTracing } from "@sentry/tracing";
 import reportWebVitals from './reportWebVitals';
-import {isProduction} from "./analytics/Mixpanel";
+import { isProduction } from "./analytics/Mixpanel";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App/>
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

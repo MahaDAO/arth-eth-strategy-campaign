@@ -1,11 +1,11 @@
-import {BigNumber, Contract} from 'ethers';
-import {useCallback, useEffect, useState} from 'react';
+import { BigNumber, Contract } from 'ethers';
+import { useCallback, useEffect, useState } from 'react';
 
 import useCore from './useCore';
 import ERC20 from '../protocol/ERC20';
-import {BasicState} from '../utils/interface';
-import {useBlockNumber} from '../state/application/hooks';
-import {LOADING_DEFAULT_BASIC_STATE, NON_LOADING_DEFAULT_BASIC_STATE} from '../utils/constants';
+import { BasicState } from '../utils/interface';
+import { useBlockNumber } from '../state/application/hooks';
+import { LOADING_DEFAULT_BASIC_STATE, NON_LOADING_DEFAULT_BASIC_STATE } from '../utils/constants';
 
 const useTokenBalanceOf = (token: ERC20 | Contract, address: string | null) => {
   const [balance, setBalance] = useState<BasicState>(LOADING_DEFAULT_BASIC_STATE);
@@ -15,7 +15,7 @@ const useTokenBalanceOf = (token: ERC20 | Contract, address: string | null) => {
 
   const fetchBalance = useCallback(async () => {
     const bal: BigNumber = await token.balanceOf(address);
-    setBalance({isLoading: false, value: bal});
+    setBalance({ isLoading: false, value: bal });
   }, [token, address]);
 
   useEffect(() => {
