@@ -4,15 +4,12 @@ import {useMediaQuery} from "react-responsive";
 
 import OpenPosition from "../OpenPosition";
 import Header from "./components/Header";
-import PoolInfo from "./components/PoolInfo";
 import styled from "styled-components";
 import TextWrapper from "../../components/TextWrapper";
-import theme from "../../theme";
 import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
 import PostionDetails from "../PostionDetails";
-import AprInfo from "./components/AprInfo";
 
 import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 import SummaryView from "./components/SummaryView";
