@@ -3,9 +3,9 @@ import mixpanel from 'mixpanel-browser';
 export const isProduction = process.env.REACT_APP_ISPROD === 'true';
 
 if (isProduction) {
-  mixpanel.init('c7c11684939aa922256e19e6e5d88f46');
+  mixpanel.init('02cd2ca8a4b9369a9cc0f381d34cc2f3');
 } else {
-  mixpanel.init('e903d602bc8eb2c652c11a05306a85fe');
+  mixpanel.init('4d316b5b0c240fd24ae4e63baa70be99');
 }
 
 let actions = {

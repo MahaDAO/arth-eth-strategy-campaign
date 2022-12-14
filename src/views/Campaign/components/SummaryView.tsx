@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { parseUnits } from "ethers/lib/utils";
+import React, {useState, useMemo} from "react";
+import {parseUnits} from "ethers/lib/utils";
 
 import DataField from "../../../components/DataField";
 
@@ -8,9 +8,9 @@ import IconLoader from "../../../components/IconLoader";
 import TextButton from "../../../components/TextButton";
 import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
 import useGetBorrowingFeeRateWithDecay from "../../../hooks/state/TroveManager/useGetBorrowingFeeRateWithDecay";
-import { DECIMALS_18 } from "../../../utils/constants";
-import { BigNumber } from "ethers";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {DECIMALS_18} from "../../../utils/constants";
+import {BigNumber} from "ethers";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 
 const SummaryView = (props: { ethAmount: string }) => {
   const [simplifieldView, setsimplifieldView] = useState<boolean>(false);
@@ -68,7 +68,7 @@ const SummaryView = (props: { ethAmount: string }) => {
                 <span className={"bold"}>
                   {Number(
                     getDisplayBalance(arthOutputFromLoans, 18)
-                  ).toLocaleString("en-US", { maximumFractionDigits: 3 })}
+                  ).toLocaleString("en-US", {maximumFractionDigits: 3})}
                   <IconLoader
                     iconName={"ARTH"}
                     iconType={"tokenSymbol"}
@@ -77,7 +77,7 @@ const SummaryView = (props: { ethAmount: string }) => {
                   />
                   ARTH
                 </span>{" "}
-                (at a <b>300%</b> collateral ratio), which is then is then
+                (at a <b>300%</b> collateral ratio), which is then
                 deposited into <span className={"bold"}>MahaLend</span>.
               </div>
             }
@@ -95,7 +95,7 @@ const SummaryView = (props: { ethAmount: string }) => {
               value={
                 Number(
                   getDisplayBalance(parseUnits(props.ethAmount || "0", 18), 18)
-                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
+                ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
                 " ARTH"
               }
               valueFontColor={"white"}
@@ -109,7 +109,7 @@ const SummaryView = (props: { ethAmount: string }) => {
               value={
                 Number(
                   getDisplayBalance(arthOutputFromLoans, 18)
-                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
+                ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
                 " ARTH"
               }
               valueFontColor={"white"}
@@ -123,13 +123,13 @@ const SummaryView = (props: { ethAmount: string }) => {
               value={
                 Number(
                   getDisplayBalance(arthOutputFromLoans, 18)
-                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
+                ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
                 " ARTH"
               }
               valueFontColor={"white"}
               valueFontWeight={600}
             />
-            <DataField label={"Minimum cr should be 300%"} labelFontSize={10} />
+            <DataField label={"Minimum cr should be 300%"} labelFontSize={10}/>
           </div>
         </div>
       )}

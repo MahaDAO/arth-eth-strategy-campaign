@@ -9,7 +9,7 @@ interface IProps {
   availableNetworks?: number[]
 }
 
-const Page = ({ children }: IProps) => {
+const Page = ({children}: IProps) => {
   return (
     <MainPageContainer>
       <StyledPage>
@@ -47,6 +47,7 @@ const MainPageContainer = styled.div`
   padding: 0 60px;
   width: 100vw;
   display: flex;
+  min-height: 100vh;
   @media (max-width: 600px) {
     padding: 0;
   }
