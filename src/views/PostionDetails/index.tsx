@@ -114,12 +114,6 @@ const PositionDetails = () => {
             valueFontColor={'white'}
             className={'m-b-2'}
           />
-          <DataField
-            label={''}
-            value={'$2000'}
-            valueFontSize={14}
-            valueFontColor={theme.color.transparent[100]}
-          />
         </div>
       </Rewards>
     </div>
