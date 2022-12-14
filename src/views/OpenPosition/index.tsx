@@ -24,7 +24,6 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
   const balance = useGetNativeTokenBalance();
 
   const isInputGreaterThanMax = useMemo(() => {
-    return false
     const bnETHAmount = parseUnits(ethAmount || "0", 18);
     return bnETHAmount.gt(balance.value);
   }, [ethAmount, balance]);

@@ -12,7 +12,7 @@ const AprInfo = () => {
   });
 
   const fetchAPY = useCallback(async () => {
-    const url = `https://api.arthcoin.com/apy/stability`;
+    const url = `https://api.arthcoin.com/apy/campaign`;
     /*const headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
@@ -42,7 +42,7 @@ const AprInfo = () => {
         labelFontWeight={600}
         labelFontColor={'white'}
         labelFontSize={14}
-        value={mahaAPR.data}
+        value={mahaAPR.data.toString()}
         isValueLoading={mahaAPR.isLoading}
         valueFontColor={theme.color.primary[300]}
         valueFontWeight={600}
