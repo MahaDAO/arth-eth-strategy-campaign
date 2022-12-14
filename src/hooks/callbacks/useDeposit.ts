@@ -5,7 +5,7 @@ import { useTransactionAdder } from "../../state/transactions/hooks";
 
 import useCore from "../useCore";
 import formatErrorMessage from "../../utils/formatErrorMessage";
-import { DECIMALS_18, ZERO_ADDRESS } from "../../utils/constants";
+import { DECIMALS_18 } from "../../utils/constants";
 import { getDisplayBalance } from "../../utils/formatBalance";
 import { findHintsForNominalCollateralRatio } from "../../utils";
 import { useWallet } from "use-wallet";

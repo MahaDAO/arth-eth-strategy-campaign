@@ -7,7 +7,9 @@ import { useTransactionAdder } from '../../state/transactions/hooks';
 
 import useCore from '../useCore';
 import formatErrorMessage from '../../utils/formatErrorMessage';
-import { DECIMALS_18, ZERO_ADDRESS } from '../../utils/constants';
+import { DECIMALS_18 } from '../../utils/constants';
+import { getDisplayBalance } from '../../utils/formatBalance';
+import { findHintsForNominalCollateralRatio } from '../../utils';
 
 const useWithdraw = (ethAmount: BigNumber, arthAmount: BigNumber) => {
   const core = useCore();
@@ -21,18 +23,32 @@ const useWithdraw = (ethAmount: BigNumber, arthAmount: BigNumber) => {
     else {
       try {
         const strategyContract = core.getARTHETHTroveLpStrategy();
+        const trove = core.getTroveManager();
+
+        const troveStatus = await trove.Troves(strategyContract.address);
+        const newETH = troveStatus.coll.sub(ethAmount);
+        const newARTH = troveStatus.debt.sub(arthAmount);
+
+        const [upperHint, lowerHint]: string[] =
+          await findHintsForNominalCollateralRatio(
+            newETH.mul(DECIMALS_18.mul(100)).div(newARTH),
+            core.getSortedTroves(),
+            core.getHintHelpers(),
+            core.getTroveManager(),
+            core.myAccount
+          );
 
         const loanParams = {
           maxFee: DECIMALS_18,
-          upperHint: ZERO_ADDRESS,
-          lowerHint: ZERO_ADDRESS,
+          upperHint: upperHint,
+          lowerHint: lowerHint,
           arthAmount: 0
         }
 
         const response = await strategyContract.withdraw(loanParams);
 
         addTransaction(response, {
-          summary: `Withdraw from ARTH/ETH pool.`
+          summary: `Withdraw ${Number(getDisplayBalance(ethAmount, 18, 3))} ETH`
         });
 
         if (callback) callback();
@@ -45,7 +61,7 @@ const useWithdraw = (ethAmount: BigNumber, arthAmount: BigNumber) => {
         });
       }
     }
-  }, [core, addPopup, account, addTransaction]);
+  }, [core, addPopup, account, ethAmount, arthAmount, addTransaction]);
 
   return action;
 }
