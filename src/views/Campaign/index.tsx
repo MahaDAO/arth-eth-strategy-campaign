@@ -21,7 +21,7 @@ import StrategyInfo from "./components/StrategyInfo";
 import bgImage from '../../assets/images/bg.png';
 
 const Campaign = () => {
-  const [ethAmount, setEthAmount] = useState<string>("1");
+  const [ethAmount, setEthAmount] = useState<string>("");
 
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();

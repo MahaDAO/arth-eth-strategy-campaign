@@ -77,7 +77,7 @@ const SummaryView = (props: { ethAmount: string }) => {
                   />
                   ARTH
                 </span>{" "}
-                (at a <b>300%</b> collateral ratio), which is then
+                (at a <b>~300%</b> collateral ratio), which is then
                 deposited into <span className={"bold"}>MahaLend</span>.
               </div>
             }
@@ -118,6 +118,15 @@ const SummaryView = (props: { ethAmount: string }) => {
           </div>
           <div className={"m-b-12"}>
             <DataField
+              label={"Collateral Ratio"}
+              labelFontWeight={600}
+              value={'~300%'}
+              valueFontColor={"white"}
+              valueFontWeight={600}
+            />
+          </div>
+          <div className={"m-b-12"}>
+            <DataField
               label={"Supply amount to lending pool"}
               labelFontWeight={600}
               value={
@@ -129,7 +138,6 @@ const SummaryView = (props: { ethAmount: string }) => {
               valueFontColor={"white"}
               valueFontWeight={600}
             />
-            <DataField label={"Minimum cr should be 300%"} labelFontSize={10}/>
           </div>
         </div>
       )}

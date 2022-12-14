@@ -4,7 +4,7 @@ import Loader from "react-spinners/BeatLoader";
 import theme from "../../theme";
 
 import ToolTip from "../Tooltip";
-import TextWrapper, { TextWrapperProps } from "../TextWrapper";
+import TextWrapper, {TextWrapperProps} from "../TextWrapper";
 
 interface Iprops {
   label?: string;
@@ -46,7 +46,7 @@ const DataField = (props: Iprops) => {
 
   return (
     <div className={`single-line-${position} ${className}`}>
-      <div className="single-line-center-start">
+      <div className="single-line-center-start flex1">
         {label && <TextWrapper
           text={label}
           fontWeight={labelFontWeight}
@@ -58,10 +58,10 @@ const DataField = (props: Iprops) => {
           className="m-l-4"
         />}
       </div>
-      <div className="single-line-center-start">
+      <div className="single-line-center-end">
         {value &&
-          isValueLoading
-          ? <Loader color={'#ffffff'} loading={true} size={2} margin={2} />
+        isValueLoading
+          ? <Loader color={'#ffffff'} loading={true} size={2} margin={2}/>
           : <TextWrapper
             text={value || ""}
             fontWeight={valueFontWeight}
@@ -75,6 +75,7 @@ const DataField = (props: Iprops) => {
             fontWeight={valueFontWeight}
             fontSize={valueFontSize}
             Fcolor={valueTagColor}
+            align={'right'}
           />
         </div>}
       </div>
