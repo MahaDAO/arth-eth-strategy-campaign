@@ -4,23 +4,24 @@ import Page from "./components/Page/Page";
 import NoPageFound from "./components/NoPageFound";
 import ARTHETH from "./views/arth-eth";
 import ARTHUSDC from "./views/arth-usdc";
+import Home from "./views/Home";
 
 const Navigation = () => {
 
   return (
     <Switch>
-      {/*<Route exact path="/">
-        <Page availableNetworks={[137, 1337]}>
+      <Route exact path="/">
+        <Page>
           <Home/>
         </Page>
-      </Route>*/}
+      </Route>
       <Route exact path="/arth-eth-strategy">
-        <Page availableNetworks={[137, 1337]}>
+        <Page>
           <ARTHETH/>
         </Page>
       </Route>
       <Route exact path="/arth-usdc-strategy">
-        <Page availableNetworks={[137, 1337]}>
+        <Page>
           <ARTHUSDC/>
         </Page>
       </Route>
