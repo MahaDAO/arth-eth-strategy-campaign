@@ -96,7 +96,7 @@ const SummaryView = (props: { ethAmount: string }) => {
                 Number(
                   getDisplayBalance(parseUnits(props.ethAmount || "0", 18), 18)
                 ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
-                " ARTH"
+                " ETH"
               }
               valueFontColor={"white"}
               valueFontWeight={600}
