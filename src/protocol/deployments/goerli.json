@@ -7,6 +7,10 @@
     "abi": "IERC20",
     "address": "0x0Ac047155dfc292598503e31EBa58F988F0De76d"
   },
+  "USDC": {
+    "abi": "IERC20",
+    "address": "0x7651f6C3Fa619E40A48fc7a60D34BCFc7897C362"
+  },
   "ETHPriceFeed": {
     "abi": "PriceFeed",
     "address": "0x10fc058fc6c4e011c3369bC8C909a853d36ffFa0"

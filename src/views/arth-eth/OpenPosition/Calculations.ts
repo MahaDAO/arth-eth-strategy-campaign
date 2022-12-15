@@ -1,17 +1,17 @@
-import { useMemo } from "react";
-import { BigNumber } from "ethers";
-import { parseUnits } from "ethers/lib/utils";
+import {useMemo} from "react";
+import {BigNumber} from "ethers";
+import {parseUnits} from "ethers/lib/utils";
 
 import {
   DECIMALS_18,
   LOADING_DEFAULT_BASIC_STATE,
   NON_LOADING_DEFAULT_BASIC_STATE,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 
-import { BasicState } from "../../utils/interface";
+import {BasicState} from "../../../utils/interface";
 
-import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
-import troveDetails from "../../configs/troveDetails";
+import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
+import troveDetails from "../../../configs/troveDetails";
 
 export const useGetLoanEth = (ethAmount: string): string => {
   return useMemo(() => {
