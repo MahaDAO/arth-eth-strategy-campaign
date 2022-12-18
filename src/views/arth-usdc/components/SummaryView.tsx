@@ -1,5 +1,5 @@
-import React, {useState, useMemo} from "react";
-import {parseUnits} from "ethers/lib/utils";
+import React, { useState, useMemo } from "react";
+import { parseUnits } from "ethers/lib/utils";
 
 import DataField from "../../../components/DataField";
 
@@ -8,9 +8,9 @@ import IconLoader from "../../../components/IconLoader";
 import TextButton from "../../../components/TextButton";
 import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
 import useGetBorrowingFeeRateWithDecay from "../../../hooks/state/TroveManager/useGetBorrowingFeeRateWithDecay";
-import {DECIMALS_18} from "../../../utils/constants";
-import {BigNumber} from "ethers";
-import {getDisplayBalance} from "../../../utils/formatBalance";
+import { DECIMALS_18 } from "../../../utils/constants";
+import { BigNumber } from "ethers";
+import { getDisplayBalance } from "../../../utils/formatBalance";
 
 const SummaryView = (props: { USDCAmount: string }) => {
   const [simplifieldView, setsimplifieldView] = useState<boolean>(false);
@@ -68,8 +68,10 @@ const SummaryView = (props: { USDCAmount: string }) => {
                   />
                   USDC &#127881;
                 </span>{" "}
-                out of this which {usdcToSupply}USDC is used to borrow {arthBorrowed}ARTH from mahalend and
-                The remaining USDC and borrowed ARTH is then deposited to ARTH/USDC curve pool.
+                out of this which <span className={"bold"}>{usdcToSupply} USDC</span> is used to
+                borrow <span className={"bold"}>{arthBorrowed} ARTH</span> from MahaLend and
+                the remaining USDC and borrowed ARTH is then deposited
+                into the <span className={"bold"}>ARTH/USDC curve pool</span>.
               </div>
             }
             className={"m-b-16"}
@@ -86,7 +88,7 @@ const SummaryView = (props: { USDCAmount: string }) => {
               value={
                 Number(
                   getDisplayBalance(parseUnits(usdcDeposited.toString(), 6), 18)
-                ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
+                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
                 " USDC"
               }
               valueFontColor={"white"}
@@ -100,7 +102,7 @@ const SummaryView = (props: { USDCAmount: string }) => {
               value={
                 Number(
                   getDisplayBalance(parseUnits(usdcDeposited.toString(), 6), 18)
-                ).toLocaleString("en-US", {maximumFractionDigits: 3}) +
+                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
                 " ARTH"
               }
               valueFontColor={"white"}

@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import DataField from "../../../components/DataField";
 import theme from "../../../theme";
 
@@ -24,7 +24,7 @@ const AprInfo = () => {
       .then((res) => res.json())
       .then((res: { [key: string]: string }) => {
         if (res['arth-usdc']) {
-          setMahaApr({isLoading: false, data: res['arth-eth-loans']});
+          setMahaApr({ isLoading: false, data: res['arth-eth-loans'] });
         }
       })
       .catch((err) => {

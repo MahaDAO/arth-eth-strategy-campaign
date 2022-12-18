@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {Grid} from "@material-ui/core";
-import {useMediaQuery} from "react-responsive";
+import React, { useState } from "react";
+import { Grid } from "@material-ui/core";
+import { useMediaQuery } from "react-responsive";
 
 import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
@@ -22,20 +22,20 @@ const Campaign = () => {
 
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();
-  const isMobile = useMediaQuery({maxWidth: '600px'});
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   return (
     <div className={'custom-container'}>
-      <BgImage src={bgImage}/>
-      <Header/>
+      <BgImage src={bgImage} />
+      <Header />
       {
         isEligible.isLoading
-          ? <LoadingPage/>
+          ? <LoadingPage />
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
-                  isMobile && <StrategyInfo/>
+                  isMobile && <StrategyInfo />
                 }
                 <FormPart isEligibile={isEligible.value}>
                   {!isEligible.value && <Hidden>
@@ -45,7 +45,7 @@ const Campaign = () => {
                         align={'center'}
                         className={'m-b-4'}
                       />
-                      <div style={{width: 'max-content', margin: "auto"}}>
+                      <div style={{ width: 'max-content', margin: "auto" }}>
                         <ActionButton
                           text={'Check'}
                           onClick={() => {
@@ -56,16 +56,16 @@ const Campaign = () => {
                   </Hidden>}
                   {
                     positionDetails.value?.isActive
-                      ? <PostionDetails/>
-                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
+                      ? <PostionDetails />
+                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount} />
                   }
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                {!isMobile && <StrategyInfo/>}
-                {!positionDetails.value?.isActive && <SummaryView USDCAmount={USDCAmount}/>}
+                {!isMobile && <StrategyInfo />}
+                {!positionDetails.value?.isActive && <SummaryView USDCAmount={USDCAmount} />}
                 {/* <PoolInfo /> */}
                 {/* <AprInfo /> */}
               </div>

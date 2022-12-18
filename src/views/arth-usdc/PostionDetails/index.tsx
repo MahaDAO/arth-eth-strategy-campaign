@@ -1,19 +1,19 @@
 import styled from "styled-components";
 import theme from "../../../theme";
 import DataField from "../../../components/DataField";
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import TextWrapper from "../../../components/TextWrapper";
 import Button from "../../../components/Button";
 import TextButton from "../../../components/TextButton";
 import useGetPositionDetails from "../../../hooks/state/useGetPositionDetails";
-import {getDisplayBalance} from "../../../utils/formatBalance";
+import { getDisplayBalance } from "../../../utils/formatBalance";
 import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
-import {BigNumber} from "ethers";
+import { BigNumber } from "ethers";
 import useWithdraw from "../../../hooks/callbacks/useWithdraw";
 import useGetMahaRewards from "../../../hooks/state/useGetMahaRewards";
 import useClaimRewards from "../../../hooks/callbacks/useClaimRewards";
 import AprInfo from "../components/AprInfo";
-import {BNZERO} from "../../../utils/constants";
+import { BNZERO } from "../../../utils/constants";
 
 const PositionDetails = () => {
   const price = useCollateralPriceFeed()
@@ -41,7 +41,7 @@ const PositionDetails = () => {
             label={'Your USDC collateral deposited'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(BNZERO, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} USDC`}
+            value={`${Number(getDisplayBalance(BNZERO, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} USDC`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -66,7 +66,7 @@ const PositionDetails = () => {
             label={'Debt amount'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(BNZERO, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
+            value={`${Number(getDisplayBalance(BNZERO, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
             valueFontColor={theme.color.transparent[100]}
             valueFontSize={16}
             valueFontWeight={600}
@@ -83,7 +83,7 @@ const PositionDetails = () => {
             label={'ARTH/USDC deposited to curve finance pool'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(BNZERO, 16, 3)).toLocaleString('en-US', {maximumFractionDigits: 3})}ARTH/USDC`}
+            value={`${Number(getDisplayBalance(BNZERO, 16, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 })}ARTH/USDC`}
             valueFontColor={theme.color.transparent[100]}
             valueFontSize={16}
             valueFontWeight={600}
@@ -100,7 +100,7 @@ const PositionDetails = () => {
       </div>
       <Rewards className={'material-primary m-b-24'}>
         <div className={'single-line-center-between m-b-24'}>
-          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'}/>
+          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'} />
           <RewardsBtn>
             <Button
               onClick={claimHandler}
@@ -115,14 +115,14 @@ const PositionDetails = () => {
             label={'MAHA Rewards'}
             labelFontWeight={600}
             labelFontColor={'white'}
-            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4}) + " MAHA"}
+            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4 }) + " MAHA"}
             valueFontSize={16}
             valueFontWeight={600}
             valueFontColor={'white'}
             className={'m-b-2'}
           />
         </div>
-        <AprInfo/>
+        <AprInfo />
       </Rewards>
     </div>
   )

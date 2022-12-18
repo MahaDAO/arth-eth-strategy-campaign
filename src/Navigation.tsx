@@ -1,4 +1,4 @@
-import {Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import Page from "./components/Page/Page";
 import NoPageFound from "./components/NoPageFound";
@@ -10,25 +10,25 @@ const Navigation = () => {
 
   return (
     <Switch>
-      <Route exact path="/">
+      {/* <Route exact path="/">
         <Page>
           <Home/>
         </Page>
-      </Route>
+      </Route> */}
       <Route exact path="/arth-eth-strategy">
         <Page>
-          <ARTHETH/>
+          <ARTHETH />
         </Page>
       </Route>
       <Route exact path="/arth-usdc-strategy">
         <Page>
-          <ARTHUSDC/>
+          <ARTHUSDC />
         </Page>
       </Route>
       <Route exact path="*">
-        <NoPageFound/>
+        {/* <NoPageFound /> */}
+        <Redirect to="/arth-eth-strategy" />
       </Route>
-      <Redirect to="/"/>
     </Switch>
   );
 }
