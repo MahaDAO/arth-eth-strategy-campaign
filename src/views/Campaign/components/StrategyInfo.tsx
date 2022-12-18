@@ -13,12 +13,11 @@ const StrategyInfo = () => {
       />
       <TextWrapper text={
         <div>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-          <br/>
-          <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled</p>
-          <br/>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <p>The ETH staking program is a simple way for ETH holders to benefit from the ARTH farms.</p>
+          <br />
+          <p>The ETH deposited here is used to collateralize and mint ARTH, and then is used to deposit
+            into the MahaLend lending protocol.</p>
+          <br />
         </div>
       }
       />
