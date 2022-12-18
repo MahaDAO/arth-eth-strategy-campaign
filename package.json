@@ -60,7 +60,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "push": "npm run build && echo vaults.arth.loans > build/CNAME && gh-pages -d build"
+    "push": "npm run build && echo vaults.arth.loans > build/CNAME && gh-pages -d build --repo git@github.com:mahadao-deployments/vaults.arth.loans.git"
   },
   "eslintConfig": {
     "extends": [
