@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import {Grid} from "@material-ui/core";
 import {useMediaQuery} from "react-responsive";
 
-import OpenPosition from "../OpenPosition";
+import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
 import styled from "styled-components";
 import TextWrapper from "../../components/TextWrapper";
 import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
-import PostionDetails from "../PostionDetails";
+import PostionDetails from "./PostionDetails";
 
 import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 import SummaryView from "./components/SummaryView";
@@ -18,7 +18,7 @@ import StrategyInfo from "./components/StrategyInfo";
 import bgImage from '../../assets/images/bg.png';
 
 const Campaign = () => {
-  const [ethAmount, setEthAmount] = useState<string>("");
+  const [USDCAmount, setUSDCAmount] = useState<string>("");
 
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();
@@ -57,7 +57,7 @@ const Campaign = () => {
                   {
                     positionDetails.value?.isActive
                       ? <PostionDetails/>
-                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
+                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
                   }
                 </FormPart>
               </div>
@@ -65,7 +65,7 @@ const Campaign = () => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {!isMobile && <StrategyInfo/>}
-                {!positionDetails.value?.isActive && <SummaryView ethAmount={ethAmount}/>}
+                {!positionDetails.value?.isActive && <SummaryView USDCAmount={USDCAmount}/>}
                 {/* <PoolInfo /> */}
                 {/* <AprInfo /> */}
               </div>

@@ -1,18 +1,18 @@
 import styled from "styled-components";
-import theme from "../../theme";
-import DataField from "../../components/DataField";
+import theme from "../../../theme";
+import DataField from "../../../components/DataField";
 import React, {useMemo} from "react";
-import TextWrapper from "../../components/TextWrapper";
-import Button from "../../components/Button";
-import TextButton from "../../components/TextButton";
-import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
-import {getDisplayBalance} from "../../utils/formatBalance";
-import useCollateralPriceFeed from "../../hooks/state/TroveManager/useCollateralPriceFeed";
+import TextWrapper from "../../../components/TextWrapper";
+import Button from "../../../components/Button";
+import TextButton from "../../../components/TextButton";
+import useGetPositionDetails from "../../../hooks/state/useGetPositionDetails";
+import {getDisplayBalance} from "../../../utils/formatBalance";
+import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
 import {BigNumber} from "ethers";
-import useWithdraw from "../../hooks/callbacks/useWithdraw";
-import useGetMahaRewards from "../../hooks/state/useGetMahaRewards";
-import useClaimRewards from "../../hooks/callbacks/useClaimRewards";
-import AprInfo from "../Campaign/components/AprInfo";
+import useWithdraw from "../../../hooks/callbacks/useWithdraw";
+import useGetMahaRewards from "../../../hooks/state/useGetMahaRewards";
+import useClaimRewards from "../../../hooks/callbacks/useClaimRewards";
+import AprInfo from "../../arth-eth/components/AprInfo";
 
 const PositionDetails = () => {
   const price = useCollateralPriceFeed()

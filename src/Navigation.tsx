@@ -2,24 +2,27 @@ import {Redirect, Route, Switch} from "react-router-dom";
 
 import Page from "./components/Page/Page";
 import NoPageFound from "./components/NoPageFound";
-import Campaign from "./views/Campaign";
-import {useGetChainId} from "./utils/NetworksCustomHooks";
-import {useNetwork} from "wagmi";
+import ARTHETH from "./views/arth-eth";
+import ARTHUSDC from "./views/arth-usdc";
+import Home from "./views/Home";
 
 const Navigation = () => {
-  const chainId = useGetChainId();
-  const {chain} = useNetwork();
 
   return (
     <Switch>
-      {/*<Route exact path="/">
-        <Page availableNetworks={[137, 1337]}>
+      <Route exact path="/">
+        <Page>
           <Home/>
         </Page>
-      </Route>*/}
-      <Route exact path="/">
-        <Page availableNetworks={[137, 1337]}>
-          <Campaign/>
+      </Route>
+      <Route exact path="/arth-eth-strategy">
+        <Page>
+          <ARTHETH/>
+        </Page>
+      </Route>
+      <Route exact path="/arth-usdc-strategy">
+        <Page>
+          <ARTHUSDC/>
         </Page>
       </Route>
       <Route exact path="*">
