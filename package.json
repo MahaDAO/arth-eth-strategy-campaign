@@ -60,7 +60,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "gh-deploy": "npm run build && echo eth.arth.loans > build/CNAME && gh-pages -d build"
+    "gh-deploy": "npm run build && echo vaults.arth.loans > build/CNAME && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
