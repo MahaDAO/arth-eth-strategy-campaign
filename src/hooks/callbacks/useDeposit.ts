@@ -72,8 +72,17 @@ const useDeposit = (ethAmount: string) => {
             arthAmount: arthDesired,
           };
 
+          const gasLimit = (
+            await strategyContract.estimateGas.deposit(loanParams, 0, {
+              value: eth,
+            })
+          )
+            .mul(120)
+            .div(100); // add 20% more gas limit
+
           const response = await strategyContract.deposit(loanParams, 0, {
             value: eth,
+            gasLimit,
           });
 
           addTransaction(response, {
