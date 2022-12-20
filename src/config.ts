@@ -1,12 +1,12 @@
 import ethereum from "./configs/ethereum";
 import { Configuration } from "./utils/interface";
 import goerli from "./configs/goerli";
-import local from "./configs/local";
+import polgyon from "./configs/polygon";
 import { isProduction } from "./analytics/Mixpanel";
 
 const configurations: { [env: string]: Configuration } = {
   ...ethereum,
-  // ...local,
+  ...polgyon,
   ...goerli,
 };
 

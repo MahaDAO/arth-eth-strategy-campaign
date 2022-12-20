@@ -1,4 +1,4 @@
-import {Configuration} from "../utils/interface";
+import { Configuration } from "../utils/interface";
 
 const configurations: { [env: string]: Configuration } = {
   5: {
@@ -21,7 +21,6 @@ const configurations: { [env: string]: Configuration } = {
     decimalOverrides: {
       "USDC": 6,
     },
-    poolAddress: "0x7d335a784C35Adf1ca51765B68B658D928cD0a70"
   },
 };
 

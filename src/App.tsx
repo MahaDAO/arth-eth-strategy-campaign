@@ -26,7 +26,6 @@ import { useGetUpdateActiveChainId } from "./state/chains/hooks";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import {
-  darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
@@ -72,7 +71,7 @@ const WalletProvider: React.FC = ({ children }) => {
 
 const RainbowProvider: React.FC = ({ children }) => {
   const { chains, provider } = configureChains(
-    [chain.goerli, chain.mainnet],
+    [chain.goerli, chain.mainnet, chain.polygon],
     [publicProvider()]
   );
 
