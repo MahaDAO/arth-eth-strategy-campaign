@@ -136,6 +136,10 @@ export class Protocol {
     return this._contracts[this._activeNetwork][`ARTHETHTroveLpStrategy`];
   }
 
+  getARTHUSDCCurveLpStrategy() {
+    return this._contracts[this._activeNetwork][`ARTHUSDCCurveLPStrategy`];
+  }
+
   getUniV3PositionManager() {
     return this._contracts[this._activeNetwork]["UniV3PositionManager"];
   }
