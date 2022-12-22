@@ -56,7 +56,6 @@ const SummaryView = (props: { ethAmount: string }) => {
                     maximumFractionDigits: 3,
                   })}
                   <IconLoader
-
                     iconName={"ETH"}
                     iconType={"tokenSymbol"}
                     width={12}
@@ -64,7 +63,9 @@ const SummaryView = (props: { ethAmount: string }) => {
                   />
                   ETH &#127881;
                 </span>{" "}
-                which is being used as collateral to mint{" "}
+                which will earn you rewards in MAHA. Your {Number(props.ethAmount).toLocaleString("en-US", {
+                maximumFractionDigits: 3,
+              })} ETH will be used as collateral to mint{" "}
                 <span className={"bold"}>
                   {Number(
                     getDisplayBalance(arthOutputFromLoans, 18)
