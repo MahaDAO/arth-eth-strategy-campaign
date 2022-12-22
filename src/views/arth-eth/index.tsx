@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Grid} from "@material-ui/core";
 import {useMediaQuery} from "react-responsive";
+import {Helmet} from "react-helmet";
 
 import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
@@ -27,6 +28,11 @@ const Campaign = () => {
 
   return (
     <div className={'custom-container'}>
+      <Helmet>
+        <title>ETH Single Asset Staking Program powered by MahaDAO</title>
+        <meta name="description"
+              content="ETH Single Asset Staking Program lets you earn rewards in MAHA by staking ETH on our platform. "/>
+      </Helmet>
       <BgImage src={bgImage}/>
       <Header/>
       {
