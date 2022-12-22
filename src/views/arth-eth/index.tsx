@@ -16,6 +16,7 @@ import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
 
 import bgImage from '../../assets/images/bg.png';
+import Footer from "../../components/Footer";
 
 const Campaign = () => {
   const [ethAmount, setEthAmount] = useState<string>("");
@@ -72,6 +73,9 @@ const Campaign = () => {
             </Grid>
           </Grid>
       }
+      <FooterContainer>
+        <Footer/>
+      </FooterContainer>
     </div>
   )
 }
@@ -109,3 +113,8 @@ const Hidden = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const FooterContainer = styled.footer`
+  display: flex;
+  justify-content: center;
+`

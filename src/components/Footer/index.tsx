@@ -21,6 +21,58 @@ const Footer = () => {
       <div className={'single-line-center-center m-b-8'}>
         <div
           onClick={() => {
+            trackButtons('arth_docs');
+            window.open('https://docs.arth.loans');
+          }}
+          className="p-l-8 p-r-8"
+        >
+          <TextWrapper
+            text={'About ARTH'}
+            className="pointer"
+            Fcolor={theme.color.transparent[100]}
+          />
+        </div>
+        <div
+          onClick={() => {
+            trackButtons('mahadao_docs');
+            window.open('https://docs.mahadao.com');
+          }}
+          className="p-l-8 p-r-8"
+        >
+          <TextWrapper
+            text={'About MahaDAO'}
+            className="pointer"
+            Fcolor={theme.color.transparent[100]}
+          />
+        </div>
+        <div
+          onClick={() => {
+            trackButtons('website');
+            window.open('https://mahadao.com');
+          }}
+          className="p-l-8 p-r-8"
+        >
+          <TextWrapper
+            text={'MahaDAO'}
+            className="pointer"
+            Fcolor={theme.color.transparent[100]}
+          />
+        </div>
+        <div
+          onClick={() => {
+            trackButtons('mahalend_app');
+            window.open('https://app.mahalend.com');
+          }}
+          className="p-l-8 p-r-8"
+        >
+          <TextWrapper
+            text={'Mahalend'}
+            className="pointer"
+            Fcolor={theme.color.transparent[100]}
+          />
+        </div>
+        {/*<div
+          onClick={() => {
             trackButtons('website');
             window.open('https://mahadao.com');
           }}
@@ -31,8 +83,8 @@ const Footer = () => {
             className="pointer"
             Fcolor={theme.color.transparent[100]}
           />
-        </div>
-        <div
+        </div>*/}
+        {/*<div
           onClick={() => {
             trackButtons('twitter');
             window.open('https://twitter.com/TheMahaDAO');
@@ -44,8 +96,8 @@ const Footer = () => {
             className="pointer"
             Fcolor={theme.color.transparent[100]}
           />
-        </div>
-        <div
+        </div>*/}
+        {/*<div
           onClick={() => {
             trackButtons('github');
             window.open('https://github.com/mahadao');
@@ -115,7 +167,7 @@ const Footer = () => {
             className="pointer"
             Fcolor={theme.color.transparent[100]}
           />
-        </div>
+        </div>*/}
       </div>
     </FooterContainer>
   );
