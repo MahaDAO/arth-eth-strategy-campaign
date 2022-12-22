@@ -66,6 +66,10 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
           <ActionButton
             text={"Deposit"}
             onClick={onDepositClick}
+            tracking_id={'deposit'}
+            tracking_params={{
+              programName: 'arth_eth',
+            }}
             disabled={isInputGreaterThanMax || !Number(ethAmount)}
           />
         </div>

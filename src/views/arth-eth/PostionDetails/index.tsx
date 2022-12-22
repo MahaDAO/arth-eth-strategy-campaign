@@ -1,18 +1,19 @@
 import styled from "styled-components";
 import theme from "../../../theme";
 import DataField from "../../../components/DataField";
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import TextWrapper from "../../../components/TextWrapper";
 import Button from "../../../components/Button";
 import TextButton from "../../../components/TextButton";
 import useGetPositionDetails from "../../../hooks/state/useGetPositionDetails";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
-import { BigNumber } from "ethers";
+import {BigNumber} from "ethers";
 import useWithdraw from "../../../hooks/callbacks/useWithdraw";
 import useGetMahaRewards from "../../../hooks/state/useGetMahaRewards";
 import useClaimRewards from "../../../hooks/callbacks/useClaimRewards";
 import AprInfo from "../../arth-eth/components/AprInfo";
+import ActionButton from "../../../components/ActionButton";
 
 const PositionDetails = () => {
   const price = useCollateralPriceFeed()
@@ -40,7 +41,7 @@ const PositionDetails = () => {
             label={'Your ETH collateral'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.ethForLoan, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ETH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.ethForLoan, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ETH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -53,7 +54,7 @@ const PositionDetails = () => {
             label={'ARTH minted'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.arthFromLoan, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.arthFromLoan, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -65,7 +66,7 @@ const PositionDetails = () => {
             label={'ARTH supplied to MahaLend'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(positionDetails.value.arthInLendingPool, 18)).toLocaleString('en-US', { maximumFractionDigits: 3 })} ARTH`}
+            value={`${Number(getDisplayBalance(positionDetails.value.arthInLendingPool, 18)).toLocaleString('en-US', {maximumFractionDigits: 3})} ARTH`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -77,7 +78,7 @@ const PositionDetails = () => {
             label={'Collateral Ratio'}
             labelFontSize={16}
             labelFontColor={'white'}
-            value={`${Number(getDisplayBalance(cr, 16, 3)).toLocaleString('en-US', { maximumFractionDigits: 3 })}%`}
+            value={`${Number(getDisplayBalance(cr, 16, 3)).toLocaleString('en-US', {maximumFractionDigits: 3})}%`}
             valueFontColor={'white'}
             valueFontSize={16}
             valueFontWeight={600}
@@ -89,17 +90,25 @@ const PositionDetails = () => {
             text={'Close Position'}
             onClick={onWithdrawClick}
             align={'center'}
+            tracking_id={'withdraw'}
+            tracking_params={{
+              programName: 'arth_eth',
+            }}
           />
         </div>
       </div>
       <Rewards className={'material-primary m-b-24'}>
         <div className={'single-line-center-between m-b-24'}>
-          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'} />
+          <TextWrapper text={'Rewards'} fontSize={24} fontFamily={'Syne'}/>
           <RewardsBtn>
-            <Button
+            <ActionButton
               onClick={claimHandler}
               text={'Collect Rewards'}
               size={'sm'}
+              tracking_id={'claim'}
+              tracking_params={{
+                programName: 'arth_eth',
+              }}
               disabled={mahaRewards.value.lte(0)}
             />
           </RewardsBtn>
@@ -109,14 +118,14 @@ const PositionDetails = () => {
             label={'MAHA Rewards'}
             labelFontWeight={600}
             labelFontColor={'white'}
-            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', { maximumFractionDigits: 4 }) + " MAHA"}
+            value={Number(getDisplayBalance(mahaRewards.value, 18, 3)).toLocaleString('en-US', {maximumFractionDigits: 4}) + " MAHA"}
             valueFontSize={16}
             valueFontWeight={600}
             valueFontColor={'white'}
             className={'m-b-2'}
           />
         </div>
-        <AprInfo />
+        <AprInfo/>
       </Rewards>
     </div>
   )
