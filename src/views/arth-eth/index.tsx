@@ -32,7 +32,7 @@ const Campaign = () => {
       {
         isEligible.isLoading
           ? <LoadingPage/>
-          : <Grid container spacing={3}>
+          : <Grid container spacing={2}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
@@ -66,7 +66,7 @@ const Campaign = () => {
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {!isMobile && <StrategyInfo/>}
-                {!positionDetails.value?.isActive && <SummaryView ethAmount={ethAmount}/>}
+                {!positionDetails.value?.isActive && !isMobile && <SummaryView ethAmount={ethAmount}/>}
                 {/* <PoolInfo /> */}
                 {/* <AprInfo /> */}
               </div>

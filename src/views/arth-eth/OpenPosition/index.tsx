@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import styled from "styled-components";
-import { parseUnits } from "ethers/lib/utils";
+import {parseUnits} from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../../hooks/state/useGetNativeTokenBalance";
 
@@ -15,12 +15,14 @@ import theme from "../../../theme";
 import TextWrapper from "../../../components/TextWrapper";
 import useDeposit from "../../../hooks/callbacks/useDeposit";
 import ActionButton from "../../../components/ActionButton";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 import InfoTip from "../../../components/InfoTip";
 import AprInfo from "../../arth-eth/components/AprInfo";
+import SummaryView from "../components/SummaryView";
+import {useMediaQuery} from "react-responsive";
 
 const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<React.SetStateAction<string>> }) => {
-  const { ethAmount, setEthAmount } = props;
+  const {ethAmount, setEthAmount} = props;
   const balance = useGetNativeTokenBalance();
 
   const isInputGreaterThanMax = useMemo(() => {
@@ -30,6 +32,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
 
   const depositHandler = useDeposit(ethAmount);
   const onDepositClick = () => depositHandler();
+  const isMobile = useMediaQuery({maxWidth: '600px'});
 
   return (
     <div>
@@ -39,7 +42,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
           dataValueLoading={balance.isLoading}
           dataValue={`Balance: ${Number(
             getDisplayBalance(balance.value)
-          ).toLocaleString("en-US", { maximumFractionDigits: 3 })}`}
+          ).toLocaleString("en-US", {maximumFractionDigits: 3})}`}
           className={"m-b-24"}
         >
           <States
@@ -55,7 +58,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                   setEthAmount(getDisplayBalance(balance.value, 18));
                 }}
               />
-              <CollateralDropDown selectedSymbol={"ETH"} />
+              <CollateralDropDown selectedSymbol={"ETH"}/>
             </div>
           </States>
         </InputContainer>
@@ -67,14 +70,15 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
           />
         </div>
       </Form>
+      {isMobile && <SummaryView ethAmount={ethAmount}/>}
       <Rewards className={"material-primary m-b-24"}>
         <div className={"single-line-center-between m-b-24"}>
-          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"} />
+          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"}/>
           <RewardsBtn>
-            <Button text={"Collect Rewards"} size={"sm"} disabled={true} />
+            <Button text={"Collect Rewards"} size={"sm"} disabled={true}/>
           </RewardsBtn>
         </div>
-        <AprInfo />
+        <AprInfo/>
         <div className={"m-b-8"}>
           <DataField
             label={"Earned Rewards"}
@@ -88,7 +92,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
           />
         </div>
         <InfoTip type={'Info'}
-          msg={<div>You have no rewards collected &#128542;, deposit ETH and start earn MAHA &#127881;</div>} />
+                 msg={<div>You have no rewards collected &#128542;, deposit ETH and start earn MAHA &#127881;</div>}/>
       </Rewards>
     </div>
   );
