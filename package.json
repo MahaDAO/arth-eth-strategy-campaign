@@ -1,6 +1,6 @@
 {
   "name": "campaign.mahadao.com",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "private": true,
   "dependencies": {
     "@ethersproject/providers": "^5.4.5",
