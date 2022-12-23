@@ -26,12 +26,11 @@ import { useGetUpdateActiveChainId } from "./state/chains/hooks";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import {
-  darkTheme,
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { infuraProvider } from "wagmi/providers/infura";
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 import ChainUpdater from "./components/ChainUpdater";
@@ -76,8 +75,8 @@ const RainbowProvider: React.FC = ({ children }) => {
   const { chains, provider } = configureChains(
     ConfigChain,
     [
-      alchemyProvider({ apiKey: 'Pqa8x2474ELXnBdyrbgHJE8WciGvie2H' }),
-      // publicProvider()
+      isProduction ? alchemyProvider({ apiKey: 'Pqa8x2474ELXnBdyrbgHJE8WciGvie2H' })
+        : infuraProvider({ apiKey: 'd3f7dbf6880a410981a74ff7ef8c95cd' })
     ]
   );
 

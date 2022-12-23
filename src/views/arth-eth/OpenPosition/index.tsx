@@ -1,6 +1,6 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
-import {parseUnits} from "ethers/lib/utils";
+import { parseUnits } from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../../hooks/state/useGetNativeTokenBalance";
 
@@ -15,18 +15,18 @@ import theme from "../../../theme";
 import TextWrapper from "../../../components/TextWrapper";
 import useDeposit from "../../../hooks/callbacks/useDeposit";
 import ActionButton from "../../../components/ActionButton";
-import {getDisplayBalance} from "../../../utils/formatBalance";
+import { getDisplayBalance } from "../../../utils/formatBalance";
 import InfoTip from "../../../components/InfoTip";
 import AprInfo from "../../arth-eth/components/AprInfo";
 import SummaryView from "../components/SummaryView";
-import {useMediaQuery} from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import Confetti from "react-confetti";
 import SuccesModal from "../../../components/SuccesModal";
 import useGetPositionDetails from "../../../hooks/state/useGetPositionDetails";
 import PostionDetails from "../PostionDetails";
 
 const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<React.SetStateAction<string>> }) => {
-  const {ethAmount, setEthAmount} = props;
+  const { ethAmount, setEthAmount } = props;
   const balance = useGetNativeTokenBalance();
   const [success, setSuccess] = useState<boolean>(false);
   const [successModal, setSuccessModal] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
     ).then(r => {
     });
   }
-  const isMobile = useMediaQuery({maxWidth: '600px'});
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
 
   /*useEffect(() => {
     let myTimeout: NodeJS.Timeout | null = null;
@@ -60,25 +60,28 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
 
   return (
     <div>
-      {success && <div style={{position: 'fixed', top: 0, left: 0, zIndex: 99}}>
+      {success && <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 99 }}>
         <Confetti
           recycle={true}
           onConfettiComplete={() => console.log('finished')}
           numberOfPieces={500}
+          width={window.innerWidth}
         />
       </div>}
       <SuccesModal
         modalOpen={success}
+        buttonType="transparent"
+        buttonText="Continue"
         setModalOpen={() => setSuccess(false)}
-        title={'Congrats! you are now farming MAHA and supporting the vision'}
+        title={'Congrats 🎉 You are now supporting a vision to create an inflation-proof future!'}
         subTitle={<div>
-          join our <a href={'https://discord.com/invite/mahadao'} className={'links'}>discord</a> and <a
-          href={'https://t.me/MahaDAO'} className={'links'}>telegram</a> here for latest updates
+          Join the <span className="bold">#farming</span> channel in our <a href={'https://discord.com/invite/mahadao'} className={'links'}>Discord </a>
+          and be a part of our awesome community.
         </div>}
       />
       {
         positionDetails.value?.isActive
-          ? <PostionDetails/>
+          ? <PostionDetails />
           : <div>
             <Form className={"m-b-24"}>
               <InputContainer
@@ -86,7 +89,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                 dataValueLoading={balance.isLoading}
                 dataValue={`Balance: ${Number(
                   getDisplayBalance(balance.value)
-                ).toLocaleString("en-US", {maximumFractionDigits: 3})}`}
+                ).toLocaleString("en-US", { maximumFractionDigits: 3 })}`}
                 className={"m-b-24"}
               >
                 <States
@@ -102,7 +105,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                         setEthAmount(getDisplayBalance(balance.value, 18));
                       }}
                     />
-                    <CollateralDropDown selectedSymbol={"ETH"}/>
+                    <CollateralDropDown selectedSymbol={"ETH"} />
                   </div>
                 </States>
               </InputContainer>
@@ -118,15 +121,15 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                 />
               </div>
             </Form>
-            {isMobile && <SummaryView ethAmount={ethAmount}/>}
+            {isMobile && <SummaryView ethAmount={ethAmount} />}
             <Rewards className={"material-primary m-b-24"}>
               <div className={"single-line-center-between m-b-24"}>
-                <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"}/>
+                <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"} />
                 <RewardsBtn>
-                  <Button text={"Collect Rewards"} size={"sm"} disabled={true}/>
+                  <Button text={"Collect Rewards"} size={"sm"} disabled={true} />
                 </RewardsBtn>
               </div>
-              <AprInfo/>
+              <AprInfo />
               <div className={"m-b-8"}>
                 <DataField
                   label={"Earned Rewards"}
@@ -140,8 +143,8 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                 />
               </div>
               <InfoTip type={'Info'}
-                       msg={<div>You have no rewards collected &#128542;, deposit ETH and start earning
-                         MAHA &#127881;</div>}/>
+                msg={<div>You have no rewards collected &#128542;, deposit ETH and start earning
+                  MAHA &#127881;</div>} />
             </Rewards>
           </div>
       }
