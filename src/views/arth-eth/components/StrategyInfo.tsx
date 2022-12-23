@@ -13,19 +13,14 @@ const StrategyInfo = () => {
       />
       <TextWrapper text={
         <div>
-          <p className={'m-b-8'}>The ETH staking program is a simple way for ETH holders to earn a yield by providing
-            liquidity to the
-            <a href={'https://mahadao.com'} className={'links'}> MahaDAO</a> ecosystem .</p>
-          <p className={'m-b-8'}>The ETH you contribute here is then used by the protocol as collateral to mint ARTH (an
-            inflation-proof
-            stablecoin) and then deposited into MahaLend to generate rewards.</p>
-          <p className={'m-b-8'}>Rewards are distributed in $MAHA, the governance token in
-            the MahaDAO
-            ecosystem. The governance token can be locked for $MAHAX to earn staking rewards and access superior
-            governance features on the governance portal <a href={'https://gov.mahadao.com/#/locker'}
-                                                            className={'links'}>here</a>.</p>
+          <p className={'m-b-8'}>The ETH staking program is a simple way for users to earn a yield on their
+            ETH by providing liquidity to the <a href={'https://mahadao.com'} className={'links'}> MahaDAO</a>  ecosystem.</p>
+          <p className={'m-b-8'}>The ETH you'll contribute here is used as collateral to mint ARTH (an
+            inflation-proof stablecoin) and then it is deposited into MahaLend to provide liquidity for the ecosystem.</p>
+          <p className={'m-b-8'}>Rewards are given out in MAHA, the governance token for the entire ecosystem. You can further lock MAHA for more staking rewards and other special benefits
+            from the <a href={'https://gov.mahadao.com/#/locker'} className={'links'}>governance portal</a>.</p>
           <p className={'m-b-8'}>
-            The ETH staked can also be withdrawn at any time without any locking period.
+            You can withdraw your ETH at any time from the program.
           </p>
         </div>
       }

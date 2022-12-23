@@ -1,4 +1,4 @@
-import {Configuration} from "../utils/interface";
+import { Configuration } from "../utils/interface";
 
 const configurations: { [env: string]: Configuration } = {
   1: {
@@ -7,7 +7,8 @@ const configurations: { [env: string]: Configuration } = {
     networkIconName: "Ethereum",
     chainId: 1,
     etherscanUrl: "https://etherscan.io",
-    defaultProvider: "https://cloudflare-eth.com",
+    defaultProvider:
+      "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
     deployments: require("../protocol/deployments/ethereum.json"),
     refreshInterval: 10000,
     gasLimitMultiplier: 1.1,

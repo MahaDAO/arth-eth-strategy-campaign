@@ -1,9 +1,9 @@
 import ethereum from "./configs/ethereum";
-import {Configuration} from "./utils/interface";
+import { Configuration } from "./utils/interface";
 import goerli from "./configs/goerli";
 import local from "./configs/local";
-import {isProduction} from "./analytics/Mixpanel";
-import {chain} from "wagmi";
+import { isProduction } from "./analytics/Mixpanel";
+import { chain } from "wagmi";
 
 const configurations: { [env: string]: Configuration } = {
   ...ethereum,
@@ -11,7 +11,7 @@ const configurations: { [env: string]: Configuration } = {
   ...goerli,
 };
 
-export let ConfigChain = [chain.goerli, chain.mainnet]
+export let ConfigChain = [chain.goerli, chain.mainnet];
 
 if (isProduction) {
   delete configurations[5];
