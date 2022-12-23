@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 import {parseUnits} from "ethers/lib/utils";
 
@@ -20,10 +20,12 @@ import InfoTip from "../../../components/InfoTip";
 import AprInfo from "../../arth-eth/components/AprInfo";
 import SummaryView from "../components/SummaryView";
 import {useMediaQuery} from "react-responsive";
+import Confetti from "react-confetti";
 
 const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<React.SetStateAction<string>> }) => {
   const {ethAmount, setEthAmount} = props;
   const balance = useGetNativeTokenBalance();
+  const [success, setSuccess] = useState<boolean>(false);
 
   const isInputGreaterThanMax = useMemo(() => {
     const bnETHAmount = parseUnits(ethAmount || "0", 18);
@@ -31,11 +33,36 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
   }, [ethAmount, balance]);
 
   const depositHandler = useDeposit(ethAmount);
-  const onDepositClick = () => depositHandler();
+  const onDepositClick = () => {
+    depositHandler(
+      () => setSuccess(true)
+    ).then(r => {
+    });
+  }
   const isMobile = useMediaQuery({maxWidth: '600px'});
+
+  useEffect(() => {
+    let myTimeout: NodeJS.Timeout | null = null;
+    if (success) {
+      myTimeout = setTimeout(() => setSuccess(false), 5000);
+    }
+
+    return () => {
+      // @ts-ignore
+      clearTimeout(myTimeout);
+    };
+  }, [success])
 
   return (
     <div>
+      {success && <div style={{position: 'fixed', top: 0, left: 0, zIndex: 99}}>
+        <Confetti
+          recycle={true}
+          onConfettiComplete={() => console.log('finished')}
+          numberOfPieces={500}
+        />
+      </div>}
+
       <Form className={"m-b-24"}>
         <InputContainer
           label={"Enter Amount"}

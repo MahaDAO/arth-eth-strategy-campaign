@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import styled from "styled-components";
-import { parseUnits } from "ethers/lib/utils";
+import {parseUnits} from "ethers/lib/utils";
 
 import useGetNativeTokenBalance from "../../../hooks/state/useGetNativeTokenBalance";
 
@@ -15,15 +15,15 @@ import theme from "../../../theme";
 import TextWrapper from "../../../components/TextWrapper";
 import useDeposit from "../../../hooks/callbacks/useDeposit";
 import ActionButton from "../../../components/ActionButton";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 import InfoTip from "../../../components/InfoTip";
 import AprInfo from "../components/AprInfo";
 import useTokenBalance from "../../../hooks/useTokenBalance";
 import useCore from "../../../hooks/useCore";
-import { useGetChainId } from "../../../utils/NetworksCustomHooks";
+import {useGetChainId} from "../../../utils/NetworksCustomHooks";
 
 const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch<React.SetStateAction<string>> }) => {
-  const { USDCAmount, setUSDCAmount } = props;
+  const {USDCAmount, setUSDCAmount} = props;
   const core = useCore();
   const chainId = useGetChainId()
   const balance = useTokenBalance(core._tokens[chainId]["USDC"]);
@@ -33,7 +33,8 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
   }, [USDCAmount, balance]);
 
   const depositHandler = useDeposit(USDCAmount);
-  const onDepositClick = () => depositHandler();
+  const onDepositClick = () => depositHandler(() => {
+  });
 
   return (
     <div>
@@ -43,7 +44,7 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
           dataValueLoading={balance.isLoading}
           dataValue={`Balance: ${Number(
             getDisplayBalance(balance.value, 6)
-          ).toLocaleString("en-US", { maximumFractionDigits: 3 })}`}
+          ).toLocaleString("en-US", {maximumFractionDigits: 3})}`}
           className={"m-b-24"}
         >
           <States
@@ -59,7 +60,7 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
                   setUSDCAmount(getDisplayBalance(balance.value, 6));
                 }}
               />
-              <CollateralDropDown selectedSymbol={"USDC"} />
+              <CollateralDropDown selectedSymbol={"USDC"}/>
             </div>
           </States>
         </InputContainer>
@@ -73,12 +74,12 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
       </Form>
       <Rewards className={"material-primary m-b-24"}>
         <div className={"single-line-center-between m-b-24"}>
-          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"} />
+          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"}/>
           <RewardsBtn>
-            <Button text={"Collect Rewards"} size={"sm"} disabled={true} />
+            <Button text={"Collect Rewards"} size={"sm"} disabled={true}/>
           </RewardsBtn>
         </div>
-        <AprInfo />
+        <AprInfo/>
         <div className={"m-b-8"}>
           <DataField
             label={"Earned Rewards"}
@@ -92,7 +93,8 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
           />
         </div>
         <InfoTip type={'Info'}
-          msg={<div>You have no rewards collected &#128542;, deposit some USDC and start earn MAHA &#127881;</div>} />
+                 msg={<div>You have no rewards collected &#128542;, deposit some USDC and start earn
+                   MAHA &#127881;</div>}/>
       </Rewards>
     </div>
   );

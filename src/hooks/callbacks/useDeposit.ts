@@ -1,27 +1,27 @@
-import { useCallback } from "react";
+import {useCallback} from "react";
 
-import { useAddPopup } from "../../state/application/hooks";
-import { useTransactionAdder } from "../../state/transactions/hooks";
+import {useAddPopup} from "../../state/application/hooks";
+import {useTransactionAdder} from "../../state/transactions/hooks";
 
 import useCore from "../useCore";
 import formatErrorMessage from "../../utils/formatErrorMessage";
-import { DECIMALS_18 } from "../../utils/constants";
-import { getDisplayBalance } from "../../utils/formatBalance";
-import { findHintsForNominalCollateralRatio } from "../../utils";
-import { useWallet } from "use-wallet";
+import {DECIMALS_18} from "../../utils/constants";
+import {getDisplayBalance} from "../../utils/formatBalance";
+import {findHintsForNominalCollateralRatio} from "../../utils";
+import {useWallet} from "use-wallet";
 import useGetBorrowingFeeRateWithDecay from "../state/TroveManager/useGetBorrowingFeeRateWithDecay";
-import { parseUnits } from "ethers/lib/utils";
-import { BigNumber } from "ethers";
+import {parseUnits} from "ethers/lib/utils";
+import {BigNumber} from "ethers";
 
 const useDeposit = (ethAmount: string) => {
   const core = useCore();
   const addPopup = useAddPopup();
-  const { account } = useWallet();
+  const {account} = useWallet();
   const addTransaction = useTransactionAdder();
   const borrowingFeeRate = useGetBorrowingFeeRateWithDecay();
 
   const action = useCallback(
-    async (callback?: () => void): Promise<void> => {
+    async (onSuccess: () => void, callback?: () => void): Promise<void> => {
       if (!account) return;
       else {
         try {
@@ -45,16 +45,6 @@ const useDeposit = (ethAmount: string) => {
           const troveStatus = await trove.Troves(strategyContract.address);
           const newETH = eth.add(troveStatus.coll);
           const newARTH = arthDesired.add(troveStatus.debt);
-
-          console.log(
-            "fdd",
-            price.mul(eth).div(arthDesired).toString(),
-            price.mul(newETH).div(newARTH).toString(),
-            eth.toString(),
-            newETH.toString(),
-            arthDesired.toString(),
-            newARTH.toString()
-          );
 
           const [upperHint, lowerHint]: string[] =
             await findHintsForNominalCollateralRatio(
@@ -89,6 +79,9 @@ const useDeposit = (ethAmount: string) => {
             summary: `Deposit ${Number(getDisplayBalance(eth, 18, 3))} ETH.`,
           });
 
+          const tx = await response.wait();
+
+          if (tx?.status === 1) onSuccess();
           if (callback) callback();
         } catch (e: any) {
           console.log("ERror", e);
