@@ -96,7 +96,8 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
           />
         </div>
         <InfoTip type={'Info'}
-                 msg={<div>You have no rewards collected &#128542;, deposit ETH and start earn MAHA &#127881;</div>}/>
+                 msg={<div>You have no rewards collected &#128542;, deposit ETH and start earning
+                   MAHA &#127881;</div>}/>
       </Rewards>
     </div>
   );
