@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import CustomModal from '../Modal';
 import styled, {keyframes} from 'styled-components';
 
@@ -6,12 +6,13 @@ import Button from '../Button';
 import IconLoader from "../IconLoader";
 
 import Tick from '../../assets/images/Tick.svg';
+import theme from "../../theme";
 
 export interface InputProps {
   modalOpen: boolean;
   setModalOpen: () => void;
-  title: string;
-  subTitle?: string;
+  title: string | ReactNode;
+  subTitle?: string | ReactNode;
   subTitleLink?: string; /* if want to redirect to other website only */
   subsubTitle?: string;
   buttonText?: string;
@@ -52,10 +53,7 @@ const SuccessModal: React.FC<InputProps> = (props) => {
     <CustomModal
       closeButton
       handleClose={() => setModalOpen()}
-      open={modalOpen}
-      modalTitleStyle={{}}
-      modalContainerStyle={{}}
-      modalBodyStyle={{}}>
+      open={modalOpen}>
       <MainContainer>
         <CloseButton>
           <IconLoader iconName="Cross" iconType="misc"/>
@@ -85,9 +83,15 @@ const SuccessModal: React.FC<InputProps> = (props) => {
 export default SuccessModal;
 
 const TickAnimation = keyframes`
-  0%   {transform: scale(0)}
-  60%  {transform: scale(1.4)}
-  100% {transform: scale(1)}
+  0% {
+    transform: scale(0)
+  }
+  60% {
+    transform: scale(1.4)
+  }
+  100% {
+    transform: scale(1)
+  }
 `;
 
 const TickBackground = keyframes`
@@ -116,7 +120,7 @@ const TickContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 32px;
   margin-bottom: 24px;
   position: relative;
 `;
@@ -142,7 +146,7 @@ const ContentConatiner = styled.div`
 `;
 
 const ContentTitle = styled.p`
-  font-family: Inter;
+  font-family: Syne;
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
@@ -159,12 +163,9 @@ const ContentSubtitle = styled.a`
   font-size: 14px;
   line-height: 140%;
   text-align: center;
-  color: #F7653B;
+  color: ${theme.color.transparent[100]};
   margin: 0;
   cursor: pointer;
-  &:hover {
-    color: #F7653B;
-  }
 `;
 
 const ContentSubSubtitle = styled.p`

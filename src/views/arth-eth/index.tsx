@@ -60,11 +60,12 @@ const Campaign = () => {
                       </div>
                     </div>
                   </Hidden>}*/}
-                  {
+                  <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
+                  {/*{
                     positionDetails.value?.isActive
                       ? <PostionDetails/>
                       : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
-                  }
+                  }*/}
                 </FormPart>
               </div>
             </Grid>
