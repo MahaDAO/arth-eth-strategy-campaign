@@ -1,33 +1,34 @@
-import { Redirect, Route, Switch } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 
 import Page from "./components/Page/Page";
 import NoPageFound from "./components/NoPageFound";
 import ARTHETH from "./views/arth-eth";
 import ARTHUSDC from "./views/arth-usdc";
 import Home from "./views/Home";
+import ComingSoon from "./components/ComingSoon";
 
 const Navigation = () => {
 
   return (
     <Switch>
-      {/* <Route exact path="/">
+      <Route exact path="/">
         <Page>
           <Home/>
         </Page>
-      </Route> */}
+      </Route>
       <Route exact path="/arth-eth-strategy">
         <Page>
-          <ARTHETH />
+          <ARTHETH/>
         </Page>
       </Route>
       <Route exact path="/arth-usdc-strategy">
         <Page>
-          <ARTHUSDC />
+          <ComingSoon/>
+          {/*<ARTHUSDC/>*/}
         </Page>
       </Route>
       <Route exact path="*">
-        {/* <NoPageFound /> */}
-        <Redirect to="/arth-eth-strategy" />
+        <NoPageFound/>
       </Route>
     </Switch>
   );

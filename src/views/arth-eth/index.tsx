@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
-import { useMediaQuery } from "react-responsive";
+import React, {useState} from "react";
+import {Grid} from "@material-ui/core";
+import {useMediaQuery} from "react-responsive";
+import {Helmet} from "react-helmet";
 
 import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
@@ -16,29 +17,35 @@ import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
 
 import bgImage from '../../assets/images/bg.png';
+import Footer from "../../components/Footer";
 
 const Campaign = () => {
   const [ethAmount, setEthAmount] = useState<string>("");
 
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
+  const isMobile = useMediaQuery({maxWidth: '600px'});
 
   return (
     <div className={'custom-container'}>
-      <BgImage src={bgImage} />
-      <Header />
+      <Helmet>
+        <title>ETH Single Asset Staking Program powered by MahaDAO</title>
+        <meta name="description"
+              content="ETH Single Asset Staking Program lets you earn rewards in MAHA by staking ETH on our platform. "/>
+      </Helmet>
+      <BgImage src={bgImage}/>
+      <Header/>
       {
         isEligible.isLoading
-          ? <LoadingPage />
-          : <Grid container spacing={3}>
+          ? <LoadingPage/>
+          : <Grid container spacing={2}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
-                  isMobile && <StrategyInfo />
+                  isMobile && <StrategyInfo/>
                 }
                 <FormPart isEligibile={isEligible.value}>
-                  {!isEligible.value && <Hidden>
+                  {/*{!isEligible.value && <Hidden>
                     <div>
                       <TextWrapper
                         text={<div>Check your eligibility</div>}
@@ -53,25 +60,28 @@ const Campaign = () => {
                         />
                       </div>
                     </div>
-                  </Hidden>}
+                  </Hidden>}*/}
                   {
                     positionDetails.value?.isActive
-                      ? <PostionDetails />
-                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount} />
+                      ? <PostionDetails/>
+                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
                   }
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                {!isMobile && <StrategyInfo />}
-                {!positionDetails.value?.isActive && <SummaryView ethAmount={ethAmount} />}
+                {!isMobile && <StrategyInfo/>}
+                {!positionDetails.value?.isActive && !isMobile && <SummaryView ethAmount={ethAmount}/>}
                 {/* <PoolInfo /> */}
                 {/* <AprInfo /> */}
               </div>
             </Grid>
           </Grid>
       }
+      <FooterContainer>
+        <Footer/>
+      </FooterContainer>
     </div>
   )
 }
@@ -90,7 +100,7 @@ const BgImage = styled.img`
 
 const FormPart = styled.div<{ isEligibile: boolean }>`
   position: relative;
-  padding: ${(props) => props.isEligibile ? '0' : '16px'};
+    //padding: ${(props) => props.isEligibile ? '0' : '16px'};
 `
 
 const Hidden = styled.div`
@@ -109,3 +119,8 @@ const Hidden = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const FooterContainer = styled.footer`
+  display: flex;
+  justify-content: center;
+`

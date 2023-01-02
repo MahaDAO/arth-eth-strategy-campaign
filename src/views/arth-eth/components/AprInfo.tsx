@@ -52,6 +52,7 @@ const AprInfo = () => {
         isValueLoading={mahaAPR.isLoading}
         valueFontColor={theme.color.primary[300]}
         valueFontWeight={600}
+        valueFontSize={16}
       />
     </div>
   )
