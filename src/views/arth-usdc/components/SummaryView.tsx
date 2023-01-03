@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { parseUnits } from "ethers/lib/utils";
+import React, {useState, useMemo} from "react";
+import {parseUnits} from "ethers/lib/utils";
 
 import DataField from "../../../components/DataField";
 
@@ -8,37 +8,17 @@ import IconLoader from "../../../components/IconLoader";
 import TextButton from "../../../components/TextButton";
 import useCollateralPriceFeed from "../../../hooks/state/TroveManager/useCollateralPriceFeed";
 import useGetBorrowingFeeRateWithDecay from "../../../hooks/state/TroveManager/useGetBorrowingFeeRateWithDecay";
-import { DECIMALS_18 } from "../../../utils/constants";
-import { BigNumber } from "ethers";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {DECIMALS_18} from "../../../utils/constants";
+import {BigNumber} from "ethers";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 
 const SummaryView = (props: { USDCAmount: string }) => {
   const [simplifieldView, setsimplifieldView] = useState<boolean>(false);
 
-  const price = useCollateralPriceFeed();
-  const borrowingFeeRate = useGetBorrowingFeeRateWithDecay();
-
-  const arthOutputFromLoans = useMemo(() => {
-    if (price.isLoading || borrowingFeeRate.isLoading) return BigNumber.from(0);
-
-    const eth = parseUnits(props.USDCAmount || "0", 18);
-    let arthDesired: BigNumber = eth
-      .mul(price.value)
-      .mul(100)
-      .div(310)
-      .div(DECIMALS_18);
-
-    // arthDesired = arthDesired
-    //   .sub(arthDesired.mul(borrowingFeeRate.value).div(DECIMALS_18))
-    //   .sub(DECIMALS_18.mul(50));
-
-    return arthDesired.lte(0) ? BigNumber.from(0) : arthDesired;
-  }, [price, props.USDCAmount, borrowingFeeRate]);
-
   const usdcDeposited = Number(props.USDCAmount) || 0;
 
-  const usdcToSupply = usdcDeposited / 2;
-  const arthBorrowed = (usdcDeposited / 2) * (97 / 100);
+  const usdcToSupply = usdcDeposited * (51 / 100);
+  const arthBorrowed = (usdcToSupply) * (97 / 100);
 
   return (
     <div className={"material-primary m-b-24"}>
@@ -68,8 +48,8 @@ const SummaryView = (props: { USDCAmount: string }) => {
                   />
                   USDC &#127881;
                 </span>{" "}
-                out of this which <span className={"bold"}>{usdcToSupply} USDC</span> is used to
-                borrow <span className={"bold"}>{arthBorrowed} ARTH</span> from MahaLend and
+                out of this which <span className={"bold"}>{Number(usdcToSupply).toFixed(2)} USDC</span> is used to
+                borrow <span className={"bold"}>{Number(arthBorrowed).toFixed(2)} ARTH</span> from MahaLend and
                 the remaining USDC and borrowed ARTH is then deposited
                 into the <span className={"bold"}>ARTH/USDC curve pool</span>.
               </div>
@@ -85,12 +65,9 @@ const SummaryView = (props: { USDCAmount: string }) => {
             <DataField
               label={"Collateral amount"}
               labelFontWeight={600}
-              value={
-                Number(
-                  getDisplayBalance(parseUnits(usdcDeposited.toString(), 6), 18)
-                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
-                " USDC"
-              }
+              value={`${Number(props.USDCAmount).toLocaleString("en-US", {
+                maximumFractionDigits: 3,
+              })} USDC`}
               valueFontColor={"white"}
               valueFontWeight={600}
             />
@@ -99,21 +76,7 @@ const SummaryView = (props: { USDCAmount: string }) => {
             <DataField
               label={"Debt amount"}
               labelFontWeight={600}
-              value={
-                Number(
-                  getDisplayBalance(parseUnits(usdcDeposited.toString(), 6), 18)
-                ).toLocaleString("en-US", { maximumFractionDigits: 3 }) +
-                " ARTH"
-              }
-              valueFontColor={"white"}
-              valueFontWeight={600}
-            />
-          </div>
-          <div className={"m-b-12"}>
-            <DataField
-              label={"Deposited to curve pool"}
-              labelFontWeight={600}
-              value={`${arthBorrowed} ARTH & ${usdcToSupply} USDC`}
+              value={`${Number(arthBorrowed).toFixed(2)} ARTH`}
               valueFontColor={"white"}
               valueFontWeight={600}
             />

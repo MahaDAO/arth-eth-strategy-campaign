@@ -118,6 +118,7 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
                   </div>
                 </States>
               </InputContainer>
+              <InfoTip type={'Info'} msg={'Your deposit is subject to a early withdrawal penalty period'}/>
               <div className={"m-t-24"}>
                 {
                   isApproved

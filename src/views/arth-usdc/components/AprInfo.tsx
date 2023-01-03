@@ -54,6 +54,17 @@ const AprInfo = () => {
         valueFontWeight={600}
         valueFontSize={16}
       />
+      <DataField
+        label={'*Subjected to change based on user deposit'}
+        labelFontWeight={600}
+        labelFontColor={'white'}
+        labelFontSize={14}
+        value={`${Number(mahaAPR.data).toLocaleString("en-US", {maximumFractionDigits: 3})} %`}
+        isValueLoading={mahaAPR.isLoading}
+        valueFontColor={theme.color.primary[300]}
+        valueFontWeight={600}
+        valueFontSize={16}
+      />
     </div>
   )
 }

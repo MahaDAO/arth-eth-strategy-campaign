@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, {useMemo} from "react";
 
 import TextWrapper from "../../../components/TextWrapper";
 import Button from "../../../components/Button";
@@ -14,6 +14,9 @@ import useGetPositionDetails from "../../../hooks/state/usdc-strategy/useGetPosi
 import useGetMahaRewards from "../../../hooks/state/usdc-strategy/useGetMahaRewards";
 import useWithdraw from "../../../hooks/callbacks/usdc-strategy/useWithdraw";
 import useClaimRewards from "../../../hooks/callbacks/usdc-strategy/useClaimRewards";
+import {LOADING_DEFAULT_BOOLEAN_STATE} from "../../../utils/constants";
+import {BasicBooleanState} from "../../../utils/interface";
+import InfoTip from "../../../components/InfoTip";
 
 const PositionDetails = () => {
   const claimHandler = useClaimRewards();
@@ -23,6 +26,21 @@ const PositionDetails = () => {
 
   const withdrawHandler = useWithdraw();
   const onWithdrawClick = () => withdrawHandler();
+
+  const underPenaltyPeriod: BasicBooleanState = useMemo(() => {
+    if (positionDetails.isLoading) return LOADING_DEFAULT_BOOLEAN_STATE
+    else {
+      const start = Number(`${Number(positionDetails.value.depositedAt)}000`)
+      const lockedDuration = Number(`${Number(positionDetails.value.lockDuration)}000`)
+      const check = new Date().getTime() < start + lockedDuration;
+      return {
+        isLoading: false,
+        value: check
+      }
+    }
+  }, [positionDetails])
+
+  console.log('data', underPenaltyPeriod);
 
   return (
     <div>
@@ -66,6 +84,10 @@ const PositionDetails = () => {
             className={'m-b-4'}
           />
         </div>
+        {underPenaltyPeriod.value &&
+          <InfoTip type={'Warning'}
+                   msg={'you will be charged 100USDC early withdrawal penalty which will be lifted after the penalty period'}/>
+        }
         <div className={'m-t-32'}>
           <TextButton
             text={'Close Position'}
