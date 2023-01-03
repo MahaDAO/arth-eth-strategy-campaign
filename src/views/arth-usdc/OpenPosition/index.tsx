@@ -1,6 +1,6 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import styled from "styled-components";
-import { parseUnits } from "ethers/lib/utils";
+import {parseUnits} from "ethers/lib/utils";
 
 import useTokenBalance from "../../../hooks/useTokenBalance";
 
@@ -14,15 +14,16 @@ import Button from "../../../components/Button";
 import TextWrapper from "../../../components/TextWrapper";
 import useDeposit from "../../../hooks/callbacks/usdc-strategy/useDeposit";
 import ActionButton from "../../../components/ActionButton";
-import { getDisplayBalance } from "../../../utils/formatBalance";
+import {getDisplayBalance} from "../../../utils/formatBalance";
 import InfoTip from "../../../components/InfoTip";
 import AprInfo from "../components/AprInfo";
 import useCore from "../../../hooks/useCore";
-import { useGetChainId } from "../../../utils/NetworksCustomHooks";
-import { BigNumber } from "ethers";
+import {useGetChainId} from "../../../utils/NetworksCustomHooks";
+import {BigNumber} from "ethers";
+import useApprove, {ApprovalState} from "../../../hooks/callbacks/useApprove";
 
 const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch<React.SetStateAction<string>> }) => {
-  const { USDCAmount, setUSDCAmount } = props;
+  const {USDCAmount, setUSDCAmount} = props;
 
   const core = useCore();
   const chainId = useGetChainId()
@@ -36,6 +37,20 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
   const depositHandler = useDeposit(USDCAmount);
   const onDepositClick = () => depositHandler();
 
+  const [approveStatus, approve] = useApprove(
+    core._tokens[chainId]['USDC'],
+    core.getARTHUSDCCurveLpStrategy().address,
+  );
+
+  const isApproved = useMemo(
+    () => approveStatus === ApprovalState.APPROVED,
+    [approveStatus]
+  );
+  const isApproving = useMemo(
+    () => approveStatus === ApprovalState.PENDING,
+    [approveStatus]
+  );
+
   return (
     <div>
       <Form className={"m-b-24"}>
@@ -44,7 +59,7 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
           dataValueLoading={balance.isLoading}
           dataValue={`Balance: ${Number(
             getDisplayBalance(balance.value, 6)
-          ).toLocaleString("en-US", { maximumFractionDigits: 3 })}`}
+          ).toLocaleString("en-US", {maximumFractionDigits: 3})}`}
           className={"m-b-24"}
         >
           <States
@@ -60,26 +75,39 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
                   setUSDCAmount(getDisplayBalance(balance.value, 6));
                 }}
               />
-              <CollateralDropDown selectedSymbol={"USDC"} />
+              <CollateralDropDown selectedSymbol={"USDC"}/>
             </div>
           </States>
         </InputContainer>
         <div className={"m-t-24"}>
-          <ActionButton
-            text={"Deposit"}
-            onClick={onDepositClick}
-            disabled={isInputGreaterThanMax || !Number(USDCAmount)}
-          />
+          {
+            isApproved
+              ? <ActionButton
+                text={"Deposit"}
+                onClick={onDepositClick}
+                disabled={isInputGreaterThanMax || !Number(USDCAmount)}
+              />
+              : <ActionButton
+                onClick={approve}
+                loading={isApproving}
+                tracking_id={"approve_USDC"}
+                tracking_params={{
+                  collateral: 'USDC'
+                }}
+                text={'Approve USDC'}
+              >
+              </ActionButton>
+          }
         </div>
       </Form>
       <Rewards className={"material-primary m-b-24"}>
         <div className={"single-line-center-between m-b-24"}>
-          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"} />
+          <TextWrapper text={"Rewards"} fontSize={24} fontFamily={"Syne"}/>
           <RewardsBtn>
-            <Button text={"Collect Rewards"} size={"sm"} disabled={true} />
+            <Button text={"Collect Rewards"} size={"sm"} disabled={true}/>
           </RewardsBtn>
         </div>
-        <AprInfo />
+        <AprInfo/>
         <div className={"m-b-8"}>
           <DataField
             label={"Earned Rewards"}
@@ -93,7 +121,8 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
           />
         </div>
         <InfoTip type={'Info'}
-          msg={<div>You have no rewards collected &#128542;, deposit some USDC and start earn MAHA &#127881;</div>} />
+                 msg={<div>You have no rewards collected &#128542;, deposit some USDC and start earn
+                   MAHA &#127881;</div>}/>
       </Rewards>
     </div>
   );

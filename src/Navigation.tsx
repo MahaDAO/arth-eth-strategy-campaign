@@ -23,8 +23,7 @@ const Navigation = () => {
       </Route>
       <Route exact path="/arth-usdc-strategy">
         <Page>
-          <ComingSoon/>
-          {/*<ARTHUSDC/>*/}
+          <ARTHUSDC/>
         </Page>
       </Route>
       <Route exact path="*">

@@ -1,22 +1,29 @@
 [
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": true,
         "internalType": "address",
-        "name": "src",
+        "name": "_usdc",
         "type": "address"
       },
       {
-        "indexed": false,
+        "internalType": "address",
+        "name": "_maha",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
-        "name": "wad",
+        "name": "_rewardsDuration",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
       }
     ],
-    "name": "Deposit",
-    "type": "event"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
     "anonymous": false,
@@ -113,25 +120,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "dst",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "wad",
-        "type": "uint256"
-      }
-    ],
-    "name": "Withdrawal",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "user",
         "type": "address"
       },
@@ -179,7 +167,31 @@
   },
   {
     "inputs": [],
-    "name": "collectRewards",
+    "name": "canInitialize",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "usdcSupplied",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minLiquidityReceived",
+        "type": "uint256"
+      }
+    ],
+    "name": "deposit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -187,49 +199,47 @@
   {
     "inputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "arthToBorrow",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "totalUsdcSupplied",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minUsdcInLp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minArthInLp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minLiquidityReceived",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint16",
-            "name": "lendingReferralCode",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint256",
-            "name": "interestRateMode",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct ARTHUSDCCurveLP.DepositParams",
-        "name": "depositParams",
-        "type": "tuple"
+        "internalType": "address",
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "v",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "r",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "s",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "usdcSupplied",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minLiquidityReceived",
+        "type": "uint256"
       }
     ],
-    "name": "deposit",
+    "name": "depositWithPermit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -254,34 +264,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "getRevision",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "target",
-        "type": "address"
-      },
-      {
-        "internalType": "bytes",
-        "name": "signature",
-        "type": "bytes"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "emergencyCall",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      }
-    ],
-    "name": "flush",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -302,54 +294,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "__usdc",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "__arth",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "__maha",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_lendingPool",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_liquidityPool",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_rewardsDuration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_operator",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "initialize",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -393,10 +337,10 @@
   },
   {
     "inputs": [],
-    "name": "lendingPool",
+    "name": "lp",
     "outputs": [
       {
-        "internalType": "contract ILendingPool",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -406,34 +350,41 @@
   },
   {
     "inputs": [],
-    "name": "liquidityPool",
+    "name": "minDepositForPermit",
     "outputs": [
       {
-        "internalType": "contract IStableSwap",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "bytes[]",
-        "name": "data",
-        "type": "bytes[]"
-      }
-    ],
-    "name": "multicall",
+    "inputs": [],
+    "name": "minLockDuration",
     "outputs": [
       {
-        "internalType": "bytes[]",
-        "name": "results",
-        "type": "bytes[]"
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
       }
     ],
-    "stateMutability": "payable",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minLockDurationForPermit",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -499,13 +450,18 @@
     "name": "positions",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
+        "internalType": "uint64",
+        "name": "depositedAt",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "lockDuration",
+        "type": "uint64"
       },
       {
         "internalType": "uint256",
-        "name": "arthBorrowed",
+        "name": "totalUsdc",
         "type": "uint256"
       },
       {
@@ -515,27 +471,17 @@
       },
       {
         "internalType": "uint256",
+        "name": "arthBorrowed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "usdcInLp",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "arthInLp",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "liquidity",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalUsdc",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "interestRateMode",
+        "name": "lpTokensMinted",
         "type": "uint256"
       }
     ],
@@ -635,7 +581,33 @@
   },
   {
     "inputs": [],
+    "name": "totalArthBorrowed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalUsdcSupplied",
     "outputs": [
       {
         "internalType": "uint256",
@@ -706,9 +678,35 @@
   },
   {
     "inputs": [],
+    "name": "varDebtArth",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "withdraw",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawalPenalty",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

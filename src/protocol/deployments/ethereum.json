@@ -30,5 +30,9 @@
   "ETHHintHelpers": {
     "abi": "HintHelpers",
     "address": "0xeBE989Cf09Af235e139FB19EF75302914df4b310"
+  },
+  "ARTHUSDCCurveLPStrategy": {
+    "abi": "ARTHUSDCCurveLp",
+    "address": "0x5480E8BEeDb3eBA5747a4A3aEF0850a3759df9B4"
   }
 }

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
-import { useMediaQuery } from "react-responsive";
+import React, {useState} from "react";
+import {Grid} from "@material-ui/core";
+import {useMediaQuery} from "react-responsive";
 
 import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
@@ -11,31 +11,32 @@ import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
 import PostionDetails from "./PostionDetails";
 
-import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
 
 import bgImage from '../../assets/images/bg.png';
+import useGetPositionDetails from "../../hooks/state/usdc-strategy/useGetPositionDetails";
+import useGetDepositAmount from "../../hooks/state/usdc-strategy/useGetDepositAmount";
 
 const Campaign = () => {
   const [USDCAmount, setUSDCAmount] = useState<string>("");
 
   const isEligible = useGetIsEligible();
-  const positionDetails = useGetPositionDetails();
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
+  const isMobile = useMediaQuery({maxWidth: '600px'});
+  const depositedAmount = useGetDepositAmount();
 
   return (
     <div className={'custom-container'}>
-      <BgImage src={bgImage} />
-      <Header />
+      <BgImage src={bgImage}/>
+      <Header/>
       {
         isEligible.isLoading
-          ? <LoadingPage />
+          ? <LoadingPage/>
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
-                  isMobile && <StrategyInfo />
+                  isMobile && <StrategyInfo/>
                 }
                 <FormPart isEligibile={isEligible.value}>
                   {!isEligible.value && <Hidden>
@@ -45,7 +46,7 @@ const Campaign = () => {
                         align={'center'}
                         className={'m-b-4'}
                       />
-                      <div style={{ width: 'max-content', margin: "auto" }}>
+                      <div style={{width: 'max-content', margin: "auto"}}>
                         <ActionButton
                           text={'Check'}
                           onClick={() => {
@@ -55,19 +56,17 @@ const Campaign = () => {
                     </div>
                   </Hidden>}
                   {
-                    positionDetails.value?.isActive
-                      ? <PostionDetails />
-                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount} />
+                    depositedAmount.value.gt(0)
+                      ? <PostionDetails/>
+                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
                   }
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                {!isMobile && <StrategyInfo />}
-                {!positionDetails.value?.isActive && <SummaryView USDCAmount={USDCAmount} />}
-                {/* <PoolInfo /> */}
-                {/* <AprInfo /> */}
+                {!isMobile && <StrategyInfo/>}
+                {depositedAmount.value.gt(0) && <SummaryView USDCAmount={USDCAmount}/>}
               </div>
             </Grid>
           </Grid>
