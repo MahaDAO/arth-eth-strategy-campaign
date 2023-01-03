@@ -6,8 +6,6 @@ import {useTransactionAdder} from "../../../state/transactions/hooks";
 import useCore from "../../useCore";
 import formatErrorMessage from "../../../utils/formatErrorMessage";
 import {formatToBN, getDisplayBalance} from "../../../utils/formatBalance";
-import {parseUnits} from "ethers/lib/utils";
-import {BigNumber} from "ethers";
 import {useWallet} from "use-wallet";
 import {BNZERO} from "../../../utils/constants";
 
@@ -18,7 +16,7 @@ const useDeposit = (usdcAmount: string) => {
   const addTransaction = useTransactionAdder();
 
   const action = useCallback(
-    async (callback?: () => void): Promise<void> => {
+    async (onSuccess: () => void, callback?: () => void): Promise<void> => {
       if (!account) return;
       else {
         try {
@@ -26,29 +24,25 @@ const useDeposit = (usdcAmount: string) => {
 
           const usdcAmountBn = formatToBN(usdcAmount, 6);
 
-          console.log('usdcAmountBn', usdcAmountBn, usdcAmount, getDisplayBalance(usdcAmountBn, 6, 3));
+          const gasLimit = (
+            await strategyContract.estimateGas.deposit(usdcAmountBn, BNZERO)
+          )
+            .mul(120)
+            .div(100); // add 20% more gas limit
 
-          /* const depositParams = {
-             usdcSupplied: usdcAmountBn,
-             minLiquidityReceived: BNZERO,
-           }
+          const response = await strategyContract.deposit(usdcAmountBn, BNZERO, {
+            gasLimit,
+          });
 
-           const gasLimit = (
-             await strategyContract.estimateGas.deposit(usdcAmountBn, BNZERO)
-           )
-             .mul(120)
-             .div(100); // add 20% more gas limit
-
-           const response = await strategyContract.deposit(usdcAmountBn, BNZERO, {
-             gasLimit,
-           });*/
-
-          const response = await strategyContract.deposit(usdcAmountBn, BNZERO);
+          // const response = await strategyContract.deposit(usdcAmountBn, BNZERO);
 
           addTransaction(response, {
             summary: `Deposit ${Number(getDisplayBalance(usdcAmountBn, 6, 3))} USDC.`,
           });
 
+          const tx = await response.wait();
+
+          if (tx?.status === 1) onSuccess();
           if (callback) callback();
         } catch (e: any) {
           console.log("useDeposit error", e);

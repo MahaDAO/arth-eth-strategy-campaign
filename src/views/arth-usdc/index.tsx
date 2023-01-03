@@ -17,6 +17,7 @@ import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import useGetDepositAmount from "../../hooks/state/usdc-strategy/useGetDepositAmount";
 
 import bgImage from '../../assets/images/bg.png';
+import {Helmet} from "react-helmet";
 
 const Campaign = () => {
   const [USDCAmount, setUSDCAmount] = useState<string>("");
@@ -27,6 +28,11 @@ const Campaign = () => {
 
   return (
     <div className={'custom-container'}>
+      <Helmet>
+        <title>USDC Single Asset Staking Program powered by MahaDAO</title>
+        <meta name="description"
+              content="USDC Single Asset Staking Program lets you earn rewards in MAHA by staking USDC on our platform. "/>
+      </Helmet>
       <BgImage src={bgImage}/>
       <Header/>
       {
@@ -39,7 +45,7 @@ const Campaign = () => {
                   isMobile && <StrategyInfo/>
                 }
                 <FormPart isEligibile={isEligible.value}>
-                  {!isEligible.value && <Hidden>
+                  {/* {!isEligible.value && <Hidden>
                     <div>
                       <TextWrapper
                         text={<div>Check your eligibility</div>}
@@ -54,19 +60,20 @@ const Campaign = () => {
                         />
                       </div>
                     </div>
-                  </Hidden>}
-                  {
+                  </Hidden>}*/}
+                  <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
+                  {/*{
                     depositedAmount.value.gt(0)
                       ? <PostionDetails/>
-                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
-                  }
+                      :
+                  }*/}
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {!isMobile && <StrategyInfo/>}
-                {depositedAmount.value.gt(0) && <SummaryView USDCAmount={USDCAmount}/>}
+                {depositedAmount.value.gt(0) && !isMobile && <SummaryView USDCAmount={USDCAmount}/>}
               </div>
             </Grid>
           </Grid>
