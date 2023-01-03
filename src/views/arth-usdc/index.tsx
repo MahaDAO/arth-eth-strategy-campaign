@@ -1,22 +1,22 @@
 import React, {useState} from "react";
 import {Grid} from "@material-ui/core";
 import {useMediaQuery} from "react-responsive";
-
-import OpenPosition from "./OpenPosition";
-import Header from "./components/Header";
 import styled from "styled-components";
+
 import TextWrapper from "../../components/TextWrapper";
-import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
-import PostionDetails from "./PostionDetails";
 
+import Header from "./components/Header";
 import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
+import PostionDetails from "./PostionDetails";
+import OpenPosition from "./OpenPosition";
+
+import useGetIsEligible from "../../hooks/state/useGetIsEligible";
+import useGetDepositAmount from "../../hooks/state/usdc-strategy/useGetDepositAmount";
 
 import bgImage from '../../assets/images/bg.png';
-import useGetPositionDetails from "../../hooks/state/usdc-strategy/useGetPositionDetails";
-import useGetDepositAmount from "../../hooks/state/usdc-strategy/useGetDepositAmount";
 
 const Campaign = () => {
   const [USDCAmount, setUSDCAmount] = useState<string>("");
