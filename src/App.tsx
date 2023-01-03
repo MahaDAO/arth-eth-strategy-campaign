@@ -15,7 +15,7 @@ import ModalsProvider from "./context/Modals";
 import ProtocolProvider from "./context/Provider";
 
 import store from "./state";
-import { getChainsRpc, getSupportedChains } from "./config";
+import { ConfigChain, getChainsRpc, getSupportedChains } from "./config";
 import useCore from "./hooks/useCore";
 import Updaters from "./state/Updaters";
 import { isProduction } from "./analytics/Mixpanel";
@@ -29,8 +29,10 @@ import {
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { infuraProvider } from "wagmi/providers/infura";
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
 import ChainUpdater from "./components/ChainUpdater";
 import { myCustomTheme } from "./utils/rainbowKitCustomTheme";
 
@@ -71,12 +73,15 @@ const WalletProvider: React.FC = ({ children }) => {
 
 const RainbowProvider: React.FC = ({ children }) => {
   const { chains, provider } = configureChains(
-    [chain.goerli, chain.mainnet, chain.polygon],
-    [publicProvider()]
+    ConfigChain,
+    [
+      isProduction ? alchemyProvider({ apiKey: 'Pqa8x2474ELXnBdyrbgHJE8WciGvie2H' })
+        : infuraProvider({ apiKey: 'd3f7dbf6880a410981a74ff7ef8c95cd' })
+    ]
   );
 
   const { connectors } = getDefaultWallets({
-    appName: "Arth Eth Strategy",
+    appName: "ARTH Vaults",
     chains,
   });
 
@@ -160,4 +165,5 @@ const App: React.FC = () => {
 
 export default App;
 
-if (isProduction) console.log = function () { };
+if (isProduction) console.log = function () {
+};

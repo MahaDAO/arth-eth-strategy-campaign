@@ -155,6 +155,7 @@ const Modal: React.FC<props> = ({
         style={modalContainerStyle}
         fullScreen={fullScreen}
         fullWidth={mobile}
+        disableBackdropClick={false}
         onClose={handleCloseModal}
         aria-labelledby="customized-dialog-title"
         open={openModal}

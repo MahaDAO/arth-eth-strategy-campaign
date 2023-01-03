@@ -2,22 +2,21 @@ import React, {useState} from "react";
 import {Grid} from "@material-ui/core";
 import {useMediaQuery} from "react-responsive";
 import {Helmet} from "react-helmet";
+import Confetti from 'react-confetti'
+import styled from "styled-components";
 
+import PostionDetails from "./PostionDetails";
 import OpenPosition from "./OpenPosition";
 import Header from "./components/Header";
-import styled from "styled-components";
-import TextWrapper from "../../components/TextWrapper";
-import useGetIsEligible from "../../hooks/state/useGetIsEligible";
-import LoadingPage from "../../components/LoadingPage";
-import ActionButton from "../../components/ActionButton";
-import PostionDetails from "./PostionDetails";
-
-import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
+import LoadingPage from "../../components/LoadingPage";
+import Footer from "../../components/Footer";
+
+import useGetIsEligible from "../../hooks/state/useGetIsEligible";
+import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
 
 import bgImage from '../../assets/images/bg.png';
-import Footer from "../../components/Footer";
 
 const Campaign = () => {
   const [ethAmount, setEthAmount] = useState<string>("");
@@ -61,11 +60,12 @@ const Campaign = () => {
                       </div>
                     </div>
                   </Hidden>}*/}
-                  {
+                  <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
+                  {/*{
                     positionDetails.value?.isActive
                       ? <PostionDetails/>
                       : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
-                  }
+                  }*/}
                 </FormPart>
               </div>
             </Grid>

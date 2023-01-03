@@ -1,11 +1,11 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loader from "react-spinners/PulseLoader";
 
 import config from "../../config";
 import fileTheme from "../../theme";
-import { Mixpanel } from "../../analytics/Mixpanel";
+import {Mixpanel} from "../../analytics/Mixpanel";
 
 export interface tracking_params {
   position?: string;
@@ -13,6 +13,8 @@ export interface tracking_params {
   action?: "initial" | "confirm" | "cancel";
   amount?: number;
   other?: object;
+
+  programName?: string;
 }
 
 export interface ButtonProps {
@@ -50,7 +52,7 @@ function variantToStyle(variant = "default", color: any) {
     };
   } else if (variant === "outlined") {
     return {
-      fg: { normal: color.transparent[100], hover: color.transparent[100] },
+      fg: {normal: color.transparent[100], hover: color.transparent[100]},
       bg: {
         normal: color.transparentog,
         hover: color.transparentog,
@@ -63,9 +65,9 @@ function variantToStyle(variant = "default", color: any) {
     };
   } else if (variant === "rounded") {
     return {
-      fg: { normal: color.primary[300] },
-      bg: { normal: color.transparent[100], disabled: color.transparentog },
-      border: { radius: "19px", radiusHover: "19px" },
+      fg: {normal: color.primary[300]},
+      bg: {normal: color.transparent[100], disabled: color.transparentog},
+      border: {radius: "19px", radiusHover: "19px"},
     };
   } else {
     return {
@@ -77,20 +79,20 @@ function variantToStyle(variant = "default", color: any) {
 }
 
 const Button: React.FC<ButtonProps> = ({
-  children,
-  disabled,
-  href,
-  onClick,
-  size,
-  text,
-  to,
-  theme,
-  variant,
-  loading = false,
-  tracking_id = "",
-  tracking_params = {},
-}) => {
-  const { color, spacing } = fileTheme;
+                                         children,
+                                         disabled,
+                                         href,
+                                         onClick,
+                                         size,
+                                         text,
+                                         to,
+                                         theme,
+                                         variant,
+                                         loading = false,
+                                         tracking_id = "",
+                                         tracking_params = {},
+                                       }) => {
+  const {color, spacing} = fileTheme;
 
   const variantStyle = variantToStyle(variant, color);
 
@@ -182,7 +184,7 @@ const Button: React.FC<ButtonProps> = ({
     >
       {!loading && children}
       {!loading && ButtonChild}
-      <Loader color={"#ffffff"} loading={loading} size={10} margin={2} />
+      <Loader color={"#ffffff"} loading={loading} size={10} margin={2}/>
     </StyledButton>
   );
 };
@@ -205,10 +207,10 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
   position: relative;
-  color: ${({ fg }) => fg.normal};
-  background: ${({ bg }) => bg.normal};
-  border: ${({ border }) => border.normal};
-  border-radius: ${({ border }) => border.radius};
+  color: ${({fg}) => fg.normal};
+  background: ${({bg}) => bg.normal};
+  border: ${({border}) => border.normal};
+  border-radius: ${({border}) => border.radius};
   box-shadow: ${(props) => props.boxShadow};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
@@ -218,25 +220,27 @@ const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   font-size: 14px;
   font-weight: 600;
-  height: ${({ size }) => size}px;
+  height: ${({size}) => size}px;
   justify-content: center;
   outline: none !important;
   padding: 10px 22px;
   width: 100%;
 
   &:hover {
-    color: ${({ fg }) => fg.hover};
-    background: ${({ bg }) => bg.hover};
-    border: ${({ border }) => border.hover};
-    border-radius: ${({ border }) => border.radiusHover};
+    color: ${({fg}) => fg.hover};
+    background: ${({bg}) => bg.hover};
+    border: ${({border}) => border.hover};
+    border-radius: ${({border}) => border.radiusHover};
   }
+
   &:focus {
-    color: ${({ fg }) => fg.selected};
-    background: ${({ bg }) => bg.selected};
+    color: ${({fg}) => fg.selected};
+    background: ${({bg}) => bg.selected};
   }
+
   &:disabled {
-    color: ${({ fg }) => fg.disabled};
-    background: ${({ bg }) => bg.disabled};
+    color: ${({fg}) => fg.disabled};
+    background: ${({bg}) => bg.disabled};
     cursor: not-allowed;
     opacity: 0.5;
   }

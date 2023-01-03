@@ -35,7 +35,8 @@ const OpenPosition = (props: { USDCAmount: string, setUSDCAmount: React.Dispatch
   }, [USDCAmount, balance]);
 
   const depositHandler = useDeposit(USDCAmount);
-  const onDepositClick = () => depositHandler();
+  const onDepositClick = () => depositHandler(() => {
+  });
 
   const [approveStatus, approve] = useApprove(
     core._tokens[chainId]['USDC'],
