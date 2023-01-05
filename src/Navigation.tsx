@@ -6,8 +6,19 @@ import ARTHETH from "./views/arth-eth";
 import ARTHUSDC from "./views/arth-usdc";
 import Home from "./views/Home";
 import ComingSoon from "./components/ComingSoon";
+import ReDepolying from "./components/ReDepolying";
 
 const Navigation = () => {
+
+  return (
+    <Switch>
+      <Route exact path="*">
+        <Page>
+          <ReDepolying/>
+        </Page>
+      </Route>
+    </Switch>
+  )
 
   return (
     <Switch>
