@@ -101,6 +101,7 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
                       value={ethAmount}
                       setValue={setEthAmount}
                       maxTag={true}
+                      disabled
                       onMaxClick={() => {
                         setEthAmount(getDisplayBalance(balance.value, 18));
                       }}
@@ -111,13 +112,14 @@ const OpenPosition = (props: { ethAmount: string, setEthAmount: React.Dispatch<R
               </InputContainer>
               <div className={"m-t-24"}>
                 <ActionButton
-                  text={"Deposit"}
+                  text={"Deposits are Paused"}
                   onClick={onDepositClick}
                   tracking_id={'deposit'}
                   tracking_params={{
                     programName: 'arth_eth',
                   }}
-                  disabled={isInputGreaterThanMax || !Number(ethAmount)}
+                  disabled
+                // disabled={isInputGreaterThanMax || !Number(ethAmount)}
                 />
               </div>
             </Form>
