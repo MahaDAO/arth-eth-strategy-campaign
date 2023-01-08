@@ -1,51 +1,58 @@
-import React, { useState } from "react";
-import { Grid } from "@material-ui/core";
-import { useMediaQuery } from "react-responsive";
-
-import OpenPosition from "./OpenPosition";
-import Header from "./components/Header";
+import React, {useState} from "react";
+import {Grid} from "@material-ui/core";
+import {useMediaQuery} from "react-responsive";
 import styled from "styled-components";
+
 import TextWrapper from "../../components/TextWrapper";
-import useGetIsEligible from "../../hooks/state/useGetIsEligible";
 import LoadingPage from "../../components/LoadingPage";
 import ActionButton from "../../components/ActionButton";
-import PostionDetails from "./PostionDetails";
 
-import useGetPositionDetails from "../../hooks/state/useGetPositionDetails";
+import Header from "./components/Header";
 import SummaryView from "./components/SummaryView";
 import StrategyInfo from "./components/StrategyInfo";
+import PostionDetails from "./PostionDetails";
+import OpenPosition from "./OpenPosition";
+
+import useGetIsEligible from "../../hooks/state/useGetIsEligible";
+import useGetDepositAmount from "../../hooks/state/usdc-strategy/useGetDepositAmount";
 
 import bgImage from '../../assets/images/bg.png';
+import {Helmet} from "react-helmet";
 
 const Campaign = () => {
   const [USDCAmount, setUSDCAmount] = useState<string>("");
 
   const isEligible = useGetIsEligible();
-  const positionDetails = useGetPositionDetails();
-  const isMobile = useMediaQuery({ maxWidth: '600px' });
+  const isMobile = useMediaQuery({maxWidth: '600px'});
+  const depositedAmount = useGetDepositAmount();
 
   return (
     <div className={'custom-container'}>
-      <BgImage src={bgImage} />
-      <Header />
+      <Helmet>
+        <title>USDC Single Asset Staking Program powered by MahaDAO</title>
+        <meta name="description"
+              content="USDC Single Asset Staking Program lets you earn rewards in MAHA by staking USDC on our platform. "/>
+      </Helmet>
+      <BgImage src={bgImage}/>
+      <Header/>
       {
         isEligible.isLoading
-          ? <LoadingPage />
+          ? <LoadingPage/>
           : <Grid container spacing={3}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
-                  isMobile && <StrategyInfo />
+                  isMobile && <StrategyInfo/>
                 }
                 <FormPart isEligibile={isEligible.value}>
-                  {!isEligible.value && <Hidden>
+                  {/* {!isEligible.value && <Hidden>
                     <div>
                       <TextWrapper
                         text={<div>Check your eligibility</div>}
                         align={'center'}
                         className={'m-b-4'}
                       />
-                      <div style={{ width: 'max-content', margin: "auto" }}>
+                      <div style={{width: 'max-content', margin: "auto"}}>
                         <ActionButton
                           text={'Check'}
                           onClick={() => {
@@ -53,21 +60,20 @@ const Campaign = () => {
                         />
                       </div>
                     </div>
-                  </Hidden>}
-                  {
-                    positionDetails.value?.isActive
-                      ? <PostionDetails />
-                      : <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount} />
-                  }
+                  </Hidden>}*/}
+                  <OpenPosition USDCAmount={USDCAmount} setUSDCAmount={setUSDCAmount}/>
+                  {/*{
+                    depositedAmount.value.gt(0)
+                      ? <PostionDetails/>
+                      :
+                  }*/}
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                {!isMobile && <StrategyInfo />}
-                {!positionDetails.value?.isActive && <SummaryView USDCAmount={USDCAmount} />}
-                {/* <PoolInfo /> */}
-                {/* <AprInfo /> */}
+                {!isMobile && <StrategyInfo/>}
+                {depositedAmount.value.gt(0) && !isMobile && <SummaryView USDCAmount={USDCAmount}/>}
               </div>
             </Grid>
           </Grid>

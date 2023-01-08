@@ -1,0 +1,38 @@
+{
+  "ARTH": {
+    "abi": "IERC20",
+    "address": "0xE52509181FEb30EB4979E29EC70D50FD5C44D590"
+  },
+  "MAHA": {
+    "abi": "IERC20",
+    "address": "0xeDd6cA8A4202d4a36611e2fff109648c4863ae19"
+  },
+  "USDC": {
+    "abi": "IERC20",
+    "address": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
+  },
+  "ETHPriceFeed": {
+    "abi": "PriceFeed",
+    "address": "0x2cE6d814E02c999864AF9eE46f2018a3E7fA4590"
+  },
+  "ETHTroveManager": {
+    "abi": "TroveManager",
+    "address": "0x30Bc984403B3e08F078dAAA91F5A615864049D00"
+  },
+  "ETHSortedTroves": {
+    "abi": "SortedTroves",
+    "address": "0xCe017c8e3807678AdfDA61613be6114afE95590f"
+  },
+  "ARTHETHTroveLpStrategy": {
+    "abi": "ARTHETHTroveLp",
+    "address": "0xA9735E594624339f8fbc8a99c57C13C7B4E8BCaC"
+  },
+  "ARTHUSDCCurveLPStrategy": {
+    "abi": "ARTHUSDCCurveLp",
+    "address": "0x7f8ae76e8dbfa37dbb59fd861a70d2036aec6bd7"
+  },
+  "ETHHintHelpers": {
+    "abi": "HintHelpers",
+    "address": "0x259F17E5eF66635443026acC905Ae77080e4339a"
+  }
+}

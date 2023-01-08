@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import styled from 'styled-components';
 
 export interface TextWrapperProps {
@@ -8,7 +8,7 @@ export interface TextWrapperProps {
   fontSize?: 32 | 24 | 18 | 16 | 14 | 12 | 10;
   FletterSpacing?: string;
   Fcolor?: string;
-  text: string | JSX.Element;
+  text: string | ReactNode;
   align?: 'left' | 'center' | 'right';
   className?: string;
   lineHeight?: string;
@@ -37,7 +37,7 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
         fcolor={Fcolor}
-        style={{ color: Fcolor }}
+        style={{color: Fcolor}}
         className={className}
         align={align}
         lineHeight={lineHeight}
@@ -54,7 +54,7 @@ const TextWrapper = (props: TextWrapperProps) => {
         fontStyle={fontStyle}
         letterSpacing={FletterSpacing}
         fcolor={Fcolor}
-        style={{ color: Fcolor }}
+        style={{color: Fcolor}}
         className={className}
         align={align}
         lineHeight={lineHeight}

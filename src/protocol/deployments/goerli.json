@@ -9,7 +9,7 @@
   },
   "USDC": {
     "abi": "IERC20",
-    "address": "0x7651f6C3Fa619E40A48fc7a60D34BCFc7897C362"
+    "address": "0x835a468B921C0568E3017bA75D61968C823E7F58"
   },
   "ETHPriceFeed": {
     "abi": "PriceFeed",
@@ -30,5 +30,9 @@
   "ETHHintHelpers": {
     "abi": "HintHelpers",
     "address": "0x3DD027e3A2B605D7445f0937502977121e0AE880"
+  },
+  "ARTHUSDCCurveLPStrategy": {
+    "abi": "ARTHUSDCCurveLp",
+    "address": "0xf790e96301bB8E5E141F16Ae4dDBe244074bFFDC"
   }
 }

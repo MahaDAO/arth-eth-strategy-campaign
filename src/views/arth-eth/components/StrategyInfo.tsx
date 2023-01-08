@@ -15,7 +15,7 @@ const StrategyInfo = () => {
         <div>
           <p className={'m-b-8'}>The ETH staking program is a simple way for users to earn a yield on their
             ETH by providing liquidity to the <a href={'https://mahadao.com'}
-                                                 className={'links'}> MahaDAO</a> ecosystem.</p>
+              className={'links'}> MahaDAO</a> ecosystem.</p>
           <p className={'m-b-8'}>The ETH you'll contribute here is used as collateral to mint ARTH (an
             inflation-proof stablecoin) and then it is deposited into MahaLend to provide liquidity for the
             ecosystem.</p>

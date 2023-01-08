@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {Grid} from "@material-ui/core";
-import {useMediaQuery} from "react-responsive";
-import {Helmet} from "react-helmet";
+import React, { useState } from "react";
+import { Grid } from "@material-ui/core";
+import { useMediaQuery } from "react-responsive";
+import { Helmet } from "react-helmet";
 import Confetti from 'react-confetti'
 import styled from "styled-components";
 
@@ -23,25 +23,27 @@ const Campaign = () => {
 
   const isEligible = useGetIsEligible();
   const positionDetails = useGetPositionDetails();
-  const isMobile = useMediaQuery({maxWidth: '600px'});
+  const isMobile = useMediaQuery({ maxWidth: '600px' });
+
+  console.log(positionDetails, positionDetails.value?.isActive)
 
   return (
     <div className={'custom-container'}>
       <Helmet>
         <title>ETH Single Asset Staking Program powered by MahaDAO</title>
         <meta name="description"
-              content="ETH Single Asset Staking Program lets you earn rewards in MAHA by staking ETH on our platform. "/>
+          content="ETH Single Asset Staking Program lets you earn rewards in MAHA by staking ETH on our platform. " />
       </Helmet>
-      <BgImage src={bgImage}/>
-      <Header/>
+      <BgImage src={bgImage} />
+      <Header />
       {
         isEligible.isLoading
-          ? <LoadingPage/>
+          ? <LoadingPage />
           : <Grid container spacing={2}>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
                 {
-                  isMobile && <StrategyInfo/>
+                  isMobile && <StrategyInfo />
                 }
                 <FormPart isEligibile={isEligible.value}>
                   {/*{!isEligible.value && <Hidden>
@@ -60,19 +62,19 @@ const Campaign = () => {
                       </div>
                     </div>
                   </Hidden>}*/}
-                  <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
-                  {/*{
+                  {/* <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount} /> */}
+                  {
                     positionDetails.value?.isActive
-                      ? <PostionDetails/>
-                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount}/>
-                  }*/}
+                      ? <PostionDetails />
+                      : <OpenPosition ethAmount={ethAmount} setEthAmount={setEthAmount} />
+                  }
                 </FormPart>
               </div>
             </Grid>
             <Grid item lg={6} md={6} sm={12} xs={12}>
               <div className={'mo-custom-container'}>
-                {!isMobile && <StrategyInfo/>}
-                {!positionDetails.value?.isActive && !isMobile && <SummaryView ethAmount={ethAmount}/>}
+                {!isMobile && <StrategyInfo />}
+                {!positionDetails.value?.isActive && !isMobile && <SummaryView ethAmount={ethAmount} />}
                 {/* <PoolInfo /> */}
                 {/* <AprInfo /> */}
               </div>
@@ -80,7 +82,7 @@ const Campaign = () => {
           </Grid>
       }
       <FooterContainer>
-        <Footer/>
+        <Footer />
       </FooterContainer>
     </div>
   )

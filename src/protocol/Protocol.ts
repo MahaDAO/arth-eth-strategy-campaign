@@ -1,9 +1,9 @@
-import { Contract, ethers } from "ethers";
+import {Contract, ethers} from "ethers";
 
 import ERC20 from "./ERC20";
 import ABIS from "./deployments/abi";
-import { configKeys, Configuration } from "../utils/interface";
-import { getDefaultProvider } from "../utils/provider";
+import {configKeys, Configuration} from "../utils/interface";
+import {getDefaultProvider} from "../utils/provider";
 import Web3 from "web3";
 
 /**
@@ -45,7 +45,7 @@ export class Protocol {
     try {
       for (const [chainIdString, config] of Object.entries(cfg)) {
         const chainId = Number(chainIdString);
-        const { deployments } = config;
+        const {deployments} = config;
         this.provider = getDefaultProvider(config);
         const networkConfig: { [name: string]: Contract } = {};
         const tokens: { [name: string]: ERC20 } = {};
@@ -134,6 +134,10 @@ export class Protocol {
 
   getARTHETHTroveLpStrategy() {
     return this._contracts[this._activeNetwork][`ARTHETHTroveLpStrategy`];
+  }
+
+  getARTHUSDCCurveLpStrategy() {
+    return this._contracts[this._activeNetwork][`ARTHUSDCCurveLPStrategy`];
   }
 
   getUniV3PositionManager() {

@@ -45,13 +45,24 @@ const useWithdraw = (ethAmount: BigNumber, arthAmount: BigNumber) => {
             arthAmount: 0,
           };
 
-          const gasLimit = (await strategyContract.withdraw(loanParams))
+          const gasLimit = (
+            await strategyContract.withdraw(
+              loanParams.maxFee,
+              loanParams.upperHint,
+              loanParams.lowerHint
+            )
+          )
             .mul(120)
             .div(100); // add 20% more gas limit
 
-          const response = await strategyContract.withdraw(loanParams, {
-            gasLimit,
-          });
+          const response = await strategyContract.withdraw(
+            loanParams.maxFee,
+            loanParams.upperHint,
+            loanParams.lowerHint,
+            {
+              gasLimit,
+            }
+          );
 
           addTransaction(response, {
             summary: `Withdraw ${Number(
