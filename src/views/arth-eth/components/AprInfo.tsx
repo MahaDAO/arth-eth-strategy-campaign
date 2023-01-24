@@ -2,17 +2,29 @@ import React, {useCallback, useEffect, useState} from "react";
 import DataField from "../../../components/DataField";
 import theme from "../../../theme";
 
+interface IAprInternal {
+  min: number;
+  max: number;
+  boostEffectiveness: number;
+}
+
+interface IApr {
+  tvlUSD: number;
+  current: IAprInternal;
+  upcoming: IAprInternal;
+}
+
 const AprInfo = () => {
   const [mahaAPR, setMahaApr] = useState<{
-    data: string;
+    data: number;
     isLoading: false;
   }>({
     isLoading: false,
-    data: '0',
+    data: 0,
   });
 
   const fetchAPY = useCallback(async () => {
-    const url = `https://api.arthcoin.com/apy/campaign`;
+    const url = `https://api.arthcoin.com/apr/vaults`;
     /*const headers = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
@@ -22,15 +34,15 @@ const AprInfo = () => {
 
     fetch(url)
       .then((res) => res.json())
-      .then((res: { [key: string]: string }) => {
-        if (res['arth-eth-loans']) {
-          setMahaApr({isLoading: false, data: res['arth-eth-loans']});
+      .then((res: { [key: string]: IApr }) => {
+        if (res['arth-eth-strategy']) {
+          setMahaApr({isLoading: false, data: res['arth-eth-strategy'].current.min});
         }
       })
       .catch((err) => {
         setMahaApr({
           isLoading: false,
-          data: '0',
+          data: 0,
         });
       });
   }, []);
