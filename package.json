@@ -1,6 +1,6 @@
 {
   "name": "campaign.mahadao.com",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "private": true,
   "dependencies": {
     "@aave/contract-helpers": "^1.10.0",
