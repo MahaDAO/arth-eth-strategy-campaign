@@ -1,22 +1,22 @@
-import {useCallback} from "react";
+import { useCallback } from "react";
 
-import {useAddPopup} from "../../state/application/hooks";
-import {useTransactionAdder} from "../../state/transactions/hooks";
+import { useAddPopup } from "../../state/application/hooks";
+import { useTransactionAdder } from "../../state/transactions/hooks";
 
 import useCore from "../useCore";
 import formatErrorMessage from "../../utils/formatErrorMessage";
-import {DECIMALS_18} from "../../utils/constants";
-import {getDisplayBalance} from "../../utils/formatBalance";
-import {findHintsForNominalCollateralRatio} from "../../utils";
-import {useWallet} from "use-wallet";
+import { DECIMALS_18 } from "../../utils/constants";
+import { getDisplayBalance } from "../../utils/formatBalance";
+import { findHintsForNominalCollateralRatio } from "../../utils";
+import { useWallet } from "use-wallet";
 import useGetBorrowingFeeRateWithDecay from "../state/TroveManager/useGetBorrowingFeeRateWithDecay";
-import {parseUnits} from "ethers/lib/utils";
-import {BigNumber} from "ethers";
+import { parseUnits } from "ethers/lib/utils";
+import { BigNumber } from "ethers";
 
 const useDeposit = (ethAmount: string) => {
   const core = useCore();
   const addPopup = useAddPopup();
-  const {account} = useWallet();
+  const { account } = useWallet();
   const addTransaction = useTransactionAdder();
   const borrowingFeeRate = useGetBorrowingFeeRateWithDecay();
 
@@ -63,17 +63,29 @@ const useDeposit = (ethAmount: string) => {
           };
 
           const gasLimit = (
-            await strategyContract.estimateGas.deposit(loanParams, 0, {
-              value: eth,
-            })
+            await strategyContract.estimateGas.deposit(
+              loanParams.maxFee,
+              loanParams.upperHint,
+              loanParams.lowerHint,
+              loanParams.arthAmount,
+              {
+                value: eth,
+              }
+            )
           )
             .mul(120)
             .div(100); // add 20% more gas limit
 
-          const response = await strategyContract.deposit(loanParams, 0, {
-            value: eth,
-            gasLimit,
-          });
+          const response = await strategyContract.deposit(
+            loanParams.maxFee,
+            loanParams.upperHint,
+            loanParams.lowerHint,
+            loanParams.arthAmount,
+            {
+              value: eth,
+              gasLimit,
+            }
+          );
 
           addTransaction(response, {
             summary: `Deposit ${Number(getDisplayBalance(eth, 18, 3))} ETH.`,
